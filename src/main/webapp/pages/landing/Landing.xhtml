@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+
+<h:head>
+    <f:facet name="first">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+        <h:outputStylesheet name="primeflex/3.3.1/primeflex.css" library="webjars"/>
+    </f:facet>
+</h:head>
+<h:body>
+    <f:view>
+        <h:outputLabel value="Welcome, User" styleClass="text-2xl"/>
+
+        <hr/>
+
+        <div>
+            <h:outputText value="Please Click this button"/>
+            <br/>
+            <p:button id="toDashboardButton" icon="pi pi-check" value="Navigate to Dashboard"
+                      outcome="/pages/dashboard/Dashboard.xhtml"/>
+        </div>
+    </f:view>
+</h:body>
+</html>
