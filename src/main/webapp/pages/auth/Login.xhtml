@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:k="http://xmlns.jcp.org/jsf/passthrough">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/style.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+
+      <style>
+        * {
+          box-sizing: border-box;
+          color: rgb(226, 226, 226);
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
+        .ui-button .ui-button-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 15px 15px;
+          background-color: #3470e9;
+          font-size: 18px;
+        }
+
+        .ui-button .ui-button-text:hover {
+          background-color: #042aff;
+        }
+
+        .ui-button .ui-button-icon-left {
+          display: none !important;
+        }
+
+        .ui-button .ui-button-text:before {
+          margin-right: 5px;
+          content: "\f2f6";
+          font-family: "Font Awesome 5 Free";
+        }
+      </style>
+    </f:facet>
+  </h:head>
+  <h:body>
+    <div>
+      <h:form>
+        <div class="signinform">
+          <div class="container">
+            <!-- main content -->
+            <div class="w3l-form-info">
+              <div>
+                <p:link outcome="/pages/dashboard/Dashboard.xhtml">
+                  <img
+                    src="resources/images/myyyy.png"
+                    alt="Logo"
+                    width="80%"
+                    height="80%"
+                /></p:link>
+              </div>
+              <div id="tv">
+                <div class="input-group">
+                  <span><i class="fas fa-id-card" aria-hidden="true"></i></span>
+                  <h:inputText id="mid" k:placeholder="Member id" required="true" requiredMessage="*Member id required" />
+                  <h:message for="mid" styleClass="error-message" />
+                </div>
+                <div class="input-group">
+                  <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                  <h:inputSecret id="password" k:placeholder="Password" required="true" requiredMessage="*Password required" />
+                    <h:message for="password" styleClass="error-message" />
+                </div>
+                <div class="form-row bottom">
+                  <div class="form-check">
+                    <h:selectBooleanCheckbox id="remember" />
+                    <h:outputLabel for="remember" value="Remember me?" />
+                  </div>
+                  <a href="#url" class="forgot">Forgot password?</a>
+                </div>
+                <br />
+
+                <p:button
+                  styleClass="btn btn-primary btn-block"
+                  outcome="/pages/dashboard/Dashboard.xhtml"
+                  value="Login"
+                  icon="fas fa-sign-in"
+                  layout="custom"
+                  template="{buttonContent}" />
+                <p class="account">
+                  Don't have an account?
+                  <h:outputLink value="Register.xhtml">Register</h:outputLink>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <p>2023 Kimanyi SACCO login form | All Rights Reserved</p>
+          </div>
+        </div>
+      </h:form>
+    </div>
+  </h:body>
+  <script src="resources/js/fontawesome.js"></script>
+</html>

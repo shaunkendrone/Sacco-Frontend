@@ -18,6 +18,8 @@ public class Navigation {
 
     private final String register = "/pages/auth/Register.xhtml";
 
+    private final String login = "/pages/auth/Login.xhtml";
+
     public String getDashboard() {
         return dashboard;
     }
@@ -30,6 +32,8 @@ public class Navigation {
         return register;
     }
 
+    public String getLogin() {
+        return login;
+    }
     
-
 }
