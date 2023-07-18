@@ -8,12 +8,15 @@ import javax.faces.bean.ManagedBean;
  * It is to help us navigate between the pages in the application easily.
  */
 @ManagedBean(name = "navigation")
-@ApplicationScoped //There should be only one instance of the class created for the entire application
+@ApplicationScoped // There should be only one instance of the class created for the entire
+                   // application
 public class Navigation {
 
     private final String dashboard = "/pages/dashboard/Dashboard.xhtml";
 
     private final String landing = "/pages/landing/Landing.xhtml";
+
+    private final String register = "/pages/auth/Register.xhtml";
 
     public String getDashboard() {
         return dashboard;
@@ -23,5 +26,10 @@ public class Navigation {
         return landing;
     }
 
+    public String getRegister() {
+        return register;
+    }
+
+    
 
 }
