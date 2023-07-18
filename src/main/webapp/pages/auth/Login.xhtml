@@ -96,13 +96,15 @@
                 </div>
                 <br />
 
-                <p:button
-                  styleClass="btn btn-primary btn-block"
-                  outcome="/pages/dashboard/Dashboard.xhtml"
-                  value="Login"
-                  icon="fas fa-sign-in"
-                  layout="custom"
-                  template="{buttonContent}" />
+                <p:commandButton
+                styleClass="btn btn-primary btn-block"
+                value="Register"
+                type="submit"
+                icon="fas fa-sign-in"
+                action="#{navigation.getDashboard()}"
+                update="@form"
+                ajax="false"
+                 />
                 <p class="account">
                   Don't have an account?
                   <h:outputLink value="Register.xhtml">Register</h:outputLink>
