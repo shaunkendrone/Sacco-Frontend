@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/styles.css" />
+      <link rel="stylesheet" href="resources/css/chart.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+    </f:facet>
+  </h:head>
+  <h:body>
+    <div class="sidebar">
+      <div class="logo"></div>
+      <div class="menu-item">
+        <i class="pi pi-home"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/dashboard/Dashboard.xhtml"
+            value="Home" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-wallet" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Deposit.xhtml"
+            value="Deposit"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-money-bill" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Withdraw.xhtml"
+            value="Withdraw"
+        /></span>
+      </div>
+      
+      <div class="menu-item">
+        <i class="pi pi-user" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Details.xhtml"
+            value="Transaction Details" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-chart-pie" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Report.xhtml"
+            value="Transaction Report" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-sign-out"></i>
+        <span>
+          <p:commandLink
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            action="#{userSessionBean.logout()}"
+            value="Logout"
+        /></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="profile-section">
+        <div class="profile-name">
+            <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
+        </div>
+        <div class="profile-dropdown">
+            <h:form>
+            <p:commandButton style="margin-right: 10px;" value="View Profile" icon="pi pi-user" action="#{profile.viewProfile()}" />
+          </h:form>
+            <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{userSessionBean.logout()}" />
+        </div>
+    </div>
+      <h1
+        style="
+          color: #477deb;
+          text-align: center;
+          margin-bottom: 30px;
+          font-family: 'Times New Roman', Times, serif;
+        ">
+        Transaction Report
+      </h1>
+      <hr class="divider" />
+      <!-- <div class="card-container">
+        <div class="card">
+          <div class="icon">
+            <i
+              style="font-size: 40px"
+              class="pi pi-wallet"
+              aria-hidden="true"></i>
+          </div>
+          <h2>Withdraw Transactions</h2>
+          <h2 style="text-align: right; color: #777">
+            5
+          </h2>
+        </div>
+        <div class="card">
+          <div class="icon">
+            <i
+              style="font-size: 40px"
+              class="pi pi-money-bill"
+              aria-hidden="true"></i>
+          </div>
+          <h2>Deposit Transactions</h2>
+          <h2 style="text-align: right; color: #777">
+            5
+          </h2>
+        </div>
+        <div class="card">
+          <div class="icon">
+            <i
+              style="font-size: 40px"
+              class="pi pi-folder-open"
+              aria-hidden="true"></i>
+          </div>
+          <h2>Total Transactions</h2>
+          <h2 style="text-align: right; color: #777">1,000,000</h2>
+        </div>
+      </div> -->
+
+      <div>
+        <!-- <h2 style="color: #477deb;font-family: 'Times New Roman', Times, serif;">Transactions Chart</h2> -->
+        <div class="chart-options">
+          <div class="center-section">
+              <div class="timeframe-section dropdown-content">
+                  <label for="timeframe">Select Timeframe:</label>
+                  <select id="timeframe" onchange="updateTransactionChart()">
+                      <option value="week">Week</option>
+                      <option value="month">Month</option>
+                      <option value="year">Year</option>
+                  </select>
+              </div>
+              <div class="transaction-type-section dropdown-content">
+                  <label for="transactionType">Filter by Transaction Type:</label>
+                  <select id="transactionType" onchange="filterTransactionChart()">
+                      <option value="all">All Transactions</option>
+                      <option value="deposit">Deposit Transactions</option>
+                      <option value="withdraw">Withdraw Transactions</option>
+                  </select>
+              </div>
+          </div>
+      </div>
+      <br />
+        <div class="chart-container">
+            <canvas id="transactionChart" style="background-color: #fff;"></canvas>
+        </div>
+      </div>
+      
+      
+    </div>
+  </h:body>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var sidebar = document.querySelector(".sidebar");
+      var content = document.querySelector(".content");
+
+      sidebar.addEventListener("mouseenter", function () {
+        content.classList.add("extend");
+      });
+
+      sidebar.addEventListener("mouseleave", function () {
+        content.classList.remove("extend");
+      });
+    });
+  </script>
+
+<script>
+  // Get the canvas element and create a chart context
+  var transactionData = {
+    labels: ['2023-06-28', '2023-06-29', '2023-06-30', '2023-07-01', '2023-07-02', '2023-07-03', '2023-07-04', '2023-07-05', '2023-07-06', '2023-07-07', '2023-07-08', '2023-07-09', '2023-07-10', '2023-07-11', '2023-07-12'],
+    datasets: [{
+        label: 'Deposit',
+        data: [20, 35, 10, 30, 25, 40, 15, 20, 30, 25, 10, 5, 15, 20, 30],
+        backgroundColor: 'rgba(71, 125, 235, 0.4)',
+        borderColor: '#477DEB',
+        borderWidth: 2
+    }, {
+        label: 'Withdraw',
+        data: [10, 20, 5, 15, 10, 25, 8, 15, 20, 10, 5, 2, 8, 10, 15],
+        backgroundColor: 'rgba(235, 71, 71, 0.4)',
+        borderColor: '#EB4747',
+        borderWidth: 2
+    }, {
+        label: 'All Transactions',
+        data: [30, 15, 20, 25, 30, 10, 20, 15, 25, 10, 5, 20, 15, 10, 5],
+        backgroundColor: 'rgba(165, 105, 189, 0.4)',
+        borderColor: '#A569BD',
+        borderWidth: 2
+    }]
+};
+
+var transactionChart;
+var selectedTransactionType = 'all'; // Initially set to 'all'
+
+function updateTransactionChart() {
+    var timeframe = document.getElementById('timeframe').value;
+
+    // Prepare data based on the selected timeframe
+    var newData = {};
+    switch (timeframe) {
+        case 'week':
+            newData.labels = transactionData.labels.slice(-7);
+            break;
+        case 'month':
+            newData.labels = transactionData.labels.slice(-30);
+            break;
+        case 'year':
+            newData.labels = transactionData.labels;
+            break;
+        default:
+            break;
+    }
+
+    // Set the datasets based on the selected transaction type
+    if (selectedTransactionType === 'all') {
+        newData.datasets = [transactionData.datasets[2]];
+    } else if (selectedTransactionType === 'deposit') {
+        newData.datasets = [transactionData.datasets[0]];
+    } else if (selectedTransactionType === 'withdraw') {
+        newData.datasets = [transactionData.datasets[1]];
+    }
+
+    // Update the chart with the new data
+    transactionChart.data = newData;
+    transactionChart.update();
+}
+
+function filterTransactionChart() {
+    selectedTransactionType = document.getElementById('transactionType').value;
+
+    // Update the chart with the selected transaction type
+    updateTransactionChart();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the canvas element and create a chart context
+    var ctx = document.getElementById('transactionChart').getContext('2d');
+
+    // Create the line chart
+    transactionChart = new Chart(ctx, {
+        type: 'line',
+        data: transactionData,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 10
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Transaction Amount'
+                    }
+                },
+                x: {
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }
+            }
+        }
+    });
+
+    // Set the initial state to display "All Transactions"
+    selectedTransactionType = 'all';
+    filterTransactionChart();
+});
+
+  // Update the chart height
+  var chartContainer = document.querySelector('.chart-container');
+  chartContainer.style.height = '400px'; // Adjust the desired height
+
+
+</script>
+</html>

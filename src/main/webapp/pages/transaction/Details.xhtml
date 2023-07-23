@@ -14,13 +14,14 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
 
+      <link rel="stylesheet" href="resources/css/styles.css" />
       <link rel="stylesheet" href="resources/css/mynav.css" />
       <h:outputStylesheet
         name="primeflex/3.3.1/primeflex.css"
         library="webjars" />
     </f:facet>
   </h:head>
-  <h:body style="background-color: #f5f5f5">
+  <h:body>
     <div class="sidebar">
       <div class="logo"></div>
       <div class="menu-item">
@@ -32,7 +33,6 @@
               color: #202020;
               font-family: 'Times New Roman', Times, serif;
             "
-            styleClass="link-hover-white"
             outcome="/pages/dashboard/Dashboard.xhtml"
             value="Home" />
         </span>
@@ -40,13 +40,13 @@
       <div class="menu-item">
         <i class="pi pi-wallet" aria-hidden="true"></i>
         <span
-          ><p:commandLink
+          ><p:link
             style="
               font-size: 20px;
               color: #202020;
               font-family: 'Times New Roman', Times, serif;
             "
-            action="#{deposit.doDeposit()}"
+            outcome="/pages/transaction/Deposit.xhtml"
             value="Deposit"
         /></span>
       </div>
@@ -64,6 +64,7 @@
             value="Withdraw"
         /></span>
       </div>
+      
       <div class="menu-item">
         <i class="pi pi-user" aria-hidden="true"></i>
         <span>
@@ -90,7 +91,6 @@
             value="Transaction Report" />
         </span>
       </div>
-
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
         <span>
@@ -109,95 +109,50 @@
     <div class="content">
       <div class="profile-section">
         <div class="profile-name">
-          <h2>Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
+            <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
         </div>
         <div class="profile-dropdown">
-          <h:form>
-            <p:commandButton
-              style="margin-right: 10px"
-              value="View Profile"
-              icon="pi pi-user"
-              action="#{profile.viewProfile()}" />
+            <h:form>
+            <p:commandButton style="margin-right: 10px;" value="View Profile" icon="pi pi-user" action="#{profile.viewProfile()}" />
           </h:form>
-          <p:commandButton
-            value="Logout"
-            icon="pi pi-sign-out"
-            action="#{userSessionBean.logout()}" />
+            <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{userSessionBean.logout()}" />
         </div>
-      </div>
-      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
-        Dashboard
+    </div>
+      <h1
+        style="
+          color: #477deb;
+          text-align: center;
+          margin-bottom: 30px;
+          font-family: 'Times New Roman', Times, serif;
+        ">
+        Transaction Details
       </h1>
       <hr class="divider" />
-      <div class="card-container">
-        <div class="card">
-          <div class="icon">
-            <i
-              style="font-size: 40px"
-              class="pi pi-wallet"
-              aria-hidden="true"></i>
-          </div>
-          <h2>Deposit</h2>
-          <h4 style="text-align: right; color: #777">
-            Deposit funds into your account
-          </h4>
-        </div>
-        <div class="card">
-          <div class="icon">
-            <i
-              style="font-size: 40px"
-              class="pi pi-money-bill"
-              aria-hidden="true"></i>
-          </div>
-          <h2>Withdraw</h2>
-          <h4 style="text-align: right; color: #777">
-            Withdraw funds from your account
-          </h4>
-        </div>
-        <div class="card">
-          <div class="icon">
-            <i
-              style="font-size: 40px"
-              class="pi pi-folder-open"
-              aria-hidden="true"></i>
-          </div>
-          <h2>Account Balance</h2>
-          <h2 style="text-align: right; color: #777">1,000,000</h2>
-        </div>
-      </div>
-      <br />
-      <h2 style="color: #477deb; margin-bottom: 30px">
-        Recent Transaction details
-      </h2>
 
-      <h:form>
-        <div style="display: flex; flex-direction: column; align-items: center;">
+      <!-- Transaction Table -->
+      <div class="transaction-table">
+        <h:form>
+    
         <p:dataTable var="users" value="#{userView.users}" id="userTable">
-          <p:column headerText="Transaction Id">
-            <h:outputText value="#{users.memberId}" />
-          </p:column>
+            <p:column headerText="Code">
+                <h:outputText value="#{users.memberId}" />
+            </p:column>
 
-          <p:column headerText="Transaction Type">
-            <h:outputText value="#{users.password}" />
-          </p:column>
+            <p:column headerText="Name">
+                <h:outputText value="#{users.password}" />
+            </p:column>
 
-          <p:column headerText="Transaction Amount">
-            <h:outputText value="#{users.password}" />
-          </p:column>
+            <p:column headerText="Action">
+                <p:commandButton value="Delete" action="#{userView.delete(users)}" update="userTable"></p:commandButton>
+            </p:column>
 
-          <p:column headerText="Transaction Date">
-            <h:outputText value="#{users.password}" />
-          </p:column>
-          <!-- <p:column headerText="Action 2">
+            <p:column headerText="Action 2">
                 <p:commandButton value="Edit" actionListener="#{loginForm.setUser(users)}" action="#{loginForm.toLogin()}" />
-            </p:column> -->
+            </p:column>
         </p:dataTable>
-        <br />
-          <p:commandButton value="More Transactions" action="/pages/transaction/Details.xhtml" />
-        </div>
-      </h:form>
-
       
+    </h:form>
+      </div>
     </div>
   </h:body>
 

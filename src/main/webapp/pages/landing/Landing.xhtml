@@ -1,36 +1,87 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
->
-
-<h:head>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
     <f:facet name="first">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
 
-        <h:outputStylesheet name="primeflex/3.3.1/primeflex.css" library="webjars"/>
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
     </f:facet>
-</h:head>
-<h:body>
+  </h:head>
+  <h:body>
     <f:view>
-        <h:outputLabel value="Welcome, User" styleClass="text-2xl"/>
+      <h:outputLabel value="Welcome, Kendrone" styleClass="text-2xl" />
 
-        <hr/>
+      <hr />
 
-        <div>
-            <h:outputText value="Please Click this button"/>
-            <br/>
-            <p:button id="toDashboardButton" icon="pi pi-check" value="Navigate to Dashboard"
-                      outcome="/pages/dashboard/Dashboard.xhtml"/>
-            <p:button id="toRegisterButton" icon="pi pi-check" value="Navigate to Register"
-                      outcome="/pages/auth/Register.xhtml"/>
-                      <p:button id="toLoginButton" icon="pi pi-check" value="Navigate to Login"
-                      outcome="/pages/auth/Login.xhtml"/>
-        </div>
+      <div>
+        <h:outputText value="Please Click this button" />
+        <br />
+
+        <p:button
+          id="toDashboardButton"
+          icon="pi pi-check"
+          value="Navigate to Dashboard"
+          outcome="#{navigation.dashboard}" />
+      </div>
+      <div>
+        <p:button
+          id="toLoginButton"
+          icon="pi pi-check"
+          value="Navigate to Login"
+          outcome="/pages/auth/Login.xhtml" />
+      </div>
+      <div>
+        <p:button
+          id="toRegisterButton"
+          icon="pi pi-check"
+          value="Navigate to Register"
+          outcome="/pages/auth/Register.xhtml" />
+        <p:button
+          id="toDepositButton"
+          icon="pi pi-check"
+          value="Navigate to Deposit"
+          outcome="/pages/transaction/Deposit.xhtml" />
+      </div>
+      <div>
+        <p:button
+          id="toWithdrawButton"
+          icon="pi pi-check"
+          value="Navigate to Withdraw"
+          outcome="/pages/transaction/Withdraw.xhtml" />
+      </div>
+      <div>
+        <p:button
+          id="toDetailsButton"
+          icon="pi pi-check"
+          value="Navigate to Transaction Details"
+          outcome="/pages/transaction/Details.xhtml" />
+      </div>
+
+      <div>
+        <p:button
+          id="toTransferButton"
+          icon="pi pi-check"
+          value="Navigate to Profile"
+          outcome="/pages/transaction/Profile.xhtml" />
+      </div>
+      <div>
+        <p:button
+          id="toApplyButton"
+          icon="pi pi-check"
+          value="Navigate to Apply"
+          outcome="/pages/auth/Apply.xhtml" />
+      </div>
     </f:view>
-</h:body>
+  </h:body>
 </html>

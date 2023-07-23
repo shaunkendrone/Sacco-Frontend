@@ -1,0 +1,180 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 50px;
+    background-color: #eeebeb;
+    color: #fff;
+    transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.sidebar:hover {
+    width: 250px;
+}
+
+.divider {
+    position: relative;
+    border: none;
+    height: 2px;
+    background-color: #477DEB;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.divider:before,
+.divider:after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    width: 20px;
+    height: 2px;
+    background-color: inherit;
+}
+.divider:before {
+    left: 0;
+}
+.divider:after {
+    right: 0;
+}
+
+.sidebar .logo {
+    margin: 20px 0;
+    font-size: 18px;
+    background-image: url("minilogo.png"); /* Default logo image */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 55px;
+    height: 55px;
+    transition: background-image 0.3s;
+}
+
+
+.sidebar .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.sidebar .menu-item:hover {
+    background-color: #5889ED;
+    color: #f1f1f1;
+}
+
+.sidebar .menu-item i {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #202020;
+    font-weight: 500;
+}
+
+.menu-item:hover i {
+    color: #f1f1f1;
+}
+
+.sidebar .menu-item span {
+    font-size: 20px;
+    color: #202020;
+    font-weight: 600;
+}
+
+/* Apply the hover style to the anchor element inside the .menu-item */
+.menu-item:hover a {
+    color: #f1f1f1 !important;
+}
+
+/* Apply the hover style to the <p:link> element inside the .menu-item */
+.menu-item:hover span > a {
+    color: #f1f1f1 !important;
+}
+
+.content {
+    margin-left: 80px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.content.extend {
+    margin-left: 250px;
+}
+
+.sidebar:not(:hover) .menu-item span {
+    display: none;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile-name {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.profile-dropdown {
+    display: flex;
+    align-items: center;
+}
+
+.profile-dropdown .p-button {
+    background-color: #477DEB;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.profile-dropdown .p-button:hover {
+    background-color: #375bb5;
+    transform: scale(1.05);
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    width: calc(33.33% - 20px);
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .icon {
+    font-size: 36px;
+    color: #477DEB;
+}
+
+.card h3 {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.card p {
+    margin-top: 10px;
+    color: #777;
+}
+

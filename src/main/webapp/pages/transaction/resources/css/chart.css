@@ -1,0 +1,18 @@
+.chart-container {
+    height: 300px; /* Adjust the desired height */
+}
+
+.chart-options {
+    text-align: center;
+}
+
+.center-section {
+    display: flex;
+    justify-content: center;
+}
+
+.timeframe-section,
+.transaction-type-section {
+    margin: 0 10px;
+}
+

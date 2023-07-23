@@ -20,6 +20,16 @@ public class Navigation {
 
     private final String login = "/pages/auth/Login.xhtml";
 
+    private final String apply = "/pages/auth/Apply.xhtml";
+
+    private final String adminDashboard = "/pages/admin/adminDashboard.xhtml";
+
+    private final String addMember = "/pages/admin/AddMember.xhtml";
+
+    private final String viewMembers = "/pages/admin/ViewMembers.xhtml";
+
+    private final String adminReports = "/pages/admin/AdminReports.xhtml";
+
     public String getDashboard() {
         return dashboard;
     }
@@ -35,5 +45,24 @@ public class Navigation {
     public String getLogin() {
         return login;
     }
+
+    public String getApply() {
+        return apply;
+    }
+
+    public String getAdminDashboard() {
+        return adminDashboard;
+    }
     
+    public String getAddMember() {
+        return addMember;
+    }
+
+    public String getViewMembers() {
+        return viewMembers;
+    }
+
+    public String getAdminReports() {
+        return adminReports;
+    }
 }

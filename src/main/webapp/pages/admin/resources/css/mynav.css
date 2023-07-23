@@ -1,0 +1,280 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 50px;
+    background-color: #eeebeb;
+    color: #fff;
+    transition: width 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.sidebar:hover {
+    width: 250px;
+}
+
+.divider {
+    position: relative;
+    border: none;
+    height: 2px;
+    background-color: #477DEB;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.divider:before,
+.divider:after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    width: 20px;
+    height: 2px;
+    background-color: inherit;
+}
+.divider:before {
+    left: 0;
+}
+.divider:after {
+    right: 0;
+}
+
+.sidebar .logo {
+    margin: 20px 0;
+    font-size: 18px;
+    background-image: url("minilogo.png"); /* Default logo image */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 55px;
+    height: 55px;
+    transition: background-image 0.3s;
+}
+
+
+.sidebar .menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.sidebar .menu-item:hover {
+    background-color: #5889ED;
+    color: #f1f1f1;
+}
+
+.sidebar .menu-item i {
+    margin-right: 10px;
+    font-size: 24px;
+    color: #202020;
+    font-weight: 500;
+}
+
+.menu-item:hover i {
+    color: #f1f1f1;
+}
+
+.sidebar .menu-item span {
+    font-size: 20px;
+    color: #202020;
+    font-weight: 600;
+}
+
+/* Apply the hover style to the anchor element inside the .menu-item */
+.menu-item:hover a {
+    color: #f1f1f1 !important;
+}
+
+/* Apply the hover style to the <p:link> element inside the .menu-item */
+.menu-item:hover span > a {
+    color: #f1f1f1 !important;
+}
+
+.content {
+    margin-left: 50px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.content.extend {
+    margin-left: 250px;
+}
+
+.sidebar:not(:hover) .menu-item span {
+    display: none;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.profile-section .profile-icon {
+    font-size: 24px;
+    color: #477DEB;
+    margin-right: 10px;
+}
+
+.profile-section .profile-name {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+.profile-section .profile-dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-section .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    min-width: 160px;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.profile-section .dropdown-content a {
+    display: block;
+    padding: 5px 0;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+
+.profile-section .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.profile-section:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content .pi-chevron-down {
+    display: none;
+}
+
+.dropdown-content.open .pi-chevron-down {
+    display: inline-block;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 12px;
+    color: #333;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    width: calc(25% - 10px); /* Adjusted width to fit four cards on the same line */
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px; /* Reduced padding to make the cards smaller */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .card-content {
+    padding: 10px 10px; /* Add padding to create space between card content and More info section */
+}
+
+.card .more-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #5889ED; /* Nice color for the More info section */
+    border-radius: 0 0 10px 10px; /* Adjust border-radius to match card's rounded corners */
+    padding: 5px 0;
+}
+
+.card .more-info span {
+    margin-right: 5px;
+}
+
+.card .more-info i {
+    font-size: 18px;
+}
+
+/* Additional styling for the More info section on hover */
+.card:hover .more-info {
+    background-color: #477DEB; /* Nice color on hover */
+    cursor: pointer;
+}
+
+.card .icon {
+    font-size: 24px; /* Reduced font size for the icons */
+    color: #477DEB;
+}
+
+.card h1 {
+    margin-top: 10px; /* Reduced margin for the header */
+    color: #333;
+}
+
+
+
+.card h2 {
+    margin-top: 5px;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.line-graph-container {
+    flex: 1;
+    max-width: 600px; /* Adjust as needed */
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .top-left {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+  }
+  
+  .view-report {
+    font-size: 16px;
+    color: #477DEB;
+    text-decoration: none;
+  }
+  
+  .percentage {
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+  }
+
+  

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:k="http://xmlns.jcp.org/jsf/passthrough">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <!-- <link rel="stylesheet" href="resources/css/form.css" /> -->
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+    </f:facet>
+  </h:head>
+  <h:body style="background-color: #f5f5f5">
+    <div class="sidebar">
+      <div class="logo"></div>
+      <div class="menu-item">
+        <i class="pi pi-prime"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+              
+            "
+            styleClass="link-hover-white"
+            outcome="/pages/admin/AdminDashboard.xhtml"
+            value="Home" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-user-plus" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AddMember.xhtml"
+            value="Register New Member"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-verified" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/SaccoMembers.xhtml"
+            value="Approved Members"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-users" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/ViewMembers.xhtml"
+            value="View Requests"
+        /></span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-chart-pie" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AdminReports.xhtml"
+            value="Reports and Analysis" />
+        </span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-sign-out"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/auth/Login.xhtml"
+            value="Logout"
+        /></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="profile-section">
+        <i class="pi pi-user profile-icon"></i>
+        <div class="profile-dropdown">
+          <div class="profile-name">Admin</div>
+          <div class="dropdown-content">
+            <p:link
+              style="font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/auth/Login.xhtml">
+              <i class="pi pi-sign-out"></i> Logout
+            </p:link>
+          </div>
+          <i class="pi pi-chevron-down"></i>
+        </div>
+      </div>
+      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
+        Register New Member
+      </h1>
+      <hr class="divider" />
+      
+        <div>
+          <h:form>
+    <div>
+        <h5>Addons</h5>
+        <div class="grid ui-fluid">
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                    <p:inputText placeholder="First Name"/>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                    <p:inputText placeholder="Last Name"/>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-4">
+              <div class="ui-inputgroup">
+                <p:outputLabel for="dateOfBirth" value="Date Of Birth"/>
+                <p:datePicker id="dateOfBirth" value="#{calendarView.date2}" monthNavigator="true" yearNavigator="true" showWeek="true"/>
+              </div>
+          </div>
+
+            
+
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <div class="ui-inputgroup-addon">www</div>
+                    <p:inputText placeholder="Website"/>
+                </div>
+            </div>
+        </div>
+
+        <h5>Multiple Addons</h5>
+        <div class="grid ui-fluid">
+            <div class="col-12">
+                <div class="ui-inputgroup">
+                    <div class="ui-inputgroup-addon"><i class="pi pi-tags"/></div>
+                    <div class="ui-inputgroup-addon"><i class="pi pi-shopping-cart"/></div>
+                    <p:inputText placeholder="Price"/>
+                    <div class="ui-inputgroup-addon">$</div>
+                    <div class="ui-inputgroup-addon">.00</div>
+                </div>
+            </div>
+        </div>
+
+        <h5>Button Addons</h5>
+        <div class="grid ui-fluid">
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <p:commandButton value="Search"/>
+                    <p:inputText placeholder="Keyword"/>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <p:inputText placeholder="Keyboard"/>
+                    <p:commandButton icon="pi pi-search" styleClass="ui-button-warning"/>
+                </div>
+            </div>
+
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <p:commandButton icon="pi pi-check" styleClass="ui-button-success"/>
+                    <p:inputText placeholder="Vote"/>
+                    <p:commandButton icon="pi pi-times" styleClass="ui-button-danger"/>
+                </div>
+            </div>
+        </div>
+
+        <h5>Checkbox</h5>
+        <div class="grid ui-fluid">
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <div class="ui-inputgroup-addon"><p:selectBooleanCheckbox/></div>
+                    <p:inputText placeholder="Username"/>
+                </div>
+            </div>
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <p:inputText placeholder="Username"/>
+                    <div class="ui-inputgroup-addon"><p:radioButton for="radioDemo" itemIndex="0"/></div>
+                </div>
+            </div>
+            <div class="col-12 md:col-4">
+                <div class="ui-inputgroup">
+                    <div class="ui-inputgroup-addon"><p:selectBooleanCheckbox/></div>
+                    <p:inputText placeholder="Username"/>
+                    <div class="ui-inputgroup-addon"><p:radioButton for="radioDemo" itemIndex="0"/></div>
+                </div>
+            </div>
+        </div>
+
+        <p:selectOneRadio id="radioDemo" layout="custom" unselectable="true">
+            <f:selectItem itemValue="demo"/>
+        </p:selectOneRadio>
+    </div>
+</h:form>
+        </div>
+
+    </div>
+  </h:body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var sidebar = document.querySelector(".sidebar");
+      var content = document.querySelector(".content");
+
+      sidebar.addEventListener("mouseenter", function () {
+        content.classList.add("extend");
+      });
+
+      sidebar.addEventListener("mouseleave", function () {
+        content.classList.remove("extend");
+      });
+    });
+  </script>
+  <script src="resources/js/fontawesome.js"></script>
+</html>

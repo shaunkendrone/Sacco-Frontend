@@ -1,0 +1,111 @@
+/* view-profile.css */
+
+/* Profile Information */
+.profile-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .profile-image {
+    font-size: 72px;
+    color: #477DEB;
+    margin-right: 20px;
+  }
+  
+  .profile-details h3 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+  }
+  
+  .profile-details p {
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  /* Additional Profile Details */
+  .additional-details {
+    margin-bottom: 30px;
+  }
+  
+  .additional-details h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .additional-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .additional-details li {
+    margin-bottom: 10px;
+  }
+  
+  .detail-label {
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    width: 150px;
+  }
+  
+  .detail-value {
+    color: #666;
+  }
+  
+  /* Profile Actions */
+  .profile-actions {
+    margin-bottom: 30px;
+  }
+  
+  .profile-actions h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .profile-actions p {
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  .profile-actions p i {
+    margin-right: 5px;
+  }
+  
+  .profile-actions p a {
+    color: #477DEB;
+    text-decoration: none;
+  }
+  
+  .profile-actions p a:hover {
+    text-decoration: underline;
+  }
+  
+  .profile-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.form-column {
+    flex-basis: 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.update-button-group {
+    display: flex;
+    justify-content: center;
+    margin-left: 35%;
+}
+
+/* Add additional styles as needed */

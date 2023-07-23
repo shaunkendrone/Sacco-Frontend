@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+    </f:facet>
+    <style>
+      .chart {
+        width: 100%;
+        height: 500px;
+      }
+    </style>
+  </h:head>
+  <h:body style="background-color: #f5f5f5">
+    <div class="sidebar">
+      <div class="logo"></div>
+      <div class="menu-item">
+        <i class="pi pi-prime"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            styleClass="link-hover-white"
+            outcome="/pages/admin/AdminDashboard.xhtml"
+            value="Home" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-user-plus" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AddMember.xhtml"
+            value="Register New Member"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-verified" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/SaccoMembers.xhtml"
+            value="Approved Members"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-users" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/ViewMembers.xhtml"
+            value="View Requests"
+        /></span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-chart-pie" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AdminReports.xhtml"
+            value="Reports and Analysis" />
+        </span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-sign-out"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/auth/Login.xhtml"
+            value="Logout"
+        /></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="profile-section">
+        <i class="pi pi-user profile-icon"></i>
+        <div class="profile-dropdown">
+          <div class="profile-name">Admin</div>
+        </div>
+      </div>
+      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
+        Admin Dashboard
+      </h1>
+      <hr class="divider" />
+      <div class="card-container">
+        <!-- Card 1 -->
+        <div
+          class="card"
+          style="
+            background-image: url('resources/images/money.png');
+            background-size: 70px;
+            background-repeat: no-repeat;
+            background-position-x: 90%;
+            background-position-y: 10%;
+          ">
+          <div class="card-content">
+            <h1>20</h1>
+            <h2>Total Transactions</h2>
+          </div>
+          <div class="more-info">
+            <span>More info</span>
+            <i class="fas fa-info-circle"></i>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div
+          class="card"
+          style="
+            background-image: url('resources/images/multiple-users-silhouette_33308.png');
+            background-size: 70px;
+            background-repeat: no-repeat;
+            background-position-x: 90%;
+            background-position-y: 10%;
+          ">
+          <div>
+            <h1>15</h1>
+            <h2>Members</h2>
+          </div>
+          <div class="more-info">
+            <span>More info</span>
+            <i class="fas fa-info-circle"></i>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div
+          class="card"
+          style="
+            background-image: url('resources/images/people-connection.png');
+            background-size: 70px;
+            background-repeat: no-repeat;
+            background-position-x: 90%;
+            background-position-y: 10%;
+          ">
+          <div>
+            <h1>5</h1>
+            <h2>Requests to Approve</h2>
+          </div>
+          <div class="more-info">
+            <span>More info</span>
+            <i class="fas fa-info-circle"></i>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div
+          class="card"
+          style="
+            background-image: url('resources/images/verified-user.png');
+            background-size: 70px;
+            background-repeat: no-repeat;
+            background-position-x: 90%;
+            background-position-y: 10%;
+          ">
+          <div>
+            <h1>10</h1>
+            <h2>Approved Members</h2>
+          </div>
+          <div class="more-info">
+            <span>More info</span>
+            <i class="fas fa-info-circle"></i>
+          </div>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="line-graph-container" style="background-color: #fff;">
+        <div>
+          <span>Members over time</span>
+          <a href="path-to-report-page" class="view-report">View Report</a>
+          <div class="percentage">+20%</div> <!-- Replace with the actual percentage value -->
+        </div>
+        <canvas id="lineGraph"></canvas>
+      </div>
+
+      <div class="card">
+        <!--Member with the highest account balance-->
+        
+      </div>
+    </div>
+  </h:body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var sidebar = document.querySelector(".sidebar");
+      var content = document.querySelector(".content");
+
+      sidebar.addEventListener("mouseenter", function () {
+        content.classList.add("extend");
+      });
+
+      sidebar.addEventListener("mouseleave", function () {
+        content.classList.remove("extend");
+      });
+    });
+  </script>
+  <script src="resources/js/fontawesome.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Sample data for the line graph (replace with your actual data)
+    const data = {
+      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], // Replace with your actual labels
+      datasets: [
+        {
+          label: 'Number of Members',
+          data: [100, 150, 200, 180], // Replace with your actual data points
+          borderColor: '#477DEB',
+          backgroundColor: 'rgba(71, 125, 235, 0.2)',
+          borderWidth: 2,
+        },
+      ],
+    };
+  
+    // Line graph configuration
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: '#f0f0f0',
+            },
+          },
+        },
+      },
+    };
+  
+    // Render the line graph
+    const lineGraphCtx = document.getElementById('lineGraph').getContext('2d');
+    new Chart(lineGraphCtx, config);
+  </script>
+  
+</html>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+
+      <!-- PrimeFaces JS -->
+      <h:outputScript name="primefaces/jquery/jquery.js" library="primefaces" />
+      <h:outputScript name="primefaces/primefaces.js" library="primefaces" />
+    </f:facet>
+  </h:head>
+  <h:body style="background-color: #f5f5f5">
+    <div class="sidebar">
+      <div class="logo"></div>
+      <div class="menu-item">
+        <i class="pi pi-prime"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            styleClass="link-hover-white"
+            outcome="/pages/admin/AdminDashboard.xhtml"
+            value="Home" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-user-plus" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AddMember.xhtml"
+            value="Register New Member"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-verified" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/SaccoMembers.xhtml"
+            value="Approved Members"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-users" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/ViewMembers.xhtml"
+            value="View Requests"
+        /></span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-chart-pie" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AdminReports.xhtml"
+            value="Reports and Analysis" />
+        </span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-sign-out"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/auth/Login.xhtml"
+            value="Logout"
+        /></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="profile-section">
+        <i class="pi pi-user profile-icon"></i>
+        <div class="profile-dropdown">
+          <div class="profile-name">Admin</div>
+          <div class="dropdown-content">
+            <p:link
+              style="font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/auth/Login.xhtml">
+              <i class="pi pi-sign-out"></i> Logout
+            </p:link>
+          </div>
+          <i class="pi pi-chevron-down"></i>
+        </div>
+      </div>
+      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
+        SACCO Members
+      </h1>
+      <hr class="divider" />
+      <!-- Transaction Table -->
+      <div class="transaction-table">
+        <h:form>
+          <p:dataTable
+            var="member"
+            value="#{myMembers.approvedMembers}"
+            id="membersTable"
+            paginator="true"
+            rows="10"
+            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+            rowsPerPageTemplate="5,10,15">
+            <p:column
+              headerText="First Name"
+              sortBy="#{member.firstName}"
+              filterBy="#{member.firstName}">
+              <h:outputText value="#{member.firstName}" />
+            </p:column>
+
+            <p:column
+              headerText="Last Name"
+              sortBy="#{member.lastName}"
+              filterBy="#{member.lastName}">
+              <h:outputText value="#{member.lastName}" />
+            </p:column>
+
+            <p:column
+              headerText="Gender"
+              sortBy="#{member.gender}"
+              filterBy="#{member.gender}">
+              <h:outputText value="#{member.gender}" />
+            </p:column>
+
+            <p:column
+              headerText="Address"
+              sortBy="#{member.address}"
+              filterBy="#{member.address}">
+              <h:outputText value="#{member.address}" />
+            </p:column>
+
+            <p:column
+              headerText="Occupation"
+              sortBy="#{member.occupation}"
+              filterBy="#{member.occupation}">
+              <h:outputText value="#{member.occupation}" />
+            </p:column>
+
+            <p:column headerText="Action">
+              <p:commandButton
+                value="View Member"
+                icon="pi pi-eye"
+                actionListener="#{myMembers.setSelectedMember(member)}"
+                oncomplete="PF('memberDialog').show()"
+                 />
+            </p:column>
+          </p:dataTable>
+          <p:dialog
+            header="Member Details"
+            widgetVar="memberDialog"
+            minHeight="40"
+            width="350"
+            showEffect="fade">
+            <h:panelGrid columns="2" cellpadding="5" style="width: 100%">
+              <h:outputText value="First Name:" />
+              <h:outputText value="#{myMembers.selectedMember.firstName}" />
+
+              <h:outputText value="Last Name:" />
+              <h:outputText value="#{myMembers.selectedMember.lastName}" />
+
+              <h:outputText value="Date Of Birth: " />
+              <h:outputText value="#{myMembers.selectedMember.dateOfBirth}" />
+
+              <h:outputText value="Gender: " />
+              <h:outputText value="#{myMembers.selectedMember.gender}" />
+
+              <h:outputText value="Address: " />
+              <h:outputText value="#{myMembers.selectedMember.address}" />
+
+              <h:outputText value="Phone Number: " />
+              <h:outputText value="#{myMembers.selectedMember.phoneNumber}" />
+
+              <h:outputText value="Occupation: " />
+              <h:outputText value="#{myMembers.selectedMember.occupation}" />
+            </h:panelGrid>
+            <f:facet name="footer">
+              <p:commandButton type="button" value="Okay" style="width: 5rem" onclick="PF('memberDialog').hide()" />
+            </f:facet>
+          </p:dialog>
+        </h:form>
+      </div>
+    </div>
+  </h:body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var sidebar = document.querySelector(".sidebar");
+      var content = document.querySelector(".content");
+
+      sidebar.addEventListener("mouseenter", function () {
+        content.classList.add("extend");
+      });
+
+      sidebar.addEventListener("mouseleave", function () {
+        content.classList.remove("extend");
+      });
+    });
+  </script>
+  <script src="resources/js/fontawesome.js"></script>
+</html>

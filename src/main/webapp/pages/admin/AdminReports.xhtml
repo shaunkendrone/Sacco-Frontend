@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+    </f:facet>
+  </h:head>
+  <h:body style="background-color: #f5f5f5">
+    <div class="sidebar">
+      <div class="logo"></div>
+      <div class="menu-item">
+        <i class="pi pi-prime"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+              
+            "
+            styleClass="link-hover-white"
+            outcome="/pages/admin/AdminDashboard.xhtml"
+            value="Home" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-user-plus" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AddMember.xhtml"
+            value="Register New Member"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-verified" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/SaccoMembers.xhtml"
+            value="Approved Members"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-users" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/ViewMembers.xhtml"
+            value="View Requests"
+        /></span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-chart-pie" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/admin/AdminReports.xhtml"
+            value="Reports and Analysis" />
+        </span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-sign-out"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/auth/Login.xhtml"
+            value="Logout"
+        /></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="profile-section">
+        <i class="pi pi-user profile-icon"></i>
+        <div class="profile-dropdown">
+          <div class="profile-name">Admin</div>
+          <div class="dropdown-content">
+            <p:link
+              style="font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/auth/Login.xhtml">
+              <i class="pi pi-sign-out"></i> Logout
+            </p:link>
+          </div>
+          <i class="pi pi-chevron-down"></i>
+        </div>
+      </div>
+      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
+        Reports and Analysis
+      </h1>
+      <hr class="divider" />
+      
+
+    </div>
+  </h:body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var sidebar = document.querySelector(".sidebar");
+      var content = document.querySelector(".content");
+
+      sidebar.addEventListener("mouseenter", function () {
+        content.classList.add("extend");
+      });
+
+      sidebar.addEventListener("mouseleave", function () {
+        content.classList.remove("extend");
+      });
+    });
+  </script>
+  <script src="resources/js/fontawesome.js"></script>
+</html>

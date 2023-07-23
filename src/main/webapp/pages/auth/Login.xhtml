@@ -68,7 +68,7 @@
             <!-- main content -->
             <div class="w3l-form-info">
               <div>
-                <p:link outcome="/pages/dashboard/Dashboard.xhtml">
+                <p:link outcome="/pages/admin/AdminDashboard.xhtml">
                   <img
                     src="resources/images/myyyy.png"
                     alt="Logo"
@@ -78,14 +78,28 @@
               </div>
               <div id="tv">
                 <div class="input-group">
-                  <span><i class="fas fa-id-card" aria-hidden="true"></i></span>
-                  <h:inputText id="mid" k:placeholder="Member id" required="true" requiredMessage="*Member id required" />
+                  <span
+                    ><i class="fas fa-envelope" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="mid"
+                    style="color: black !important;"
+                    k:placeholder="Email"
+                    value="#{loginForm.loginMember.email}"
+                    required="true"
+                    requiredMessage="*Email required" />
                   <h:message for="mid" styleClass="error-message" />
                 </div>
                 <div class="input-group">
                   <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                  <h:inputSecret id="password" k:placeholder="Password" required="true" requiredMessage="*Password required" />
-                    <h:message for="password" styleClass="error-message" />
+                  <h:inputSecret
+                    id="password"
+                    style="color: black !important;"
+                    k:placeholder="Password"
+                    value="#{loginForm.loginMember.password}"
+                    required="true"
+                    requiredMessage="*Password required" />
+                  <h:message for="password" styleClass="error-message" />
                 </div>
                 <div class="form-row bottom">
                   <div class="form-check">
@@ -96,15 +110,16 @@
                 </div>
                 <br />
 
+                <h:messages globalOnly="true" styleClass="error-message" />
+
                 <p:commandButton
-                styleClass="btn btn-primary btn-block"
-                value="Register"
-                type="submit"
-                icon="fas fa-sign-in"
-                action="#{navigation.getDashboard()}"
-                update="@form"
-                ajax="false"
-                 />
+                  styleClass="btn btn-primary btn-block"
+                  value="Login"
+                  type="submit"
+                  icon="fas fa-sign-in"
+                  action="#{loginForm.doLogin()}"
+                  update="@form"
+                  ajax="false" />
                 <p class="account">
                   Don't have an account?
                   <h:outputLink value="Register.xhtml">Register</h:outputLink>

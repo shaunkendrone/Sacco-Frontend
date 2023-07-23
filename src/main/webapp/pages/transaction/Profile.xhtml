@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/styles.css" />
+      <link rel="stylesheet" href="resources/css/profile.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+    </f:facet>
+  </h:head>
+  <h:body>
+    <!-- <f:metadata>
+        <f:viewParam name="profile" value="#{profile}" />
+    </f:metadata> -->
+
+    <div class="sidebar">
+      <div class="logo"></div>
+      <div class="menu-item">
+        <i class="pi pi-home"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/dashboard/Dashboard.xhtml"
+            value="Home" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-wallet" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Deposit.xhtml"
+            value="Deposit"
+        /></span>
+      </div>
+
+      <div class="menu-item">
+        <i class="pi pi-money-bill" aria-hidden="true"></i>
+        <span
+          ><p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Withdraw.xhtml"
+            value="Withdraw"
+        /></span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-user" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Details.xhtml"
+            value="Transaction Details" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-chart-pie" aria-hidden="true"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/transaction/Report.xhtml"
+            value="Transaction Report" />
+        </span>
+      </div>
+      <div class="menu-item">
+        <i class="pi pi-sign-out"></i>
+        <span>
+          <p:link
+            style="
+              font-size: 20px;
+              color: #202020;
+              font-family: 'Times New Roman', Times, serif;
+            "
+            outcome="/pages/auth/Login.xhtml"
+            value="Logout"
+        /></span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="profile-section">
+        <div class="profile-name">
+            <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
+        </div>
+        <div class="profile-dropdown">
+            <h:form>
+            <p:commandButton style="margin-right: 10px;" value="View Profile" icon="pi pi-user" action="#{profile.viewProfile()}" />
+          </h:form>
+            <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{userSessionBean.logout()}" />
+        </div>
+    </div>
+      <h1
+        style="
+          color: #477deb;
+          text-align: center;
+          margin-bottom: 30px;
+          font-family: 'Times New Roman', Times, serif;
+        ">
+        My Profile
+      </h1>
+
+      <hr class="divider" />
+
+      <div class="content">
+        <!-- <h2>View Profile</h2> -->
+
+        <!-- Profile Information -->
+        <div class="profile-info">
+          <div class="profile-image">
+            <i style="font-size: 100px" class="pi pi-user"></i>
+          </div>
+          <div class="profile-details">
+            <h3>John Doe</h3>
+            <p>Email: shaun@gmail.com</p>
+            <p>Phone: 0781827469</p>
+            <p>Address: Kampala</p>
+            <p>Occupation: Software Developer</p>
+          </div>
+        </div>
+
+        <!-- Update Profile Form -->
+        <div class="update-profile-form">
+          <h3>Update Profile</h3>
+          <p>
+            Click on the field you want to edit, make changes, and click the
+            "Update" button to save:
+          </p>
+          <h:form styleClass="profile-form">
+            <div class="form-column">
+              <div class="form-group">
+                <p:outputLabel for="firstname" value="First Name:" />
+                <p:inputText
+                  style="width: fit-content"
+                  id="firstname"
+                  value="John"
+                  readonly="true" />
+                <p:button
+                  icon="pi pi-pencil"
+                  style="margin-left: 10px"
+                  value="Edit"
+                  update="firstname" />
+              </div>
+              <div class="form-group">
+                <p:outputLabel for="lastname" value="Last Name:" />
+                <p:inputText
+                  style="width: fit-content"
+                  id="lastname"
+                  value="Doe"
+                  readonly="true" />
+                <p:button
+                  icon="pi pi-pencil"
+                  style="margin-left: 10px"
+                  value="Edit"
+                  update="lastname" />
+              </div>
+              <div class="form-group">
+                <p:outputLabel for="email" value="Email:" />
+                <p:inputText
+                  style="width: fit-content"
+                  id="email"
+                  value="shaun@gmail.com"
+                  readonly="true" />
+                <p:button
+                  icon="pi pi-pencil"
+                  style="margin-left: 10px"
+                  value="Edit"
+                  update="email" />
+              </div>
+            </div>
+            <div class="form-column">
+              <div class="form-group">
+                <p:outputLabel for="phone" value="Phone Number:" />
+                <p:inputText
+                  style="width: fit-content"
+                  id="phone"
+                  value="0781827469"
+                  readonly="true" />
+                <p:button
+                  icon="pi pi-pencil"
+                  style="margin-left: 10px"
+                  value="Edit"
+                  update="phone" />
+              </div>
+              <div class="form-group">
+                <p:outputLabel for="address" value="Address:" />
+                <p:inputText
+                  style="width: fit-content"
+                  id="address"
+                  value="Kampala"
+                  readonly="true" />
+                <p:button
+                  icon="pi pi-pencil"
+                  style="margin-left: 10px"
+                  value="Edit"
+                  update="address" />
+              </div>
+              <div class="form-group">
+                <p:outputLabel for="occupation" value="Occupation:" />
+                <p:inputText
+                  style="width: fit-content"
+                  id="occupation"
+                  value="Software Developer"
+                  readonly="true" />
+                <p:button
+                  icon="pi pi-pencil"
+                  style="margin-left: 10px"
+                  value="Edit"
+                  update="occupation" />
+              </div>
+            </div>
+            <div class="update-button-group">
+              <p:button
+                value="Update"
+                outcome="/pages/transaction/Profile.xhtml"
+                />
+            </div>
+          </h:form>
+        </div>
+      </div>
+    </div>
+  </h:body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var sidebar = document.querySelector(".sidebar");
+      var content = document.querySelector(".content");
+
+      sidebar.addEventListener("mouseenter", function () {
+        content.classList.add("extend");
+      });
+
+      sidebar.addEventListener("mouseleave", function () {
+        content.classList.remove("extend");
+      });
+    });
+  </script>
+</html>
