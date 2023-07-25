@@ -31,10 +31,16 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
-    public void updateAccountBalance(Account account, double newBalance) {
+    public double getAccountBalance(int accountId) {
+        // Fetch the account from the database using the accountId
+        Account account = saccoDao.getAccountByAccountId(accountId);
+
         if (account != null) {
-            account.setBalance(newBalance);
-            saccoDao.saveAccount(account);
+            // Return the account balance
+            return account.getBalance();
+        } else {
+            // Return 0 if the account is not found
+            return 0.0;
         }
     }
 }

@@ -24,7 +24,7 @@
       <style>
         * {
           box-sizing: border-box;
-          color: rgb(226, 226, 226);
+          /* color: rgb(226, 226, 226); */
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
         }
@@ -57,12 +57,16 @@
           content: "\f2f6";
           font-family: "Font Awesome 5 Free";
         }
+        
       </style>
     </f:facet>
   </h:head>
   <h:body>
     <div>
       <h:form>
+        <p:growl id="messages" showDetail="true" />
+        <!-- <p:message id="invalidCredentialsMsg" for="messages" severity="error" />
+        <p:message id="loginSuccessMsg" for="messages" severity="info" /> -->
         <div class="signinform">
           <div class="container">
             <!-- main content -->
@@ -83,23 +87,23 @@
                   ></span>
                   <h:inputText
                     id="mid"
-                    style="color: black !important;"
+                    style="color: black !important"
                     k:placeholder="Email"
                     value="#{loginForm.loginMember.email}"
                     required="true"
                     requiredMessage="*Email required" />
-                  <h:message for="mid" styleClass="error-message" />
+                  <!-- <h:message for="mid" styleClass="error-message" /> -->
                 </div>
                 <div class="input-group">
                   <span><i class="fas fa-key" aria-hidden="true"></i></span>
                   <h:inputSecret
                     id="password"
-                    style="color: black !important;"
+                    style="color: black !important"
                     k:placeholder="Password"
                     value="#{loginForm.loginMember.password}"
                     required="true"
                     requiredMessage="*Password required" />
-                  <h:message for="password" styleClass="error-message" />
+                  <!-- <h:message for="password" styleClass="error-message" /> -->
                 </div>
                 <div class="form-row bottom">
                   <div class="form-check">
@@ -118,8 +122,9 @@
                   type="submit"
                   icon="fas fa-sign-in"
                   action="#{loginForm.doLogin()}"
-                  update="@form"
+                  update="messages @form"
                   ajax="false" />
+
                 <p class="account">
                   Don't have an account?
                   <h:outputLink value="Register.xhtml">Register</h:outputLink>

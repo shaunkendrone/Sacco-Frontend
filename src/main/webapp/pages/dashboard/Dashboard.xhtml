@@ -40,13 +40,13 @@
       <div class="menu-item">
         <i class="pi pi-wallet" aria-hidden="true"></i>
         <span
-          ><p:commandLink
+          ><p:link
             style="
               font-size: 20px;
               color: #202020;
               font-family: 'Times New Roman', Times, serif;
             "
-            action="#{deposit.doDeposit()}"
+            outcome="/pages/transaction/Deposit.xhtml"
             value="Deposit"
         /></span>
       </div>
@@ -162,7 +162,9 @@
               aria-hidden="true"></i>
           </div>
           <h2>Account Balance</h2>
-          <h2 style="text-align: right; color: #777">1,000,000</h2>
+          <h2 style="text-align: right; color: #777">
+            <h:outputText value="#{myTransactions.getAccountBalance()}" />
+        </h2>
         </div>
       </div>
       <br />
@@ -171,33 +173,37 @@
       </h2>
 
       <h:form>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-        <p:dataTable var="users" value="#{userView.users}" id="userTable">
-          <p:column headerText="Transaction Id">
-            <h:outputText value="#{users.memberId}" />
-          </p:column>
+        <div style="display: flex; flex-direction: column; align-items: center">
+          <!-- Assuming you have imported the necessary namespaces at the beginning of your file -->
 
-          <p:column headerText="Transaction Type">
-            <h:outputText value="#{users.password}" />
-          </p:column>
+          <p:dataTable
+            var="transaction"
+            value="#{myTransactions.getTransactions()}"
+            rows="5"
+            id="userTable">
+            <p:column headerText="Transaction Id">
+              <h:outputText value="#{transaction.transactionId}" />
+            </p:column>
 
-          <p:column headerText="Transaction Amount">
-            <h:outputText value="#{users.password}" />
-          </p:column>
+            <p:column headerText="Transaction Type">
+              <h:outputText value="#{transaction.transactionType}" />
+            </p:column>
 
-          <p:column headerText="Transaction Date">
-            <h:outputText value="#{users.password}" />
-          </p:column>
-          <!-- <p:column headerText="Action 2">
-                <p:commandButton value="Edit" actionListener="#{loginForm.setUser(users)}" action="#{loginForm.toLogin()}" />
-            </p:column> -->
-        </p:dataTable>
-        <br />
-          <p:commandButton value="More Transactions" action="/pages/transaction/Details.xhtml" />
+            <p:column headerText="Transaction Amount">
+              <h:outputText value="#{transaction.transactionAmount}" />
+            </p:column>
+
+            <p:column headerText="Transaction Date">
+              <h:outputText value="#{transaction.transactionDate}" />
+            </p:column>
+          </p:dataTable>
+
+          <br />
+          <p:button
+            value="More Transactions"
+            outcome="/pages/transaction/Details.xhtml" />
         </div>
       </h:form>
-
-      
     </div>
   </h:body>
 

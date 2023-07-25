@@ -9,5 +9,6 @@ public interface MemberService {
     Members getMemberByEmail(String email);
     List<Members> getAllMembers();
     List<Members> getApprovedMembers();
-    
+    boolean isEmailExists(String email);
+    boolean isPhoneNumberExists(String phoneNumber);
 }

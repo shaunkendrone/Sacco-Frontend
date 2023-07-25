@@ -26,5 +26,15 @@ public class MemberServiceImp implements MemberService{
         return memberDao.getApprovedMembers();
     }
 
+    @Override
+    public boolean isEmailExists(String email) {
+        // Delegate the call to the SaccoDao's isEmailExists() method
+        return memberDao.isEmailExists(email);
+    }
+
+    @Override
+    public boolean isPhoneNumberExists(String phoneNumber) {
+        return memberDao.isPhoneNumberExists(phoneNumber);
+    }
     
 }

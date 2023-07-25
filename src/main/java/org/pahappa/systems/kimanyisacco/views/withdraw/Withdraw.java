@@ -9,6 +9,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.pahappa.Dao.SaccoDao;
+import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.services.AccountService;
@@ -64,6 +65,15 @@ public class Withdraw {
             if(account !=null){
                 transactionService.withdraw(account, withdrawAmount, new Date().toString());
                 withdrawAmount = 0.0;
+                FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Withdraw Successful", null));
+                
+                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Account not found", null));

@@ -1,6 +1,7 @@
 package org.pahappa.systems.kimanyisacco.views.deposit;
 
 import org.pahappa.Dao.SaccoDao;
+import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.services.AccountService;
@@ -10,7 +11,7 @@ import org.pahappa.systems.kimanyisacco.services.TransactionServiceImp;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+// import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
@@ -74,8 +75,18 @@ public class Deposit {
             if(account !=null){
                 transactionService.deposit(account, depositAmount, new Date().toString());
                 depositAmount = 0.0;
+
+                FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Deposit Successful", null));
+                
+                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }else{
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Account not found", null));
             }
         }else{
@@ -86,17 +97,7 @@ public class Deposit {
             }
         }
 
-        // Perform the deposit transaction using the TransactionService
-        // (Assuming the depositAmount is already set in the class)
-        // transactionService.deposit(account, depositAmount, new Date().toString());
-
-        // Update the account balance using the AccountService
-        // double newBalance = account.getBalance() + depositAmount;
-        // accountService.updateAccountBalance(account, newBalance);
-
-        // Redirect or show appropriate message
-        // FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-        //         "Deposit successful. New balance: " + newBalance, null));
+        
     }
 
     // Other methods and logic as needed

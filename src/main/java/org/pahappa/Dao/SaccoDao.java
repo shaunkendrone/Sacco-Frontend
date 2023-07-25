@@ -121,6 +121,44 @@ public class SaccoDao {
         }
     }
 
+    public boolean isEmailExists(String email) {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Members.class);
+            criteria.add(Restrictions.eq("email", email));
+            Members member = (Members) criteria.uniqueResult();
+            return member != null;
+        } catch (HibernateException ex) {
+            // Handle any exceptions or log errors as needed
+            ex.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public boolean isPhoneNumberExists(String phoneNumber) {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Members.class);
+            criteria.add(Restrictions.eq("phoneNumber", phoneNumber));
+            Members member = (Members) criteria.uniqueResult();
+            return member != null;
+        } catch (HibernateException ex) {
+            // Handle any exceptions or log errors as needed
+            ex.printStackTrace();
+            return false;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
     public void saveAccount(Account account) {
         Session session = null;
         Transaction transaction = null;
@@ -211,5 +249,4 @@ public class SaccoDao {
         }
     }
         
-    
 }

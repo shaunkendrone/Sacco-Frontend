@@ -132,12 +132,13 @@
       <!-- Deposit Form -->
       <div class="deposit-form">
         <h:form>
+          <p:growl id="messages" showDetail="true" />
             <div class="form-group">
                 <p:outputLabel for="amount" value="Deposit Amount:" />
                 <p:inputText id="amount" placeholder="Enter the amount" value="#{deposit.depositAmount}" />
             </div>
             <div class="form-group">
-                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" />
+                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" update="messages" />
             </div>
         </h:form>
     </div>

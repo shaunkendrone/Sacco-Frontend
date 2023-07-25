@@ -133,23 +133,32 @@
       <div class="transaction-table">
         <h:form>
     
-        <p:dataTable var="users" value="#{userView.users}" id="userTable">
-            <p:column headerText="Code">
-                <h:outputText value="#{users.memberId}" />
+        <p:dataTable
+            var="transaction"
+            value="#{myTransactions.getTransactions()}"
+            paginator="true"
+            paginatorPosition="bottom"
+            rows="10"
+            paginatorTemplate=" {CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} "
+            rowsPerPageTemplate="5,10,15"
+            id="userTable"
+            class="custom-table">
+            <p:column headerText="Transaction Id" sortBy="#{transaction.transactionId}" >
+              <h:outputText value="#{transaction.transactionId}" />
             </p:column>
 
-            <p:column headerText="Name">
-                <h:outputText value="#{users.password}" />
+            <p:column headerText="Transaction Type" sortBy="#{transaction.transactionType}" >
+              <h:outputText value="#{transaction.transactionType}" />
             </p:column>
 
-            <p:column headerText="Action">
-                <p:commandButton value="Delete" action="#{userView.delete(users)}" update="userTable"></p:commandButton>
+            <p:column headerText="Transaction Amount" sortBy="#{transaction.transactionAmount}" >
+              <h:outputText value="#{transaction.transactionAmount}" />
             </p:column>
 
-            <p:column headerText="Action 2">
-                <p:commandButton value="Edit" actionListener="#{loginForm.setUser(users)}" action="#{loginForm.toLogin()}" />
+            <p:column headerText="Transaction Date" sortBy="#{transaction.transactionDate}" >
+              <h:outputText value="#{transaction.transactionDate}" />
             </p:column>
-        </p:dataTable>
+          </p:dataTable>
       
     </h:form>
       </div>

@@ -87,6 +87,7 @@
           </div>
           <div id="tv">
             <h:form>
+              <p:growl id="messages" showDetail="true" />
               <div class="input-group">
                 <span><i class="fas fa-user" aria-hidden="true"></i></span>
                 <h:inputText
@@ -96,10 +97,11 @@
                   k:placeholder="First Name"
                   required="true"
                   requiredMessage="*First name required." />
-                <h:message for="firstName" styleClass="error-message" />
+                <!-- <h:message for="firstName" styleClass="error-message" /> -->
               </div>
 
-              <div class="input-group">
+              
+                <div class="input-group">
                 <span><i class="fas fa-user-plus" aria-hidden="true"></i></span>
                 <h:inputText
                   id="lastName"
@@ -108,7 +110,7 @@
                   k:placeholder="Last Name"
                   required="true"
                   requiredMessage="*Last name required." />
-                <h:message for="lastName" styleClass="error-message" />
+                <!-- <h:message for="lastName" styleClass="error-message" /> -->
               </div>
 
               <div class="input-group">
@@ -151,9 +153,10 @@
                   k:placeholder="Email"
                   required="true"
                   requiredMessage="*Email required" />
-                <h:message for="email" styleClass="error-message" />
+                <!-- <h:message for="email" styleClass="error-message" /> -->
               </div>
 
+              
               <div class="input-group">
                 <span><i class="fas fa-phone" aria-hidden="true"></i></span>
                 <h:inputText
@@ -163,8 +166,9 @@
                   k:placeholder="Phone Number"
                   required="true"
                   requiredMessage="*Phone number required." />
-                <h:message for="phone" styleClass="error-message" />
+                <!-- <h:message for="phone" styleClass="error-message" /> -->
               </div>
+              
 
               <div class="input-group">
                 <span
@@ -177,12 +181,13 @@
                   k:placeholder="Address"
                   required="true"
                   requiredMessage="*Address required." />
-                <h:message for="address" styleClass="error-message" />
+                <!-- <h:message for="address" styleClass="error-message" /> -->
               </div>
 
               <!--Occupation-->
-              <div class="input-group">
+                <div class="input-group">
                 <span><i class="fas fa-briefcase" aria-hidden="true"></i></span>
+                
                 <h:inputText
                   id="occupation"
                   style="color: black !important"
@@ -190,10 +195,11 @@
                   k:placeholder="Occupation"
                   required="true"
                   requiredMessage="*Occupation is required." />
-                <h:message for="occupation" styleClass="error-message" />
+                <!-- <h:message for="occupation" styleClass="error-message" /> -->
               </div>
 
               <div class="input-group">
+              
                 <span><i class="fas fa-key" aria-hidden="true"></i></span>
                 <h:inputSecret
                   id="password"
@@ -202,15 +208,16 @@
                   k:placeholder="Password"
                   required="true"
                   requiredMessage="*Password required." />
-                <h:message for="password" styleClass="error-message" />
+                <!-- <h:message for="password" styleClass="error-message" /> -->
               </div>
+            
 
               <p:commandButton
                 styleClass="btn btn-primary btn-block"
                 value="Register"
                 icon="fas fa-sign-in"
                 action="#{memberForm.doRegister()}"
-                update="@form" />
+                update="messages @form" />
 
               <p class="account">
                 Already a member?

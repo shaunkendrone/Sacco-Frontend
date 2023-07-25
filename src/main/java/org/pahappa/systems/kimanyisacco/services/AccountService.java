@@ -7,5 +7,5 @@ public interface AccountService {
     void createAccountForMember(Members member);
     Account getAccountByAccountId(int accountId);
     Members getMemberByEmail(String email);
-    void updateAccountBalance(Account account, double newBalance);
+    double getAccountBalance(int accountId);
 }

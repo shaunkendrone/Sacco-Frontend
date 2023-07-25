@@ -71,5 +71,8 @@ p {
     color: #777777;
 }
 
-
+.custom-table .ui-paginator-rpp-options {
+    /* Adjust the width of the rows per page dropdown as needed */
+    width:max-content;
+}
 
