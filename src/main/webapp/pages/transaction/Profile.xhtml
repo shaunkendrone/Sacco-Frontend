@@ -113,17 +113,28 @@
     </div>
 
     <div class="content">
+      <p:messages id="messages" showDetail="true" autoUpdate="true" />
       <div class="profile-section">
         <div class="profile-name">
-            <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
+          <h2
+            style="color: black; font-family: 'Times New Roman', Times, serif">
+            Welcome <h:outputText value="#{dashboard.firstName}" />
+          </h2>
         </div>
         <div class="profile-dropdown">
-            <h:form>
-            <p:commandButton style="margin-right: 10px;" value="View Profile" icon="pi pi-user" action="#{profile.viewProfile()}" />
+          <h:form>
+            <p:commandButton
+              style="margin-right: 10px"
+              value="View Profile"
+              icon="pi pi-user"
+              action="#{profile.viewProfile()}" />
           </h:form>
-            <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{userSessionBean.logout()}" />
+          <p:commandButton
+            value="Logout"
+            icon="pi pi-sign-out"
+            action="#{userSessionBean.logout()}" />
         </div>
-    </div>
+      </div>
       <h1
         style="
           color: #477deb;
@@ -145,11 +156,18 @@
             <i style="font-size: 100px" class="pi pi-user"></i>
           </div>
           <div class="profile-details">
-            <h3>John Doe</h3>
-            <p>Email: shaun@gmail.com</p>
-            <p>Phone: 0781827469</p>
-            <p>Address: Kampala</p>
-            <p>Occupation: Software Developer</p>
+            <h3>
+              <h:outputText value="#{dashboard.firstName}" />
+              <h:outputText
+                style="margin-left: 0.5em"
+                value="#{dashboard.lastName}" />
+            </h3>
+            <p>Email: <h:outputText value="#{dashboard.email}" /></p>
+            <p>
+              Phone Number: <h:outputText value="#{dashboard.phoneNumber}" />
+            </p>
+            <p>Address: <h:outputText value="#{dashboard.address}" /></p>
+            <p>Occupation: <h:outputText value="#{dashboard.occupation}" /></p>
           </div>
         </div>
 
@@ -167,39 +185,45 @@
                 <p:inputText
                   style="width: fit-content"
                   id="firstname"
-                  value="John"
-                  readonly="true" />
-                <p:button
+                  value="#{dashboard.firstName}"
+                  readonly="#{!dashboard.editMode}" />
+                <p:commandButton
                   icon="pi pi-pencil"
                   style="margin-left: 10px"
                   value="Edit"
-                  update="firstname" />
+                  actionListener="#{dashboard.toggleEditMode('firstName')}"
+                  update="firstname"
+                  process="@this" />
               </div>
               <div class="form-group">
                 <p:outputLabel for="lastname" value="Last Name:" />
                 <p:inputText
                   style="width: fit-content"
                   id="lastname"
-                  value="Doe"
-                  readonly="true" />
-                <p:button
+                  value="#{dashboard.lastName}"
+                  readonly="#{!dashboard.editMode}" />
+                  <p:commandButton
                   icon="pi pi-pencil"
                   style="margin-left: 10px"
                   value="Edit"
-                  update="lastname" />
+                  actionListener="#{dashboard.toggleEditMode('lastName')}"
+                  update="lastname"
+                  process="@this" />
               </div>
               <div class="form-group">
                 <p:outputLabel for="email" value="Email:" />
                 <p:inputText
                   style="width: fit-content"
                   id="email"
-                  value="shaun@gmail.com"
-                  readonly="true" />
-                <p:button
+                  value="#{dashboard.email}"
+                  readonly="#{!dashboard.editMode}" />
+                  <p:commandButton
                   icon="pi pi-pencil"
                   style="margin-left: 10px"
                   value="Edit"
-                  update="email" />
+                  actionListener="#{dashboard.toggleEditMode('email')}"
+                  update="email"
+                  process="@this" />
               </div>
             </div>
             <div class="form-column">
@@ -208,47 +232,54 @@
                 <p:inputText
                   style="width: fit-content"
                   id="phone"
-                  value="0781827469"
-                  readonly="true" />
-                <p:button
+                  value="#{dashboard.phoneNumber}"
+                  readonly="#{!dashboard.editMode}" />
+                  <p:commandButton
                   icon="pi pi-pencil"
                   style="margin-left: 10px"
                   value="Edit"
-                  update="phone" />
+                  actionListener="#{dashboard.toggleEditMode('phoneNumber')}"
+                  update="phone"
+                  process="@this" />
               </div>
               <div class="form-group">
                 <p:outputLabel for="address" value="Address:" />
                 <p:inputText
                   style="width: fit-content"
                   id="address"
-                  value="Kampala"
-                  readonly="true" />
-                <p:button
+                  value="#{dashboard.address}"
+                  readonly="#{!dashboard.editMode}" />
+                  <p:commandButton
                   icon="pi pi-pencil"
                   style="margin-left: 10px"
                   value="Edit"
-                  update="address" />
+                  actionListener="#{dashboard.toggleEditMode('address')}"
+                  update="address"
+                  process="@this" />
               </div>
               <div class="form-group">
                 <p:outputLabel for="occupation" value="Occupation:" />
                 <p:inputText
                   style="width: fit-content"
                   id="occupation"
-                  value="Software Developer"
-                  readonly="true" />
-                <p:button
+                  value="#{dashboard.occupation}"
+                  readonly="#{!dashboard.editMode}" />
+                  <p:commandButton
                   icon="pi pi-pencil"
                   style="margin-left: 10px"
                   value="Edit"
-                  update="occupation" />
+                  actionListener="#{dashboard.toggleEditMode('occupation')}"
+                  update="occupation"
+                  process="@this" />
               </div>
             </div>
-            <div class="update-button-group">
-              <p:button
-                value="Update"
-                outcome="/pages/transaction/Profile.xhtml"
-                />
-            </div>
+            <p:commandButton value="Save" 
+            actionListener="#{dashboard.updateProfile}" 
+            update="@form" 
+            process="@form" 
+            oncomplete="refreshPage();"
+             />
+            
           </h:form>
         </div>
       </div>
@@ -269,4 +300,9 @@
       });
     });
   </script>
+  <script>
+    function refreshPage() {
+        location.reload(); // Reload the current page
+    }
+    </script>
 </html>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.models.Account;
+import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.models.Transactions;
 
 public class TransactionServiceImp implements TransactionService {
@@ -63,6 +64,18 @@ public class TransactionServiceImp implements TransactionService {
     @Override
     public List<Transactions> getTransactionsForAccount(Account account) {
         return saccoDao.getTransactionsForAccount(account);
+    }
+
+     @Override
+    public int getDepositCountForUser(Members member) {
+        SaccoDao saccoDao = new SaccoDao();
+        return saccoDao.getDepositCountForUser(member);
+    }
+
+    @Override
+    public int getWithdrawCountForUser(Members member) {
+        SaccoDao saccoDao = new SaccoDao();
+        return saccoDao.getWithdrawCountForUser(member);
     }
 }
 

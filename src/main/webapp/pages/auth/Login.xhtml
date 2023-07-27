@@ -15,7 +15,7 @@
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
 
-      <link rel="stylesheet" href="resources/css/style.css" />
+      <link rel="stylesheet" href="resources/css/login.css" />
       <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
       <h:outputStylesheet
         name="primeflex/3.3.1/primeflex.css"
@@ -57,16 +57,48 @@
           content: "\f2f6";
           font-family: "Font Awesome 5 Free";
         }
+
+        #tv {
+      box-sizing: border-box;
+      padding: 3em 3.5em;
+      width: 450px;
+      background: #fff;
+      position: relative;
+      height: max-content;
+      border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
+      box-shadow: 20px 20px rgba(0,0,0,.15);
+      transition: all .4s ease;
+    }
+    #tv:hover {
+      border-radius: 0% 0% 50% 50% / 0% 0% 5% 5% ;
+      box-shadow: 10px 10px rgba(0,0,0,.25);
+    }
         
       </style>
     </f:facet>
   </h:head>
+  <h:outputScript>
+  $(document).ready(function() {
+    // Set the duration (in milliseconds) for the messages to be displayed
+    var displayDuration = 3000; // Change this value as needed (e.g., 3000 for 3 seconds)
+
+    // Find the messages component by its ID
+    var messages = $("#register");
+
+    // Function to hide the messages after the specified duration
+    function hideMessages() {
+      messages.hide("fade");
+    }
+
+    // Hide the messages after the specified duration
+    setTimeout(hideMessages, displayDuration);
+  });
+</h:outputScript>
   <h:body>
     <div>
+      <!-- <p:messages id="register" showDetail="true" autoUpdate="true" /> -->
       <h:form>
         <p:growl id="messages" showDetail="true" />
-        <!-- <p:message id="invalidCredentialsMsg" for="messages" severity="error" />
-        <p:message id="loginSuccessMsg" for="messages" severity="info" /> -->
         <div class="signinform">
           <div class="container">
             <!-- main content -->
@@ -114,7 +146,6 @@
                 </div>
                 <br />
 
-                <h:messages globalOnly="true" styleClass="error-message" />
 
                 <p:commandButton
                   styleClass="btn btn-primary btn-block"

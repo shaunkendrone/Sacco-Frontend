@@ -37,4 +37,9 @@ public class MemberServiceImp implements MemberService{
         return memberDao.isPhoneNumberExists(phoneNumber);
     }
     
+    @Override
+    public void updateMember(Members member) {
+        // Call the SaccoDao to update the member in the database
+        memberDao.updateMember(member);
+    }
 }

@@ -3,6 +3,7 @@ package org.pahappa.systems.kimanyisacco.services;
 import java.util.List;
 
 import org.pahappa.systems.kimanyisacco.models.Account;
+import org.pahappa.systems.kimanyisacco.models.Members;
 // import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.models.Transactions;
 
@@ -18,4 +19,10 @@ public interface TransactionService {
 
     // Get all transactions for an account
     List<Transactions> getTransactionsForAccount(Account account);
+
+    // Get the count of deposits for a specific user
+    int getDepositCountForUser(Members member);
+
+    // Get the count of deposits for a specific user
+    int getWithdrawCountForUser(Members member);
 }

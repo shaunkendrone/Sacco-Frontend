@@ -100,15 +100,18 @@
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
         <span>
-          <p:link
+          <h:form>
+          <p:commandLink
             style="
               font-size: 20px;
               color: #202020;
               font-family: 'Times New Roman', Times, serif;
             "
-            outcome="/pages/auth/Login.xhtml"
+            action="#{userSessionBean.logout()}"
             value="Logout"
-        /></span>
+        />
+      </h:form>
+      </span>
       </div>
     </div>
 
@@ -116,24 +119,18 @@
       <div class="profile-section">
         <i class="pi pi-user profile-icon"></i>
         <div class="profile-dropdown">
-          <div class="profile-name">Admin</div>
-          <div class="dropdown-content">
-            <p:link
-              style="font-family: 'Times New Roman', Times, serif"
-              outcome="/pages/auth/Login.xhtml">
-              <i class="pi pi-sign-out"></i> Logout
-            </p:link>
+          <div class="profile-name">
+            <h:outputText value="#{adminDashboard.firstName}" />
           </div>
-          <i class="pi pi-chevron-down"></i>
         </div>
       </div>
-      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
+      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px;font-family: 'Times New Roman', Times, serif;">
         SACCO Members
       </h1>
       <hr class="divider" />
       <!-- Transaction Table -->
       <div class="transaction-table">
-        <h:form>
+        <h:form id="myForm">
           <p:dataTable
             var="member"
             value="#{myMembers.approvedMembers}"
@@ -179,10 +176,12 @@
 
             <p:column headerText="Action">
               <p:commandButton
-                value="View Member"
-                icon="pi pi-eye"
-                actionListener="#{myMembers.setSelectedMember(member)}"
-                oncomplete="PF('memberDialog').show()"
+              value="View Member"
+              icon="pi pi-eye"
+              actionListener="#{myMembers.initSelectedMember(member)}"
+              update="@widgetVar(memberDialog)"
+              process="@this"
+              oncomplete="PF('memberDialog').show()"
                  />
             </p:column>
           </p:dataTable>

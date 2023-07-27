@@ -11,4 +11,5 @@ public interface MemberService {
     List<Members> getApprovedMembers();
     boolean isEmailExists(String email);
     boolean isPhoneNumberExists(String phoneNumber);
+    void updateMember(Members member);
 }

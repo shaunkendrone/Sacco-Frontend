@@ -132,13 +132,12 @@
       <!-- Deposit Form -->
       <div class="deposit-form">
         <h:form>
-          <p:growl id="messages" showDetail="true" />
             <div class="form-group">
                 <p:outputLabel for="amount" value="Deposit Amount:" />
                 <p:inputText id="amount" placeholder="Enter the amount" value="#{deposit.depositAmount}" />
             </div>
             <div class="form-group">
-                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" update="messages" />
+                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" />
             </div>
         </h:form>
     </div>
@@ -147,9 +146,6 @@
       <div class="deposit-info">
         <h3>How to Make a Deposit:</h3>
         <ol>
-          <li>
-            Choose the account you want to deposit into from the dropdown.
-          </li>
           <li>Enter the deposit amount in the provided field.</li>
           <li>Click the "Make Deposit" button to complete the deposit.</li>
         </ol>

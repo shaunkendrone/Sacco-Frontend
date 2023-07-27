@@ -143,9 +143,6 @@
 }
 
 
-
-
-
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -154,16 +151,13 @@
 }
 
 .card {
-    width: calc(33.33% - 20px);
+    width: calc(25% - 10px); /* Adjusted width to fit four cards on the same line */
     background-color: #fff;
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px; /* Reduced padding to make the cards smaller */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
+    position: relative;
 }
 
 .card .icon {
@@ -171,14 +165,33 @@
     color: #477DEB;
 }
 
-.card h3 {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #333;
+.card .more-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #5889ED; /* Nice color for the More info section */
+    border-radius: 0 0 10px 10px; /* Adjust border-radius to match card's rounded corners */
+    padding: 5px 0;
 }
 
-.card p {
-    margin-top: 10px;
-    color: #777;
+.card .more-info span {
+    margin-right: 5px;
+}
+
+.card .more-info i {
+    font-size: 18px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .card-content {
+    padding: 10px 10px; /* Add padding to create space between card content and More info section */
 }
 

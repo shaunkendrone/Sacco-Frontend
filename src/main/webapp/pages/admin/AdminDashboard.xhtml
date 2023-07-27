@@ -25,8 +25,96 @@
         width: 100%;
         height: 500px;
       }
+      .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    width: calc(25% - 10px); /* Adjusted width to fit four cards on the same line */
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px; /* Reduced padding to make the cards smaller */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card .card-content {
+    padding: 10px 10px; /* Add padding to create space between card content and More info section */
+}
+
+.card .more-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #5889ED; /* Nice color for the More info section */
+    border-radius: 0 0 10px 10px; /* Adjust border-radius to match card's rounded corners */
+    padding: 5px 0;
+}
+
+.card .more-info span {
+    margin-right: 5px;
+}
+
+.card .more-info i {
+    font-size: 18px;
+}
+
+/* Additional styling for the More info section on hover */
+.card:hover .more-info {
+    background-color: #477DEB; /* Nice color on hover */
+    cursor: pointer;
+}
+
+.card .icon {
+    font-size: 24px; /* Reduced font size for the icons */
+    color: #477DEB;
+}
+
+.card h1 {
+    margin-top: 10px; /* Reduced margin for the header */
+    color: #333;
+}
+
+
+
+.card h2 {
+    margin-top: 5px;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 15px;
+}
     </style>
   </h:head>
+  <h:outputScript>
+  $(document).ready(function() {
+    // Set the duration (in milliseconds) for the messages to be displayed
+    var displayDuration = 3000; // Change this value as needed (e.g., 3000 for 3 seconds)
+
+    // Find the messages component by its ID
+    var messages = $("#messages");
+
+    // Function to hide the messages after the specified duration
+    function hideMessages() {
+      messages.hide("fade");
+    }
+
+    // Hide the messages after the specified duration
+    setTimeout(hideMessages, displayDuration);
+  });
+</h:outputScript>
   <h:body style="background-color: #f5f5f5">
     <div class="sidebar">
       <div class="logo"></div>
@@ -102,23 +190,29 @@
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
         <span>
-          <p:link
+          <h:form>
+          <p:commandLink
             style="
               font-size: 20px;
               color: #202020;
               font-family: 'Times New Roman', Times, serif;
             "
-            outcome="/pages/auth/Login.xhtml"
+            action="#{userSessionBean.logout()}"
             value="Logout"
-        /></span>
+        />
+      </h:form>
+      </span>
       </div>
     </div>
 
     <div class="content">
+      <p:messages id="messages" showDetail="true" autoUpdate="true" />
       <div class="profile-section">
         <i class="pi pi-user profile-icon"></i>
         <div class="profile-dropdown">
-          <div class="profile-name">Admin</div>
+          <div class="profile-name">
+            <h:outputText value="#{adminDashboard.firstName}" />
+          </div>
         </div>
       </div>
       <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
@@ -137,12 +231,15 @@
             background-position-y: 10%;
           ">
           <div class="card-content">
-            <h1>20</h1>
+            <h1>
+              <h:outputText value="#{adminDashboard.totalTransactions}" />
+            </h1>
             <h2>Total Transactions</h2>
           </div>
           <div class="more-info">
-            <span>More info</span>
-            <i class="fas fa-info-circle"></i>
+            <p:link style="color: #fff;font-family: 'Times New Roman', Times, serif;" outcome="/pages/admin/AdminReports.xhtml">
+          <span>More info <i class="fas fa-info-circle"></i></span>
+          </p:link>
           </div>
         </div>
 
@@ -157,12 +254,15 @@
             background-position-y: 10%;
           ">
           <div>
-            <h1>15</h1>
-            <h2>Members</h2>
+            <h1>
+              <h:outputText value="#{adminDashboard.totalMembers}" />
+            </h1>
+            <h2>Registered Users</h2>
           </div>
           <div class="more-info">
-            <span>More info</span>
-            <i class="fas fa-info-circle"></i>
+            <p:link style="color: #fff;font-family: 'Times New Roman', Times, serif;" outcome="/pages/admin/AddMember.xhtml">
+          <span>More info <i class="fas fa-info-circle"></i></span>
+          </p:link>
           </div>
         </div>
 
@@ -177,12 +277,15 @@
             background-position-y: 10%;
           ">
           <div>
-            <h1>5</h1>
+            <h1>
+              <h:outputText value="#{adminDashboard.pendingMembers}" />
+            </h1>
             <h2>Requests to Approve</h2>
           </div>
           <div class="more-info">
-            <span>More info</span>
-            <i class="fas fa-info-circle"></i>
+            <p:link style="color: #fff;font-family: 'Times New Roman', Times, serif;" outcome="/pages/admin/ViewMembers.xhtml">
+          <span>More info <i class="fas fa-info-circle"></i></span>
+          </p:link>
           </div>
         </div>
 
@@ -197,12 +300,15 @@
             background-position-y: 10%;
           ">
           <div>
-            <h1>10</h1>
-            <h2>Approved Members</h2>
+            <h1>
+              <h:outputText value="#{adminDashboard.approvedMembers}" />
+            </h1>
+            <h2>Approved Users</h2>
           </div>
           <div class="more-info">
-            <span>More info</span>
-            <i class="fas fa-info-circle"></i>
+            <p:link style="color: #fff;font-family: 'Times New Roman', Times, serif;" outcome="/pages/admin/SaccoMembers.xhtml">
+              <span>More info <i class="fas fa-info-circle"></i></span>
+              </p:link>
           </div>
         </div>
       </div>
@@ -218,10 +324,7 @@
         <canvas id="lineGraph"></canvas>
       </div>
 
-      <div class="card">
-        <!--Member with the highest account balance-->
-        
-      </div>
+      
     </div>
   </h:body>
 

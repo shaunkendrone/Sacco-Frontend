@@ -5,6 +5,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+
 import java.io.IOException;
 
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
@@ -14,7 +16,7 @@ import org.pahappa.systems.kimanyisacco.services.LoginService;
 import org.pahappa.systems.kimanyisacco.services.LoginServiceImp;
 import org.pahappa.systems.kimanyisacco.services.MemberService;
 import org.pahappa.systems.kimanyisacco.services.MemberServiceImp;
-import org.primefaces.PrimeFaces;
+// import org.primefaces.PrimeFaces;
 
 @ManagedBean(name = "loginForm")
 @SessionScoped
@@ -37,35 +39,78 @@ public class LoginForm {
 
     private LoginService loginService = new LoginServiceImp();
 
-    public void doLogin() throws IOException {
+    private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Flash flash = facesContext.getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    }
 
-        boolean loginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(), "Approved");
-        if (loginSuccessful) {
+    private void initializeAdminUser() {
+        // Check if the admin user already exists in the database
+        Members adminUser = memberService.getMemberByEmail("admin1@gmail.com");
+        if (adminUser == null) {
+            // Admin user doesn't exist, create and save it in the database
+            Members admin = new Members();
+            admin.setFirstName("Shaun");
+            admin.setLastName("Admin");
+            admin.setEmail("admin1@gmail.com");
+            admin.setPhoneNumber("0756453219");
+            admin.setDateOfBirth(java.sql.Date.valueOf("2001-07-20")); // Set the date of birth
+            admin.setGender("Male");
+            admin.setPassword("adminpassword");
+            admin.setStatus("Admin");
+            admin.setAddress("Makerere");
+            admin.setOccupation("Software Engineer"); 
+            // Set other admin properties if needed
 
-            Members member = memberService.getMemberByEmail(loginMember.getEmail());
-        if (member != null) {
-            // Store the logged-in user's details in the session
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInMember", member);
-
-            loginMember = new LoginMember(); // Reset the loginMember object
-            String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-            FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
-            
-            System.out.println(member.getFirstName());
-        } else {
-            // Redirect to the login page with an error message
-            System.out.println("Member is null");
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Password");
-        }
-            
-        } else {
-
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Credentials");
-            FacesContext.getCurrentInstance().addMessage("messages",message);
-            
-            
+            // Save the admin user using the MemberService
+            memberService.saveMember(admin);
         }
     }
+
+    public void doLogin() throws IOException {
+        // Initialize the admin user when the login form is accessed
+        initializeAdminUser();
+    
+
+        boolean adminLoginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(), "Admin");
+        boolean loginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(), "Approved");
+        if (loginSuccessful || adminLoginSuccessful) {
+    
+            Members member = memberService.getMemberByEmail(loginMember.getEmail());
+            if (member != null) {
+                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+    
+                // Check if the user is an admin, and redirect accordingly
+                if (member.getEmail().equals("admin1@gmail.com")) {
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("adminUser", member);
+                    loginMember = new LoginMember();
+                    addFlashMessage(FacesMessage.SEVERITY_INFO, "Login Successful",
+                        "Welcome Admin");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.adminDashboard);
+                } else {
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", member);
+                    loginMember = new LoginMember();
+                    addFlashMessage(FacesMessage.SEVERITY_INFO, "Login Successful",
+                        "Welcome, " + member.getFirstName() + " " + member.getLastName() + "!");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+                }
+ 
+            } else {
+                // Redirect to the login page with an error message
+                System.out.println("Member is null");
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Credentials");
+            }
+    
+        } else {
+    
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Credentials");
+            FacesContext.getCurrentInstance().addMessage("messages", message);
+    
+        }
+    }
+    
 
     public void setUserSessionBean(UserSessionBean userSessionBean) {
         this.userSessionBean = userSessionBean;

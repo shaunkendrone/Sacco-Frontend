@@ -4,6 +4,7 @@ import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
+// import org.pahappa.systems.kimanyisacco.models.Transactions;
 import org.pahappa.systems.kimanyisacco.services.AccountService;
 import org.pahappa.systems.kimanyisacco.services.AccountServiceImp;
 import org.pahappa.systems.kimanyisacco.services.TransactionService;
@@ -14,13 +15,17 @@ import javax.faces.bean.ManagedBean;
 // import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+
 import java.io.IOException;
 import java.util.Date;
+// import java.util.List;
 
 @ManagedBean(name = "deposit")
 @SessionScoped
 public class Deposit {
     private double depositAmount;
+
     public double getDepositAmount() {
         return depositAmount;
     }
@@ -30,6 +35,7 @@ public class Deposit {
     }
 
     private AccountService accountService;
+
     public AccountService getAccountService() {
         return accountService;
     }
@@ -61,35 +67,41 @@ public class Deposit {
 
     // Getter and Setter for depositAmount
 
+    private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Flash flash = facesContext.getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
     public void makeDeposit() {
         // Retrieve the logged-in member from the session
-        Members loggedInMember = (Members) FacesContext.getCurrentInstance().getExternalContext()
-                .getSessionMap().get("loggedInMember");
+        Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("loggedInUser");
 
         // Retrieve the account associated with the member
         // Account account = member.getAccount();
 
-        if(loggedInMember !=null){
-            Account account = loggedInMember.getAccount();
+        if (loggedInUser != null) {
+            Account account = loggedInUser.getAccount();
 
-            if(account !=null){
+            if (account != null) {
                 transactionService.deposit(account, depositAmount, new Date().toString());
                 depositAmount = 0.0;
 
-                FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        "Deposit Successful", null));
-                
+                addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Deposit made successfully");
+
                 String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
                 try {
                     FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Account not found", null));
             }
-        }else{
+        } else {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
             } catch (IOException e) {
@@ -97,7 +109,17 @@ public class Deposit {
             }
         }
 
-        
+    }
+
+    public int getNumberOfDeposits() {
+        Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .get("loggedInUser");
+        if (loggedInUser != null) {
+            SaccoDao saccoDao = new SaccoDao();
+            return saccoDao.getDepositCountForUser(loggedInUser);
+        } else {
+            return 0;
+        }
     }
 
     // Other methods and logic as needed

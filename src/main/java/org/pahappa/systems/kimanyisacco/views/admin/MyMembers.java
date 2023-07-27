@@ -2,10 +2,15 @@ package org.pahappa.systems.kimanyisacco.views.admin;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+// import javax.faces.context.Flash;
+
 import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.models.Members;
+import org.primefaces.PrimeFaces;
 
 @ManagedBean(name = "myMembers")
 @ViewScoped
@@ -13,13 +18,19 @@ public class MyMembers {
     private List<Members> members;
     private List<Members> approvedMembers;
     private Members selectedMember;
+    FacesMessage message;
+
     public Members getSelectedMember() {
         return selectedMember;
     }
 
     public void setSelectedMember(Members selectedMember) {
         this.selectedMember = selectedMember;
-        System.out.println("Selected member: " + selectedMember.getLastName());
+        // System.out.println("Selected member: " + selectedMember.getLastName());
+    }
+
+    public void initSelectedMember(Members selectedMember){
+        setSelectedMember(selectedMember);
     }
 
     public MyMembers() {
@@ -38,14 +49,21 @@ public class MyMembers {
     }
 
     public void approveUser(Members member) {
-        SaccoDao saccoDao = new SaccoDao();
-        saccoDao.updateMemberStatus(member);
-        members.remove(member); // Remove the approved member from the list
-    }
+    SaccoDao saccoDao = new SaccoDao();
+    saccoDao.updateMemberStatus(member);
+    members.remove(member); // Remove the approved member from the list
 
-    public void rejectUser(Members member) {
-        SaccoDao saccoDao = new SaccoDao();
-        saccoDao.updateMemberStatusToRejected(member);
-        members.remove(member); // Remove the rejected member from the list
-    }
+    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Member approved successfully");
+    FacesContext.getCurrentInstance().addMessage("message", message);
+}
+
+public void rejectUser(Members member) {
+    SaccoDao saccoDao = new SaccoDao();
+    saccoDao.updateMemberStatusToRejected(member);
+    members.remove(member); // Remove the rejected member from the list
+
+    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Rejection", "Member rejected successfully");
+    FacesContext.getCurrentInstance().addMessage("message", message);
+}
+
 }

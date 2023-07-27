@@ -7,6 +7,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.pahappa.systems.kimanyisacco.config.SessionConfiguration;
 import org.pahappa.systems.kimanyisacco.models.Account;
@@ -71,6 +72,34 @@ public class SaccoDao {
         return membersList;
     }
 
+    public int approvedMemberCount(){
+        Session session = SessionConfiguration.getSessionFactory().openSession();
+        session.beginTransaction();
+    
+        String hql = "SELECT COUNT(*) FROM Members m WHERE m.status = :status";
+        Query query = session.createQuery(hql);
+        query.setParameter("status", "Approved");
+        Long count = (Long) query.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+    
+        return count.intValue();
+    }
+
+    public int pendingMemberCount(){
+        Session session = SessionConfiguration.getSessionFactory().openSession();
+        session.beginTransaction();
+    
+        String hql = "SELECT COUNT(*) FROM Members m WHERE m.status = :status";
+        Query query = session.createQuery(hql);
+        query.setParameter("status", "Pending");
+        Long count = (Long) query.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+    
+        return count.intValue();
+    }
+
 
     public void updateMemberStatus(Members member) {
         Session session = null;
@@ -121,6 +150,22 @@ public class SaccoDao {
         }
     }
 
+    public void updateMember(Members member){
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.update(member);
+            session.getTransaction().commit();
+        } catch (HibernateException e) {
+            // Handle any exceptions if necessary
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
     public boolean isEmailExists(String email) {
         Session session = null;
         try {
@@ -159,6 +204,7 @@ public class SaccoDao {
         }
     }
 
+
     public void saveAccount(Account account) {
         Session session = null;
         Transaction transaction = null;
@@ -178,6 +224,49 @@ public class SaccoDao {
             }
         }
     }
+
+    public int getDepositCountForUser(Members member) {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Transactions.class);
+            criteria.add(Restrictions.eq("account", member.getAccount()));
+            criteria.add(Restrictions.eq("transactionType", "Deposit")); // Specify "Deposit" as the transaction type
+            criteria.setProjection(Projections.rowCount());
+            Long count = (Long) criteria.uniqueResult();
+            return count.intValue();
+        } catch (HibernateException e) {
+            // Handle any exceptions if necessary
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public int getWithdrawCountForUser(Members member) {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Transactions.class);
+            criteria.add(Restrictions.eq("account", member.getAccount()));
+            criteria.add(Restrictions.eq("transactionType", "Withdrawal")); // Specify "Deposit" as the transaction type
+            criteria.setProjection(Projections.rowCount());
+            Long count = (Long) criteria.uniqueResult();
+            return count.intValue();
+        } catch (HibernateException e) {
+            // Handle any exceptions if necessary
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    
 
     public Account getAccountByAccountId(int accountId) {
         Session session = null;
@@ -248,5 +337,42 @@ public class SaccoDao {
             }
         }
     }
+
+    public long getTotalTransactionCount() {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            String hql = "SELECT COUNT(*) FROM Transactions";
+            Query query = session.createQuery(hql);
+            return (Long) query.uniqueResult();
+        } catch (HibernateException e) {
+            // Handle any exceptions if necessary
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public int getTotalMemberCount() {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Members.class);
+            criteria.setProjection(Projections.rowCount());
+            return ((Long) criteria.uniqueResult()).intValue();
+        } catch (HibernateException e) {
+            // Handle any exceptions if necessary
+            e.printStackTrace();
+            return 0;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    
         
 }

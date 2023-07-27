@@ -15,6 +15,16 @@ import org.pahappa.systems.kimanyisacco.models.Members;
 @SessionScoped
 public class UserSessionBean implements Serializable {
     private Members loggedInUser;
+    private Members adminUser;
+    private static final long serialVersionUID = 1L;
+
+    public Members getAdminUser() {
+        return adminUser;
+    }
+
+    public void setAdminUser(Members adminUser) {
+        this.adminUser = adminUser;
+    }
 
     public Members getLoggedInUser() {
         return loggedInUser;

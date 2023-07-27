@@ -16,12 +16,62 @@
       <meta name="apple-mobile-web-app-capable" content="yes" />
 
       <link rel="stylesheet" href="resources/css/mynav.css" />
+      <link rel="stylesheet" href="resources/css/form.css" />
       <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
       <!-- <link rel="stylesheet" href="resources/css/form.css" /> -->
       <h:outputStylesheet
         name="primeflex/3.3.1/primeflex.css"
         library="webjars" />
     </f:facet>
+    <style>
+      * {
+          box-sizing: border-box;
+          /* color: rgb(226, 226, 226); */
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
+        #styleid {
+          color: rgb(105, 105, 105);
+          font-family: "Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif";
+          font-weight: bold;
+        }
+        .divider {
+          border-top: 1px solid #ccc;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+        .error-message {
+          color: rgb(209, 92, 92);
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 16px;
+          font-weight: 550;
+        }
+
+        .ui-button .ui-button-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 15px 15px;
+          background-color: #3470e9;
+          font-size: 18px;
+        }
+
+        .ui-button .ui-button-text:hover {
+          background-color: #042aff;
+        }
+
+        .ui-button .ui-button-icon-left {
+          display: none !important;
+        }
+
+        .ui-button .ui-button-text:before {
+          margin-right: 5px;
+          content: "\f2f6";
+          font-family: "Font Awesome 5 Free";
+        }
+        
+    </style>
   </h:head>
   <h:body style="background-color: #f5f5f5">
     <div class="sidebar">
@@ -34,7 +84,6 @@
               font-size: 20px;
               color: #202020;
               font-family: 'Times New Roman', Times, serif;
-              
             "
             styleClass="link-hover-white"
             outcome="/pages/admin/AdminDashboard.xhtml"
@@ -99,15 +148,17 @@
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
         <span>
-          <p:link
-            style="
-              font-size: 20px;
-              color: #202020;
-              font-family: 'Times New Roman', Times, serif;
-            "
-            outcome="/pages/auth/Login.xhtml"
-            value="Logout"
-        /></span>
+          <h:form>
+            <p:commandLink
+              style="
+                font-size: 20px;
+                color: #202020;
+                font-family: 'Times New Roman', Times, serif;
+              "
+              action="#{userSessionBean.logout()}"
+              value="Logout" />
+          </h:form>
+        </span>
       </div>
     </div>
 
@@ -115,126 +166,161 @@
       <div class="profile-section">
         <i class="pi pi-user profile-icon"></i>
         <div class="profile-dropdown">
-          <div class="profile-name">Admin</div>
-          <div class="dropdown-content">
-            <p:link
-              style="font-family: 'Times New Roman', Times, serif"
-              outcome="/pages/auth/Login.xhtml">
-              <i class="pi pi-sign-out"></i> Logout
-            </p:link>
+          <div class="profile-name">
+            <h:outputText value="#{adminDashboard.firstName}" />
           </div>
-          <i class="pi pi-chevron-down"></i>
         </div>
       </div>
-      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px">
+      <h1 style="color: #477deb; text-align: center; margin-bottom: 30px;font-family: 'Times New Roman', Times, serif;">
         Register New Member
       </h1>
       <hr class="divider" />
-      
-        <div>
-          <h:form>
-    <div>
-        <h5>Addons</h5>
-        <div class="grid ui-fluid">
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                    <p:inputText placeholder="First Name"/>
-                </div>
-            </div>
 
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
-                    <p:inputText placeholder="Last Name"/>
+      <div id="tv">
+        <h:form>
+              <p:growl id="messages" showDetail="true" />
+              <div class="form-column-up1" style="display: flex;">
+                <div class="input-group" style="flex: 50%;">
+                  <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                  <h:inputText
+                    id="firstName"
+                    style="color: black !important"
+                    value="#{memberForm.member.firstName}"
+                    k:placeholder="First Name"
+                    required="true"
+                    requiredMessage="*First name required." />
                 </div>
-            </div>
 
-            <div class="col-12 md:col-4">
-              <div class="ui-inputgroup">
-                <p:outputLabel for="dateOfBirth" value="Date Of Birth"/>
-                <p:datePicker id="dateOfBirth" value="#{calendarView.date2}" monthNavigator="true" yearNavigator="true" showWeek="true"/>
+                <div class="input-group" style="flex:50%">
+                  <span
+                    ><i class="fas fa-user-plus" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="lastName"
+                    style="color: black !important"
+                    value="#{memberForm.member.lastName}"
+                    k:placeholder="Last Name"
+                    required="true"
+                    requiredMessage="*Last name required." />
+                </div>
               </div>
-          </div>
 
-            
-
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <div class="ui-inputgroup-addon">www</div>
-                    <p:inputText placeholder="Website"/>
+              <div class="form-column-up2" style="display: flex;">
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-calendar-alt" aria-hidden="true"></i
+                  ></span>
+                  <p:outputLabel for="navigator" />
+                  <p:datePicker
+                    style="margin-left: 10%; padding-bottom: 5px"
+                    id="navigator"
+                    value="#{memberForm.member.dateOfBirth}"
+                    monthNavigator="true"
+                    yearRange="1970:2005"
+                    yearNavigator="true"
+                    showWeek="true"
+                    placeholder="Date of Birth"
+                    required="true"
+                    requiredMessage="*Date of birth required." />
                 </div>
-            </div>
-        </div>
 
-        <h5>Multiple Addons</h5>
-        <div class="grid ui-fluid">
-            <div class="col-12">
-                <div class="ui-inputgroup">
-                    <div class="ui-inputgroup-addon"><i class="pi pi-tags"/></div>
-                    <div class="ui-inputgroup-addon"><i class="pi pi-shopping-cart"/></div>
-                    <p:inputText placeholder="Price"/>
-                    <div class="ui-inputgroup-addon">$</div>
-                    <div class="ui-inputgroup-addon">.00</div>
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-venus-mars" aria-hidden="true"></i
+                  ></span>
+                  <div class="gender-options">
+                    <h:selectOneRadio
+                      id="gender"
+                      value="#{memberForm.member.gender}"
+                      required="true"
+                      requiredMessage="*Gender required.">
+                      <f:selectItem itemLabel="Male" itemValue="Male" />
+                      <f:selectItem itemLabel="Female" itemValue="Female" />
+                    </h:selectOneRadio>
+                    <div class="space-below"></div>
+                  </div>
                 </div>
-            </div>
-        </div>
+              </div>
+              
 
-        <h5>Button Addons</h5>
-        <div class="grid ui-fluid">
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <p:commandButton value="Search"/>
-                    <p:inputText placeholder="Keyword"/>
+              
+              <div class="form-column-up2" style="display: flex;">
+                <div class="input-group" style="flex:50%">
+                  <span
+                    ><i class="fas fa-envelope" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="email"
+                    style="color: black !important"
+                    value="#{memberForm.member.email}"
+                    k:placeholder="Email"
+                    required="true"
+                    requiredMessage="*Email required" />
                 </div>
-            </div>
 
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <p:inputText placeholder="Keyboard"/>
-                    <p:commandButton icon="pi pi-search" styleClass="ui-button-warning"/>
+                <div class="input-group">
+                  <span><i class="fas fa-phone" aria-hidden="true"></i></span>
+                  <h:inputText
+                    id="phone"
+                    style="color: black !important"
+                    value="#{memberForm.member.phoneNumber}"
+                    k:placeholder="Phone Number"
+                    required="true"
+                    requiredMessage="*Phone number required." />
                 </div>
-            </div>
+                </div>
 
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <p:commandButton icon="pi pi-check" styleClass="ui-button-success"/>
-                    <p:inputText placeholder="Vote"/>
-                    <p:commandButton icon="pi pi-times" styleClass="ui-button-danger"/>
+                <div class="form-column-up4" style="display: flex;">
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-map-marker-alt" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="address"
+                    style="color: black !important"
+                    value="#{memberForm.member.address}"
+                    k:placeholder="Address"
+                    required="true"
+                    requiredMessage="*Address required." />
                 </div>
-            </div>
-        </div>
 
-        <h5>Checkbox</h5>
-        <div class="grid ui-fluid">
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <div class="ui-inputgroup-addon"><p:selectBooleanCheckbox/></div>
-                    <p:inputText placeholder="Username"/>
-                </div>
-            </div>
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <p:inputText placeholder="Username"/>
-                    <div class="ui-inputgroup-addon"><p:radioButton for="radioDemo" itemIndex="0"/></div>
-                </div>
-            </div>
-            <div class="col-12 md:col-4">
-                <div class="ui-inputgroup">
-                    <div class="ui-inputgroup-addon"><p:selectBooleanCheckbox/></div>
-                    <p:inputText placeholder="Username"/>
-                    <div class="ui-inputgroup-addon"><p:radioButton for="radioDemo" itemIndex="0"/></div>
-                </div>
-            </div>
-        </div>
+                <!--Occupation-->
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-briefcase" aria-hidden="true"></i
+                  ></span>
 
-        <p:selectOneRadio id="radioDemo" layout="custom" unselectable="true">
-            <f:selectItem itemValue="demo"/>
-        </p:selectOneRadio>
-    </div>
-</h:form>
-        </div>
+                  <h:inputText
+                    id="occupation"
+                    style="color: black !important"
+                    value="#{memberForm.member.occupation}"
+                    k:placeholder="Occupation"
+                    required="true"
+                    requiredMessage="*Occupation is required." />
+                </div>
+              </div>
 
+              <div class="input-group">
+                <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                <h:inputSecret
+                  id="password"
+                  style="color: black !important"
+                  value="#{memberForm.member.password}"
+                  k:placeholder="Password"
+                  required="true"
+                  requiredMessage="*Password required." />
+
+              </div>
+
+              <p:commandButton
+                styleClass="btn btn-primary btn-block"
+                value="Register Member"
+                icon="fas fa-sign-in"
+                action="#{memberForm.doAdminRegister()}"
+                update="messages @form" />
+
+            </h:form>
+      </div>
     </div>
   </h:body>
 

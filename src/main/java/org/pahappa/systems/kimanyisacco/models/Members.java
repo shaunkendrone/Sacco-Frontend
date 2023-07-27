@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+// import javax.persistence.Transient;
 
 @Entity
 @Table(name = "sacco_members")
@@ -26,9 +27,9 @@ public class Members {
     private String occupation;
     private String password;
 
+
     public Members() {
     }
-
 
     private Account account;
 
@@ -145,5 +146,7 @@ public class Members {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    
 
 }

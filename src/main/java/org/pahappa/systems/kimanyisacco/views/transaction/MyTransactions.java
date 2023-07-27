@@ -35,31 +35,31 @@ public class MyTransactions {
     }
 
     public List<Transactions> getTransactions() {
-        // If the sortedTransactions is null or empty, then get and sort the transactions
-        if (sortedTransactions == null || sortedTransactions.isEmpty()) {
-            // Get the currently logged in user
-            Members loggedInMember = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
-                    .get("loggedInMember");
+        // Clear the sortedTransactions list before fetching new transactions
+        sortedTransactions = null;
 
-            if (loggedInMember != null) {
-                // Get the account of the logged in user
-                Account account = loggedInMember.getAccount();
+        // Get the currently logged in user
+        Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .get("loggedInUser");
 
-                if (account != null) {
-                    // Get the transactions of the account
-                    List<Transactions> transactions = transactionService.getTransactionsForAccount(account);
+        if (loggedInUser != null) {
+            // Get the account of the logged in user
+            Account account = loggedInUser.getAccount();
 
-                    // Sort the transactions in descending order based on the transactionDate
-                    Collections.sort(transactions, new Comparator<Transactions>() {
-                        @Override
-                        public int compare(Transactions t1, Transactions t2) {
-                            // Sort in descending order by comparing the transactionDate
-                            return t2.getTransactionDate().compareTo(t1.getTransactionDate());
-                        }
-                    });
+            if (account != null) {
+                // Get the transactions of the account
+                List<Transactions> transactions = transactionService.getTransactionsForAccount(account);
 
-                    sortedTransactions = transactions;
-                }
+                // Sort the transactions in descending order based on the transactionDate
+                Collections.sort(transactions, new Comparator<Transactions>() {
+                    @Override
+                    public int compare(Transactions t1, Transactions t2) {
+                        // Sort in descending order by comparing the transactionDate
+                        return t2.getTransactionDate().compareTo(t1.getTransactionDate());
+                    }
+                });
+
+                sortedTransactions = transactions;
             }
         }
 
@@ -68,12 +68,12 @@ public class MyTransactions {
 
     public double getAccountBalance() {
         // Get the currently logged in user
-        Members loggedInMember = (Members) FacesContext.getCurrentInstance().getExternalContext()
-                .getSessionMap().get("loggedInMember");
+        Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().get("loggedInUser");
 
-        if (loggedInMember != null) {
+        if (loggedInUser != null) {
             // Get the account of the logged in user
-            Account account = loggedInMember.getAccount();
+            Account account = loggedInUser.getAccount();
 
             if (account != null) {
                 // Get the account balance from the database using the AccountService
@@ -82,5 +82,16 @@ public class MyTransactions {
         }
         // Return 0 if the account or user is not found
         return 0.0;
+    }
+
+    public int getNumberOfTransactions(){
+        Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .get("loggedInUser");
+        if (loggedInUser != null) {
+            SaccoDao saccoDao = new SaccoDao();
+            return saccoDao.getDepositCountForUser(loggedInUser)+saccoDao.getWithdrawCountForUser(loggedInUser);
+        } else {
+            return 0;
+        }
     }
 }

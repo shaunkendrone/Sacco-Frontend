@@ -68,138 +68,151 @@
           content: "\f2f6";
           font-family: "Font Awesome 5 Free";
         }
+        
+       
       </style>
     </f:facet>
   </h:head>
   <h:body>
+    <div>
+      <p:link outcome="/pages/dashboard/Dashboard.xhtml">
+        <img
+          src="resources/images/myyyy.png"
+          alt="Logo"
+          width="15%"
+          height="15%"
+      /></p:link>
+    </div>
     <div class="signinform">
       <div class="container">
         <!-- main content -->
         <div class="w3l-form-info">
-          <div>
-            <p:link outcome="/pages/dashboard/Dashboard.xhtml">
-              <img
-                src="resources/images/myyyy.png"
-                alt="Logo"
-                width="80%"
-                height="80%"
-            /></p:link>
-          </div>
+          
           <div id="tv">
             <h:form>
               <p:growl id="messages" showDetail="true" />
-              <div class="input-group">
-                <span><i class="fas fa-user" aria-hidden="true"></i></span>
-                <h:inputText
-                  id="firstName"
-                  style="color: black !important"
-                  value="#{memberForm.member.firstName}"
-                  k:placeholder="First Name"
-                  required="true"
-                  requiredMessage="*First name required." />
-                <!-- <h:message for="firstName" styleClass="error-message" /> -->
+              <div class="form-column-up1" style="display: flex;">
+                <div class="input-group" style="flex: 50%;">
+                  <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                  <h:inputText
+                    id="firstName"
+                    style="color: black !important"
+                    value="#{memberForm.member.firstName}"
+                    k:placeholder="First Name"
+                    required="true"
+                    requiredMessage="*First name required." />
+                </div>
+
+                <div class="input-group" style="flex:50%">
+                  <span
+                    ><i class="fas fa-user-plus" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="lastName"
+                    style="color: black !important"
+                    value="#{memberForm.member.lastName}"
+                    k:placeholder="Last Name"
+                    required="true"
+                    requiredMessage="*Last name required." />
+                </div>
               </div>
+
+              <div class="form-column-up2" style="display: flex;">
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-calendar-alt" aria-hidden="true"></i
+                  ></span>
+                  <p:outputLabel for="navigator" />
+                  <p:datePicker
+                    style="margin-left: 10%; padding-bottom: 5px"
+                    id="navigator"
+                    value="#{memberForm.member.dateOfBirth}"
+                    monthNavigator="true"
+                    yearRange="1970:2005"
+                    yearNavigator="true"
+                    showWeek="true"
+                    placeholder="Date of Birth"
+                    required="true"
+                    requiredMessage="*Date of birth required." />
+                </div>
+
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-venus-mars" aria-hidden="true"></i
+                  ></span>
+                  <div class="gender-options">
+                    <h:selectOneRadio
+                      id="gender"
+                      value="#{memberForm.member.gender}"
+                      required="true"
+                      requiredMessage="*Gender required.">
+                      <f:selectItem itemLabel="Male" itemValue="Male" />
+                      <f:selectItem itemLabel="Female" itemValue="Female" />
+                    </h:selectOneRadio>
+                    <div class="space-below"></div>
+                  </div>
+                </div>
+              </div>
+              
 
               
+              <div class="form-column-up2" style="display: flex;">
+                <div class="input-group" style="flex:50%">
+                  <span
+                    ><i class="fas fa-envelope" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="email"
+                    style="color: black !important"
+                    value="#{memberForm.member.email}"
+                    k:placeholder="Email"
+                    required="true"
+                    requiredMessage="*Email required" />
+                </div>
+
                 <div class="input-group">
-                <span><i class="fas fa-user-plus" aria-hidden="true"></i></span>
-                <h:inputText
-                  id="lastName"
-                  style="color: black !important"
-                  value="#{memberForm.member.lastName}"
-                  k:placeholder="Last Name"
-                  required="true"
-                  requiredMessage="*Last name required." />
-                <!-- <h:message for="lastName" styleClass="error-message" /> -->
-              </div>
+                  <span><i class="fas fa-phone" aria-hidden="true"></i></span>
+                  <h:inputText
+                    id="phone"
+                    style="color: black !important"
+                    value="#{memberForm.member.phoneNumber}"
+                    k:placeholder="Phone Number"
+                    required="true"
+                    requiredMessage="*Phone number required." />
+                </div>
+                </div>
 
-              <div class="input-group">
-                <span
-                  ><i class="fas fa-calendar-alt" aria-hidden="true"></i
-                ></span>
-                <p:outputLabel for="navigator" />
-                <p:datePicker
-                  style="margin-left: 10%; padding-bottom: 5px"
-                  id="navigator"
-                  value="#{memberForm.member.dateOfBirth}"
-                  monthNavigator="true"
-                  yearRange="1970:2005"
-                  yearNavigator="true"
-                  showWeek="true"
-                  placeholder="Date of Birth" />
-              </div>
+                <div class="form-column-up4" style="display: flex;">
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-map-marker-alt" aria-hidden="true"></i
+                  ></span>
+                  <h:inputText
+                    id="address"
+                    style="color: black !important"
+                    value="#{memberForm.member.address}"
+                    k:placeholder="Address"
+                    required="true"
+                    requiredMessage="*Address required." />
+                </div>
 
-              <div class="input-group">
-                <span
-                  ><i class="fas fa-venus-mars" aria-hidden="true"></i
-                ></span>
-                <div class="gender-options">
-                  <h:selectOneRadio
-                    id="gender"
-                    value="#{memberForm.member.gender}">
-                    <f:selectItem itemLabel="Male" itemValue="Male" />
-                    <f:selectItem itemLabel="Female" itemValue="Female" />
-                  </h:selectOneRadio>
-                  <div class="space-below"></div>
+                <!--Occupation-->
+                <div class="input-group" style="flex: 50%;">
+                  <span
+                    ><i class="fas fa-briefcase" aria-hidden="true"></i
+                  ></span>
+
+                  <h:inputText
+                    id="occupation"
+                    style="color: black !important"
+                    value="#{memberForm.member.occupation}"
+                    k:placeholder="Occupation"
+                    required="true"
+                    requiredMessage="*Occupation is required." />
                 </div>
               </div>
 
               <div class="input-group">
-                <span><i class="fas fa-envelope" aria-hidden="true"></i></span>
-                <h:inputText
-                  id="email"
-                  style="color: black !important"
-                  value="#{memberForm.member.email}"
-                  k:placeholder="Email"
-                  required="true"
-                  requiredMessage="*Email required" />
-                <!-- <h:message for="email" styleClass="error-message" /> -->
-              </div>
-
-              
-              <div class="input-group">
-                <span><i class="fas fa-phone" aria-hidden="true"></i></span>
-                <h:inputText
-                  id="phone"
-                  style="color: black !important"
-                  value="#{memberForm.member.phoneNumber}"
-                  k:placeholder="Phone Number"
-                  required="true"
-                  requiredMessage="*Phone number required." />
-                <!-- <h:message for="phone" styleClass="error-message" /> -->
-              </div>
-              
-
-              <div class="input-group">
-                <span
-                  ><i class="fas fa-map-marker-alt" aria-hidden="true"></i
-                ></span>
-                <h:inputText
-                  id="address"
-                  style="color: black !important"
-                  value="#{memberForm.member.address}"
-                  k:placeholder="Address"
-                  required="true"
-                  requiredMessage="*Address required." />
-                <!-- <h:message for="address" styleClass="error-message" /> -->
-              </div>
-
-              <!--Occupation-->
-                <div class="input-group">
-                <span><i class="fas fa-briefcase" aria-hidden="true"></i></span>
-                
-                <h:inputText
-                  id="occupation"
-                  style="color: black !important"
-                  value="#{memberForm.member.occupation}"
-                  k:placeholder="Occupation"
-                  required="true"
-                  requiredMessage="*Occupation is required." />
-                <!-- <h:message for="occupation" styleClass="error-message" /> -->
-              </div>
-
-              <div class="input-group">
-              
                 <span><i class="fas fa-key" aria-hidden="true"></i></span>
                 <h:inputSecret
                   id="password"
@@ -208,9 +221,8 @@
                   k:placeholder="Password"
                   required="true"
                   requiredMessage="*Password required." />
-                <!-- <h:message for="password" styleClass="error-message" /> -->
+
               </div>
-            
 
               <p:commandButton
                 styleClass="btn btn-primary btn-block"
@@ -219,10 +231,6 @@
                 action="#{memberForm.doRegister()}"
                 update="messages @form" />
 
-              <p class="account">
-                Already a member?
-                <h:outputLink value="Login.xhtml">Login</h:outputLink>
-              </p>
             </h:form>
           </div>
         </div>
@@ -233,5 +241,4 @@
     </div>
   </h:body>
   <script src="resources/js/fontawesome.js"></script>
-  
 </html>
