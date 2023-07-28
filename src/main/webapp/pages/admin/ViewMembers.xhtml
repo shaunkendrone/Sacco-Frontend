@@ -24,7 +24,7 @@
   <h:outputScript>
   $(document).ready(function() {
     // Set the duration (in milliseconds) for the messages to be displayed
-    var displayDuration = 3000; // Change this value as needed (e.g., 3000 for 3 seconds)
+    var displayDuration = 2000; // Change this value as needed (e.g., 3000 for 3 seconds)
 
     // Find the messages component by its ID
     var messages = $("#messages");
@@ -129,7 +129,6 @@
     </div>
 
     <div class="content">
-      <p:messages id="messages" showDetail="true" autoUpdate="true" />
       <div class="profile-section">
         <i class="pi pi-user profile-icon"></i>
         <div class="profile-dropdown">
@@ -144,8 +143,8 @@
       <hr class="divider" />
       <!-- Transaction Table -->
       <div class="transaction-table">
+        <p:growl id="messages" showDetail="true" />
         <h:form>
-          
           <p:dataTable
             var="member"
             value="#{myMembers.members}"
@@ -176,7 +175,18 @@
               <h:outputText value="#{member.occupation}" />
             </p:column>
 
-            <p:column headerText="Action">
+            <p:column headerText="Action 1">
+            <p:commandButton
+              value="View"
+              icon="pi pi-eye"
+              actionListener="#{myMembers.initSelectedMember(member)}"
+              update="@widgetVar(memberDialog)"
+              process="@this"
+              oncomplete="PF('memberDialog').show()"
+                 />
+                </p:column>
+
+            <p:column headerText="Action 2">
               <p:commandButton
                 value="Approve"
                 action="#{myMembers.approveUser(member)}"
@@ -185,7 +195,7 @@
                 styleClass="ui-button-primary" />
             </p:column>
 
-            <p:column headerText="Action 2">
+            <p:column headerText="Action 3">
               <p:commandButton
                 value="Reject"
                 action="#{myMembers.rejectUser(member)}"
@@ -194,6 +204,41 @@
                 styleClass="ui-button-danger" />
             </p:column>
           </p:dataTable>
+          <p:dialog
+            header="Member Details"
+            widgetVar="memberDialog"
+            minHeight="40"
+            width="350"
+            showEffect="fade">
+            <h:panelGrid columns="2" cellpadding="5" style="width: 100%">
+              <h:outputText value="First Name:" />
+              <h:outputText value="#{myMembers.selectedMember.firstName}" />
+
+              <h:outputText value="Last Name:" />
+              <h:outputText value="#{myMembers.selectedMember.lastName}" />
+
+              <h:outputText value="Date Of Birth: " />
+              <h:outputText value="#{myMembers.selectedMember.dateOfBirth}" />
+
+              <h:outputText value="Gender: " />
+              <h:outputText value="#{myMembers.selectedMember.gender}" />
+
+              <h:outputText value="Email: " />
+              <h:outputText value="#{myMembers.selectedMember.email}" />
+
+              <h:outputText value="Address: " />
+              <h:outputText value="#{myMembers.selectedMember.address}" />
+
+              <h:outputText value="Phone Number: " />
+              <h:outputText value="#{myMembers.selectedMember.phoneNumber}" />
+
+              <h:outputText value="Occupation: " />
+              <h:outputText value="#{myMembers.selectedMember.occupation}" />
+            </h:panelGrid>
+            <f:facet name="footer">
+              <p:commandButton type="button" value="Okay" style="width: 5rem" onclick="PF('memberDialog').hide()" />
+            </f:facet>
+          </p:dialog>
         </h:form>
       
       </div>

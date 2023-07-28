@@ -89,7 +89,7 @@ public class MyTransactions {
                 .get("loggedInUser");
         if (loggedInUser != null) {
             SaccoDao saccoDao = new SaccoDao();
-            return saccoDao.getDepositCountForUser(loggedInUser)+saccoDao.getWithdrawCountForUser(loggedInUser);
+            return saccoDao.getDepositCountForUser(loggedInUser)+saccoDao.getWithdrawCountForUser(loggedInUser)+saccoDao.getInternalTransferCountForUser(loggedInUser);
         } else {
             return 0;
         }

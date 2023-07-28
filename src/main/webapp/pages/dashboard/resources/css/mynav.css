@@ -152,12 +152,22 @@
 
 .card {
     width: calc(25% - 10px); /* Adjusted width to fit four cards on the same line */
+    height: 150px;
     background-color: #fff;
     border-radius: 10px;
     padding: 10px; /* Reduced padding to make the cards smaller */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
     position: relative;
+}
+
+.card .number {
+    /* New styles for the number */
+    position: absolute;
+    top: 0px; /* Adjust the top position to align the number */
+    right: 10px; /* Adjust the right position to align the number */
+    font-size: 30px; /* Adjust the font size as needed */
+    /* Other styles */
 }
 
 .card .icon {

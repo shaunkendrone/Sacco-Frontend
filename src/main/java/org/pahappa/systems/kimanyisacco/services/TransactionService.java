@@ -25,4 +25,8 @@ public interface TransactionService {
 
     // Get the count of deposits for a specific user
     int getWithdrawCountForUser(Members member);
+
+    void internalTransfer(Account senderAccount, Account recipientAccount, double amount, String transactionDate);
+
+    int getInternalTransferCountForUser(Members member);
 }

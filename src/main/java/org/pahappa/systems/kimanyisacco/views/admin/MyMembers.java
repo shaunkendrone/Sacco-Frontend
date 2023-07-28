@@ -7,8 +7,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 // import javax.faces.context.Flash;
+import javax.faces.context.Flash;
 
 import org.pahappa.Dao.SaccoDao;
+import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.primefaces.PrimeFaces;
 
@@ -48,13 +50,29 @@ public class MyMembers {
         return approvedMembers;
     }
 
+    private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Flash flash = facesContext.getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
     public void approveUser(Members member) {
     SaccoDao saccoDao = new SaccoDao();
     saccoDao.updateMemberStatus(member);
     members.remove(member); // Remove the approved member from the list
+    
+    addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Member approved successfully");
 
-    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Member approved successfully");
-    FacesContext.getCurrentInstance().addMessage("message", message);
+    String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+    try {
+        FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.saccoMembers);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Member approved successfully");
+    // FacesContext.getCurrentInstance().addMessage("message", message);
 }
 
 public void rejectUser(Members member) {

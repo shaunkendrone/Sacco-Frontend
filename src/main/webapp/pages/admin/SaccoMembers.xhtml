@@ -25,6 +25,23 @@
       <h:outputScript name="primefaces/primefaces.js" library="primefaces" />
     </f:facet>
   </h:head>
+  <h:outputScript>
+    $(document).ready(function() {
+      // Set the duration (in milliseconds) for the messages to be displayed
+      var displayDuration = 2000; // Change this value as needed (e.g., 3000 for 3 seconds)
+  
+      // Find the messages component by its ID
+      var messages = $("#messages");
+  
+      // Function to hide the messages after the specified duration
+      function hideMessages() {
+        messages.hide("fade");
+      }
+  
+      // Hide the messages after the specified duration
+      setTimeout(hideMessages, displayDuration);
+    });
+  </h:outputScript>
   <h:body style="background-color: #f5f5f5">
     <div class="sidebar">
       <div class="logo"></div>
@@ -116,6 +133,7 @@
     </div>
 
     <div class="content">
+      <p:messages id="messages" showDetail="true" />
       <div class="profile-section">
         <i class="pi pi-user profile-icon"></i>
         <div class="profile-dropdown">
@@ -176,7 +194,7 @@
 
             <p:column headerText="Action">
               <p:commandButton
-              value="View Member"
+              value="View"
               icon="pi pi-eye"
               actionListener="#{myMembers.initSelectedMember(member)}"
               update="@widgetVar(memberDialog)"
@@ -203,6 +221,9 @@
 
               <h:outputText value="Gender: " />
               <h:outputText value="#{myMembers.selectedMember.gender}" />
+
+              <h:outputText value="Email: " />
+              <h:outputText value="#{myMembers.selectedMember.email}" />
 
               <h:outputText value="Address: " />
               <h:outputText value="#{myMembers.selectedMember.address}" />

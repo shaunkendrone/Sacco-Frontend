@@ -266,6 +266,26 @@ public class SaccoDao {
             }
         }
     }
+
+    public int getInternalTransferCountForUser(Members member){
+        Session session = null;
+        try{
+            session = SessionConfiguration.getSessionFactory().openSession();
+            Criteria criteria = session.createCriteria(Transactions.class);
+            criteria.add(Restrictions.eq("account", member.getAccount()));
+            criteria.add(Restrictions.eq("transactionType", "Internal Transfer"));
+            criteria.setProjection(Projections.rowCount());
+            Long count = (Long) criteria.uniqueResult();
+            return count.intValue();
+        }catch (HibernateException e){
+            e.printStackTrace();
+            return 0;
+        }finally {
+            if (session != null){
+                session.close();
+            }
+        }
+    }
     
 
     public Account getAccountByAccountId(int accountId) {

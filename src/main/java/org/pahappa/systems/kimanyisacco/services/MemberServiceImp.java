@@ -2,6 +2,7 @@ package org.pahappa.systems.kimanyisacco.services;
 
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.models.Members;
 
@@ -9,7 +10,14 @@ public class MemberServiceImp implements MemberService{
     private final SaccoDao memberDao = new SaccoDao();
     @Override
     public void saveMember(Members member) {
+        String hashedPassword = hashPassword(member.getPassword());
+        member.setPassword(hashedPassword);
         memberDao.saveMember(member);
+    }
+
+    private String hashPassword(String password) {
+        // Use a strong hashing algorithm
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public Members getMemberByEmail(String email) {

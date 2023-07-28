@@ -15,13 +15,52 @@ import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.services.AccountService;
 import org.pahappa.systems.kimanyisacco.services.AccountServiceImp;
+import org.pahappa.systems.kimanyisacco.services.MemberService;
+import org.pahappa.systems.kimanyisacco.services.MemberServiceImp;
 import org.pahappa.systems.kimanyisacco.services.TransactionService;
 import org.pahappa.systems.kimanyisacco.services.TransactionServiceImp;
 
 @ManagedBean(name = "withdraw")
 @SessionScoped
 public class Withdraw {
-    public double withdrawAmount;
+    private double withdrawAmount;
+    private String transferType;
+    private String email;
+    private int accountId;
+
+    private MemberService memberService;
+
+    public MemberService getMemberService() {
+        return memberService;
+    }
+
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTransferType() {
+        return transferType;
+    }
+
+    public void setTransferType(String transferType) {
+        this.transferType = transferType;
+    }
 
     public double getWithdrawAmount() {
         return withdrawAmount;
@@ -31,7 +70,7 @@ public class Withdraw {
         this.withdrawAmount = withdrawAmount;
     }
 
-    public AccountService accountService;
+    private AccountService accountService;
 
     public AccountService getAccountService() {
         return accountService;
@@ -55,11 +94,14 @@ public class Withdraw {
         // Initialize the SaccoDao
         SaccoDao saccoDao = new SaccoDao();
 
+        transferType = "withdrawal";
+
         // Create the AccountService implementation with the SaccoDao instance
         accountService = new AccountServiceImp(saccoDao);
 
         // Create the TransactionService implementation with the SaccoDao instance
         transactionService = new TransactionServiceImp(saccoDao);
+
     }
 
     private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
@@ -111,4 +153,56 @@ public class Withdraw {
             return 0;
         }
     }
+
+    public void makeInternalTransfer() {
+        Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
+                .get("loggedInUser");
+    
+        if (loggedInUser != null) {
+            Account account = loggedInUser.getAccount();
+    
+            if (account != null) {
+                // Fetch the recipient member by email
+                memberService = new MemberServiceImp();
+                Members recipientMember = memberService.getMemberByEmail(email);
+    
+                if (recipientMember != null && recipientMember.getAccount() != null) {
+                    // Check if the email matches the account ID provided by the user
+                    if (recipientMember.getAccount().getAccountId() == accountId) {
+                        // Perform the internal transfer
+                        transactionService.internalTransfer(account, recipientMember.getAccount(), withdrawAmount,
+                                new Date().toString());
+                        withdrawAmount = 0.0;
+    
+                        addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Internal transfer successful");
+    
+                        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+                        try {
+                            FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage(null,
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Email and Account ID do not match"));
+                    }
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Recipient not found", null));
+                }
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Account not found", null));
+            }
+        } else {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
+    
 }

@@ -1,5 +1,6 @@
 package org.pahappa.systems.kimanyisacco.services;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.views.authentication.UserSessionBean;
 
@@ -13,13 +14,18 @@ public class LoginServiceImp implements LoginService {
     }
 
     @Override
-    public boolean authenticate(String email, String password,String status) {
+    public boolean authenticate(String email, String password, String status){
         Members member = memberService.getMemberByEmail(email);
-        if (member != null && member.getPassword().equals(password) && member.getStatus().equals(status)) {
-            userSessionBean.setLoggedInUser(member);
-            return true; 
-        } else {
-            return false; 
+        if (member != null) {
+            if (BCrypt.checkpw(password, member.getPassword())) {
+                if (member.getStatus().equals(status)) {
+                    return true;
+                }
+            }
         }
+        return false;
     }
+
+     
+
 }
