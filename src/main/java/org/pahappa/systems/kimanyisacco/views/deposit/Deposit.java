@@ -89,14 +89,7 @@ public class Deposit {
                 transactionService.deposit(account, depositAmount, new Date().toString());
                 depositAmount = 0.0;
 
-                addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Deposit made successfully");
-
-                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-                try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                
             } else {
                 FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Account not found", null));

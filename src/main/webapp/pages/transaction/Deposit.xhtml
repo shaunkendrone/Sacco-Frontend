@@ -107,6 +107,7 @@
     </div>
 
     <div class="content">
+      
       <div class="profile-section">
         <div class="profile-name">
             <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
@@ -131,13 +132,15 @@
 
       <!-- Deposit Form -->
       <div class="deposit-form">
+        <p:growl id="messages" showDetail="true" />
         <h:form>
+          <p:growl id="messages" showDetail="true" />
             <div class="form-group">
                 <p:outputLabel for="amount" value="Deposit Amount:" />
                 <p:inputText id="amount" placeholder="Enter the amount" value="#{deposit.depositAmount}" />
             </div>
             <div class="form-group">
-                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" />
+                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" update="messages @form" />
             </div>
         </h:form>
     </div>

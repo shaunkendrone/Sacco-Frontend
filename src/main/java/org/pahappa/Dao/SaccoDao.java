@@ -280,10 +280,6 @@ public class SaccoDao {
         }catch (HibernateException e){
             e.printStackTrace();
             return 0;
-        }finally {
-            if (session != null){
-                session.close();
-            }
         }
     }
     

@@ -1,8 +1,14 @@
 package org.pahappa.systems.kimanyisacco.services;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+
 import org.pahappa.Dao.SaccoDao;
+import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.models.Transactions;
@@ -16,6 +22,15 @@ public class TransactionServiceImp implements TransactionService {
 
     @Override
     public void deposit(Account account, double amount, String transactionDate) {
+        double minimumDepositAmount = 10000;
+    if (amount < minimumDepositAmount) {
+        FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Deposit Amount",
+                            "Minimum deposit amount is " + minimumDepositAmount));
+        
+            return; // Transaction does not proceed
+    }
+
         // Create a new transaction
         Transactions transaction = new Transactions();
         transaction.setTransactionType("Deposit");
@@ -30,10 +45,35 @@ public class TransactionServiceImp implements TransactionService {
         // Save the transaction and update the account in the database
         saccoDao.saveTransaction(transaction);
         saccoDao.saveAccount(account);
+
+        addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Deposit made successfully");
+
+                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+                try {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+    }
+
+    private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        Flash flash = facesContext.getExternalContext().getFlash();
+        flash.setKeepMessages(true);
+        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
     @Override
     public void withdraw(Account account, double amount, String transactionDate) {
+        // Check if the amount is greater than or equal to the minimum withdraw amount
+        // (10000)
+        double minimumWithdrawAmount = 10000;
+        if (amount < minimumWithdrawAmount) {
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Withdrawal Amount",
+                            "Minimum withdraw amount is " + minimumWithdrawAmount));
+            return; // Transaction does not proceed
+        }
         // Create a new transaction
         Transactions transaction = new Transactions();
         transaction.setTransactionType("Withdrawal");
@@ -50,9 +90,20 @@ public class TransactionServiceImp implements TransactionService {
             // Save the transaction and update the account in the database
             saccoDao.saveTransaction(transaction);
             saccoDao.saveAccount(account);
+
+            addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Withdraw made successfully");
+
+            String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             // Insufficient balance, handle the situation as needed
-            // For example, throw an exception or show an error message
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Insufficient Funds",
+                            "You do not have enough balance to make this transfer."));
         }
     }
 
@@ -66,7 +117,7 @@ public class TransactionServiceImp implements TransactionService {
         return saccoDao.getTransactionsForAccount(account);
     }
 
-     @Override
+    @Override
     public int getDepositCountForUser(Members member) {
         SaccoDao saccoDao = new SaccoDao();
         return saccoDao.getDepositCountForUser(member);
@@ -85,8 +136,20 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public void internalTransfer(Account senderAccount, Account recipientAccount, double amount, String transactionDate){
+    public void internalTransfer(Account senderAccount, Account recipientAccount, double amount,
+            String transactionDate) {
         // Check if the sender's account has sufficient balance for the transfer
+
+        // Check if the amount is greater than or equal to the minimum transfer amount
+        // (10000)
+        double minimumTransferAmount = 10000;
+        if (amount < minimumTransferAmount) {
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Transfer Amount",
+                            "Minimum transfer amount is " + minimumTransferAmount));
+            return; // Transaction does not proceed
+        }
+
         if (senderAccount.getBalance() >= amount) {
             // Deduct the amount from the sender's account balance
             double newSenderBalance = senderAccount.getBalance() - amount;
@@ -115,11 +178,19 @@ public class TransactionServiceImp implements TransactionService {
             saccoDao.saveTransaction(recipientTransaction);
             saccoDao.saveAccount(senderAccount);
             saccoDao.saveAccount(recipientAccount);
+
+            addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Internal transfer successful");
+            String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
-            // Insufficient balance, handle the situation as needed
-            // For example, throw an exception or show an error message
+            FacesContext.getCurrentInstance().addMessage("messages",
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Insufficient Funds",
+                            "You do not have enough balance to make this transfer."));
+
         }
     }
 }
-
-

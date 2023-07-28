@@ -12,7 +12,7 @@ import javax.faces.context.Flash;
 import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Members;
-import org.primefaces.PrimeFaces;
+// import org.primefaces.PrimeFaces;
 
 @ManagedBean(name = "myMembers")
 @ViewScoped

@@ -122,14 +122,6 @@ public class Withdraw {
                 transactionService.withdraw(account, withdrawAmount, new Date().toString());
                 withdrawAmount = 0.0;
 
-                addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Withdraw made successfully");
-
-                String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-                try {
-                    FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Account not found", null));
@@ -167,24 +159,20 @@ public class Withdraw {
                 Members recipientMember = memberService.getMemberByEmail(email);
     
                 if (recipientMember != null && recipientMember.getAccount() != null) {
-                    // Check if the email matches the account ID provided by the user
-                    if (recipientMember.getAccount().getAccountId() == accountId) {
+                    // Check if the email and account ID provided by the user match
+                    if (!recipientMember.getEmail().equals(email) || recipientMember.getAccount().getAccountId() != accountId) {
+                        FacesContext.getCurrentInstance().addMessage(null,
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Email and Account ID do not match."));
+                    } else if (recipientMember.getAccount().getAccountId() == account.getAccountId()) {
+                        // Check if the email matches the account ID provided by the user
+                        FacesContext.getCurrentInstance().addMessage(null,
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Internal transaction cannot be made to your own account"));
+                    } else {
                         // Perform the internal transfer
                         transactionService.internalTransfer(account, recipientMember.getAccount(), withdrawAmount,
                                 new Date().toString());
                         withdrawAmount = 0.0;
     
-                        addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Internal transfer successful");
-    
-                        String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-                        try {
-                            FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        FacesContext.getCurrentInstance().addMessage(null,
-                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Email and Account ID do not match"));
                     }
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null,
@@ -204,5 +192,8 @@ public class Withdraw {
     }
     
     
-    
 }
+    
+    
+    
+
