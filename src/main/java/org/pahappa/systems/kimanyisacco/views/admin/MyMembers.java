@@ -28,7 +28,6 @@ public class MyMembers {
 
     public void setSelectedMember(Members selectedMember) {
         this.selectedMember = selectedMember;
-        // System.out.println("Selected member: " + selectedMember.getLastName());
     }
 
     public void initSelectedMember(Members selectedMember){
@@ -71,8 +70,6 @@ public class MyMembers {
         e.printStackTrace();
     }
 
-    // FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Success", "Member approved successfully");
-    // FacesContext.getCurrentInstance().addMessage("message", message);
 }
 
 public void rejectUser(Members member) {

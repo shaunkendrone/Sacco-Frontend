@@ -113,7 +113,7 @@
     </div>
 
     <div class="content">
-      <p:messages id="messages" showDetail="true" autoUpdate="true" />
+      <!-- <p:messages id="messages" showDetail="true" autoUpdate="true" /> -->
       <div class="profile-section">
         <div class="profile-name">
           <h2
@@ -168,6 +168,7 @@
             </p>
             <p>Address: <h:outputText value="#{dashboard.address}" /></p>
             <p>Occupation: <h:outputText value="#{dashboard.occupation}" /></p>
+            <p>Account Id: <h:outputText value="#{dashboard.accountId}" /></p>
           </div>
         </div>
 
@@ -275,12 +276,12 @@
             </div>
             <p:commandButton value="Save" 
             actionListener="#{dashboard.updateProfile}" 
-            update="@form" 
+            update="messages @form" 
             process="@form" 
             oncomplete="refreshPage();"
              />
-            
           </h:form>
+          <p:growl id="messages" showDetail="true" />
         </div>
       </div>
     </div>

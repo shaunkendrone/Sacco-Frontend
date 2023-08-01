@@ -22,22 +22,14 @@
     </f:facet>
   </h:head>
   <h:outputScript>
-  $(document).ready(function() {
-    // Set the duration (in milliseconds) for the messages to be displayed
-    var displayDuration = 2000; // Change this value as needed (e.g., 3000 for 3 seconds)
-
-    // Find the messages component by its ID
-    var messages = $("#messages");
-
-    // Function to hide the messages after the specified duration
-    function hideMessages() {
-      messages.hide("fade");
-    }
-
-    // Hide the messages after the specified duration
-    setTimeout(hideMessages, displayDuration);
-  });
-</h:outputScript>
+    $(document).ready(function() { // Set the duration (in milliseconds) for the
+    messages to be displayed var displayDuration = 2000; // Change this value as
+    needed (e.g., 3000 for 3 seconds) // Find the messages component by its ID
+    var messages = $("#messages"); // Function to hide the messages after the
+    specified duration function hideMessages() { messages.hide("fade"); } //
+    Hide the messages after the specified duration setTimeout(hideMessages,
+    displayDuration); });
+  </h:outputScript>
   <h:body style="background-color: #f5f5f5">
     <div class="sidebar">
       <div class="logo"></div>
@@ -114,17 +106,16 @@
         <i class="pi pi-sign-out"></i>
         <span>
           <h:form>
-          <p:commandLink
-            style="
-              font-size: 20px;
-              color: #202020;
-              font-family: 'Times New Roman', Times, serif;
-            "
-            action="#{userSessionBean.logout()}"
-            value="Logout"
-        />
-      </h:form>
-      </span>
+            <p:commandLink
+              style="
+                font-size: 20px;
+                color: #202020;
+                font-family: 'Times New Roman', Times, serif;
+              "
+              action="#{userSessionBean.logout()}"
+              value="Logout" />
+          </h:form>
+        </span>
       </div>
     </div>
 
@@ -144,7 +135,8 @@
       <!-- Transaction Table -->
       <div class="transaction-table">
         <p:growl id="messages" showDetail="true" />
-        <h:form>
+        <h:form
+          >z
           <p:dataTable
             var="member"
             value="#{myMembers.members}"
@@ -152,39 +144,51 @@
             paginator="true"
             rows="10"
             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-            rowsPerPageTemplate="5,10,15"
-            >
-
-            <p:column headerText="First Name" sortBy="#{member.firstName}" filterBy="#{member.firstName}" >
+            rowsPerPageTemplate="5,10,15">
+            <p:column
+              headerText="First Name"
+              sortBy="#{member.firstName}"
+              filterBy="#{member.firstName}">
               <h:outputText value="#{member.firstName}" />
             </p:column>
 
-            <p:column headerText="Last Name" sortBy="#{member.lastName}" filterBy="#{member.lastName}">
+            <p:column
+              headerText="Last Name"
+              sortBy="#{member.lastName}"
+              filterBy="#{member.lastName}">
               <h:outputText value="#{member.lastName}" />
             </p:column>
 
-            <p:column headerText="Gender" sortBy="#{member.gender}" filterBy="#{member.gender}">
+            <p:column
+              headerText="Gender"
+              sortBy="#{member.gender}"
+              filterBy="#{member.gender}">
               <h:outputText value="#{member.gender}" />
             </p:column>
 
-            <p:column headerText="Address" sortBy="#{member.address}" filterBy="#{member.address}">
+            <p:column
+              headerText="Address"
+              sortBy="#{member.address}"
+              filterBy="#{member.address}">
               <h:outputText value="#{member.address}" />
             </p:column>
 
-            <p:column headerText="Occupation" sortBy="#{member.occupation}" filterBy="#{member.occupation}">
+            <p:column
+              headerText="Occupation"
+              sortBy="#{member.occupation}"
+              filterBy="#{member.occupation}">
               <h:outputText value="#{member.occupation}" />
             </p:column>
 
             <p:column headerText="Action 1">
-            <p:commandButton
-              value="View"
-              icon="pi pi-eye"
-              actionListener="#{myMembers.initSelectedMember(member)}"
-              update="@widgetVar(memberDialog)"
-              process="@this"
-              oncomplete="PF('memberDialog').show()"
-                 />
-                </p:column>
+              <p:commandButton
+                value="View"
+                icon="pi pi-eye"
+                actionListener="#{myMembers.initSelectedMember(member)}"
+                update="@widgetVar(memberDialog)"
+                process="@this"
+                oncomplete="PF('memberDialog').show()" />
+            </p:column>
 
             <p:column headerText="Action 2">
               <p:commandButton
@@ -192,7 +196,12 @@
                 action="#{myMembers.approveUser(member)}"
                 update="membersTable"
                 icon="pi pi-check"
-                styleClass="ui-button-primary" />
+                styleClass="ui-button-primary">
+                <p:confirm
+                  header="Confirmation"
+                  message="Are you sure you want to proceed?"
+                  icon="pi pi-exclamation-triangle" />
+              </p:commandButton>
             </p:column>
 
             <p:column headerText="Action 3">
@@ -201,7 +210,12 @@
                 action="#{myMembers.rejectUser(member)}"
                 update="messages membersTable"
                 icon="pi pi-times"
-                styleClass="ui-button-danger" />
+                styleClass="ui-button-danger">
+                <p:confirm
+                  header="Confirmation"
+                  message="Are you sure you want to proceed?"
+                  icon="pi pi-info-circle" />
+              </p:commandButton>
             </p:column>
           </p:dataTable>
           <p:dialog
@@ -236,11 +250,31 @@
               <h:outputText value="#{myMembers.selectedMember.occupation}" />
             </h:panelGrid>
             <f:facet name="footer">
-              <p:commandButton type="button" value="Okay" style="width: 5rem" onclick="PF('memberDialog').hide()" />
+              <p:commandButton
+                type="button"
+                value="Okay"
+                style="width: 5rem"
+                onclick="PF('memberDialog').hide()" />
             </f:facet>
           </p:dialog>
+          <p:confirmDialog
+            global="true"
+            showEffect="fade"
+            hideEffect="fade"
+            responsive="true"
+            width="350">
+            <p:commandButton
+              icon="pi pi-check"
+              value="Yes"
+              type="button"
+              styleClass="ui-confirmdialog-yes" />
+              <p:commandButton
+              icon="pi pi-times"
+              value="No"
+              type="button"
+              styleClass="ui-confirmdialog-no ui-button-flat" />
+          </p:confirmDialog>
         </h:form>
-      
       </div>
     </div>
   </h:body>

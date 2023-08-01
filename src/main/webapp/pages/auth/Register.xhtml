@@ -130,8 +130,10 @@
                     monthNavigator="true"
                     yearRange="1970:2005"
                     yearNavigator="true"
+                    readonlyInput="true"
                     showWeek="true"
                     placeholder="Date of Birth"
+                    widgetVar="myDatePicker"
                     required="true"
                     requiredMessage="*Date of birth required." />
                 </div>
@@ -230,8 +232,13 @@
                 icon="fas fa-sign-in"
                 action="#{memberForm.doRegister()}"
                 update="messages @form" />
-
+                <br/>
+                <p class="account">
+                  Already have an account?
+                  <h:outputLink value="Login.xhtml">Login</h:outputLink>
+                </p>
             </h:form>
+            
           </div>
         </div>
       </div>
@@ -241,4 +248,22 @@
     </div>
   </h:body>
   <script src="resources/js/fontawesome.js"></script>
+  <script>
+    $(document).ready(function () {
+        // Get the current year
+        var currentYear = new Date().getFullYear();
+        
+        // Calculate the default year (18 years ago from the current year)
+        var defaultYear = currentYear - 18;
+        
+        // Set the default date to January 1 of the default year
+        var defaultDate = new Date(defaultYear, 0, 1);
+
+        // Get the datePicker widget and set the default date
+        var datePickerWidget = PF('myDatePicker');
+        if (datePickerWidget) {
+            datePickerWidget.setDate(defaultDate);
+        }
+    });
+</script>
 </html>

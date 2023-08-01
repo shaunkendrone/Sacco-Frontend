@@ -20,6 +20,7 @@ import org.pahappa.systems.kimanyisacco.services.MemberServiceImp;
 @ManagedBean(name = "dashboard")
 @SessionScoped
 public class Dashboard {
+    FacesMessage message;
     MemberService memberService = new MemberServiceImp();
     public String getFirstName() {
         return firstName;
@@ -32,6 +33,25 @@ public class Dashboard {
     private String firstName;
     private String lastName;
     private String email;
+    private int accountId;
+    private Members member = new Members();
+
+    public Members getMember() {
+        return member;
+    }
+
+    public void setMember(Members member) {
+        this.member = member;
+    }
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -126,6 +146,7 @@ public class Dashboard {
             phoneNumber = loggedInUser.getPhoneNumber();
             address = loggedInUser.getAddress();
             occupation = loggedInUser.getOccupation();
+            accountId = loggedInUser.getAccount().getAccountId();
         } else {
             // firstName = "Guest";
             String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
@@ -134,36 +155,49 @@ public class Dashboard {
     }
 
      // Method to update the user's profile
-    public void updateProfile() {
+     public void updateProfile() {
         Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .get("loggedInUser");
         if (loggedInUser != null) {
-            // Update the user's information in the session
-            loggedInUser.setFirstName(firstName);
-            loggedInUser.setLastName(lastName);
-            loggedInUser.setEmail(email);
-            loggedInUser.setPhoneNumber(phoneNumber);
-            loggedInUser.setAddress(address);
-            loggedInUser.setOccupation(occupation);
-
-            // Save the updated user information to the database using the MemberService
-            memberService.updateMember(loggedInUser);
-
-            // Display a success message if needed.
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Profile Updated", "Your profile has been updated successfully."));
-
-            // Switch back to view mode
-            setEditMode(false);
-
-            firstName = loggedInUser.getFirstName();
-            lastName = loggedInUser.getLastName();
-            email = loggedInUser.getEmail();
-            phoneNumber = loggedInUser.getPhoneNumber();
-            address = loggedInUser.getAddress();
-            occupation = loggedInUser.getOccupation();
-
+            // Check if the provided email is already taken
+            boolean isEmailTaken = memberService.isEmailExists(email);
+            if (isEmailTaken && !email.equals(loggedInUser.getEmail())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Email Taken", "The email you entered is already taken. Please try another one."));
+                System.out.println("Email taken");
+                return;
+            } else {
+                System.out.println("Email not taken");
+    
+                // Update the user's information in the session
+                loggedInUser.setFirstName(firstName);
+                loggedInUser.setLastName(lastName);
+                loggedInUser.setEmail(email);
+                loggedInUser.setPhoneNumber(phoneNumber);
+                loggedInUser.setAddress(address);
+                loggedInUser.setOccupation(occupation);
+    
+                // Save the updated user information to the database using the MemberService
+                memberService.updateMember(loggedInUser);
+    
+                // Display a success message if needed.
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Profile Updated", "Your profile has been updated successfully."));
+    
+                // Switch back to view mode
+                setEditMode(false);
+    
+                // Refresh the input fields with the updated values
+                // firstName = loggedInUser.getFirstName();
+                // lastName = loggedInUser.getLastName();
+                // email = loggedInUser.getEmail();
+                // phoneNumber = loggedInUser.getPhoneNumber();
+                // address = loggedInUser.getAddress();
+                // occupation = loggedInUser.getOccupation();
+            }
         }
     }
+    
 
     public void setUserSessionBean(UserSessionBean userSessionBean) {
         this.userSessionBean = userSessionBean;

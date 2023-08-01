@@ -58,6 +58,19 @@ public class SaccoDao {
         return membersList;
     }
 
+    public List<Members> allMembers(){
+        Session session = SessionConfiguration.getSessionFactory().openSession();
+        session.beginTransaction();
+    
+        String hql = "FROM Members m";
+        Query query = session.createQuery(hql);
+        List<Members> membersList = query.list();
+        session.getTransaction().commit();
+        session.close();
+    
+        return membersList;
+    }
+
     public List<Members> getApprovedMembers(){
         Session session = SessionConfiguration.getSessionFactory().openSession();
         session.beginTransaction();
