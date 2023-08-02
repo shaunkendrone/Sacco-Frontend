@@ -22,21 +22,13 @@
     </f:facet>
   </h:head>
   <h:outputScript>
-    $(document).ready(function() {
-      // Set the duration (in milliseconds) for the messages to be displayed
-      var displayDuration = 2000; // Change this value as needed (e.g., 3000 for 3 seconds)
-  
-      // Find the messages component by its ID
-      var messages = $("#messages");
-  
-      // Function to hide the messages after the specified duration
-      function hideMessages() {
-        messages.hide("fade");
-      }
-  
-      // Hide the messages after the specified duration
-      setTimeout(hideMessages, displayDuration);
-    });
+    $(document).ready(function() { // Set the duration (in milliseconds) for the
+    messages to be displayed var displayDuration = 2000; // Change this value as
+    needed (e.g., 3000 for 3 seconds) // Find the messages component by its ID
+    var messages = $("#messages"); // Function to hide the messages after the
+    specified duration function hideMessages() { messages.hide("fade"); } //
+    Hide the messages after the specified duration setTimeout(hideMessages,
+    displayDuration); });
   </h:outputScript>
   <h:body>
     <div class="sidebar">
@@ -81,7 +73,7 @@
             value="Withdraw"
         /></span>
       </div>
-      
+
       <div class="menu-item">
         <i class="pi pi-user" aria-hidden="true"></i>
         <span>
@@ -128,15 +120,25 @@
       <p:growl id="messages" showDetail="true" />
       <div class="profile-section">
         <div class="profile-name">
-            <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
+          <h2
+            style="color: black; font-family: 'Times New Roman', Times, serif">
+            Welcome <h:outputText value="#{dashboard.firstName}" />
+          </h2>
         </div>
         <div class="profile-dropdown">
-            <h:form>
-            <p:commandButton style="margin-right: 10px;" value="View Profile" icon="pi pi-user" action="#{profile.viewProfile()}" />
+          <h:form>
+            <p:commandButton
+              style="margin-right: 10px"
+              value="View Profile"
+              icon="pi pi-user"
+              action="#{profile.viewProfile()}" />
           </h:form>
-            <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{userSessionBean.logout()}" />
+          <p:commandButton
+            value="Logout"
+            icon="pi pi-sign-out"
+            action="#{userSessionBean.logout()}" />
         </div>
-    </div>
+      </div>
       <h1
         style="
           color: #477deb;
@@ -149,62 +151,111 @@
       <hr class="divider" />
 
       <!-- Withdraw Form -->
-<div class="withdraw-form">
-  <h:form id="withdrawForm">
-      <div class="form-group">
-          <p:outputLabel for="amount" value="Withdraw Amount:" />
-          <p:inputText id="amount" placeholder="Enter the amount" value="#{withdraw.withdrawAmount}" />
-      </div>
-      <div class="form-group">
-          <p:outputLabel for="transferType" value="Select Transaction Type:" />
-          <p:selectOneMenu id="transferType" value="#{withdraw.transferType}">
+      <div class="withdraw-form">
+        <h:form id="withdrawForm">
+          <div class="form-group">
+            <p:outputLabel for="amount" value="Withdraw Amount:" />
+            <p:inputText
+              id="amount"
+              placeholder="Enter the amount"
+              value="#{withdraw.withdrawAmount}" />
+          </div>
+          <div class="form-group">
+            <p:outputLabel
+              for="transferType"
+              value="Select Transaction Type:" />
+            <p:selectOneMenu id="transferType" value="#{withdraw.transferType}">
               <f:selectItem itemLabel="Withdrawal" itemValue="withdrawal" />
-              <f:selectItem itemLabel="Internal Transfer" itemValue="internalTransfer" />
+              <f:selectItem
+                itemLabel="Internal Transfer"
+                itemValue="internalTransfer" />
               <p:ajax update="withdrawForm" />
-          </p:selectOneMenu>
+            </p:selectOneMenu>
+          </div>
+
+          <!-- Withdrawal Form -->
+          <h:panelGroup rendered="#{withdraw.transferType eq 'withdrawal'}">
+            <!-- No need to repeat the "Enter Amount" field here -->
+            <div class="form-group">
+              <p:commandButton
+                value="Make Withdrawal"
+                action="#{withdraw.makeWithdraw()}"
+                update="messages @form" >
+                <p:confirm
+                header="Confirmation"
+                message="Are you sure you want to proceed?"
+                icon="pi pi-info-circle" />
+              </p:commandButton>
+            </div>
+          </h:panelGroup>
+
+          <!-- Internal Transfer Form -->
+          <h:panelGroup
+            rendered="#{withdraw.transferType eq 'internalTransfer'}">
+            <div class="form-group">
+              <p:outputLabel for="email" value="Enter Email:" />
+              <p:inputText
+                id="email"
+                placeholder="Enter the email"
+                value="#{withdraw.email}" />
+            </div>
+            <div class="form-group">
+              <p:outputLabel for="accountId" value="Enter Account ID:" />
+              <p:inputText
+                id="accountId"
+                placeholder="Enter the account ID"
+                value="#{withdraw.accountId}" />
+            </div>
+            <div class="form-group">
+              <p:commandButton
+                value="Make Internal Transfer"
+                action="#{withdraw.makeInternalTransfer()}"
+                update="messages @form" >
+                <p:confirm
+                header="Confirmation"
+                message="Are you sure you want to proceed?"
+                icon="pi pi-info-circle" />
+              </p:commandButton>
+            </div>
+          </h:panelGroup>
+          <p:confirmDialog
+            global="true"
+            showEffect="fade"
+            hideEffect="fade"
+            responsive="true"
+            width="350">
+            <p:commandButton
+              icon="pi pi-check"
+              value="Yes"
+              type="button"
+              styleClass="ui-confirmdialog-yes" />
+              <p:commandButton
+              icon="pi pi-times"
+              value="No"
+              type="button"
+              styleClass="ui-confirmdialog-no ui-button-danger" />
+          </p:confirmDialog>
+        </h:form>
       </div>
 
-      <!-- Withdrawal Form -->
-      <h:panelGroup rendered="#{withdraw.transferType eq 'withdrawal'}">
-          <!-- No need to repeat the "Enter Amount" field here -->
-          <div class="form-group">
-              <p:commandButton value="Make Withdrawal" action="#{withdraw.makeWithdraw()}" update="messages @form" />
-          </div>
-      </h:panelGroup>
-
-      <!-- Internal Transfer Form -->
-      <h:panelGroup rendered="#{withdraw.transferType eq 'internalTransfer'}">
-          <div class="form-group">
-              <p:outputLabel for="email" value="Enter Email:" />
-              <p:inputText id="email" placeholder="Enter the email" value="#{withdraw.email}" />
-          </div>
-          <div class="form-group">
-              <p:outputLabel for="accountId" value="Enter Account ID:" />
-              <p:inputText id="accountId" placeholder="Enter the account ID" value="#{withdraw.accountId}" />
-          </div>
-          <div class="form-group">
-              <p:commandButton value="Make Internal Transfer" action="#{withdraw.makeInternalTransfer()}" update="messages @form" />
-          </div>
-      </h:panelGroup>
-      
-  </h:form>
-</div>
-
-<!-- Withdraw Information -->
-<div class="withdraw-info">
-  <h3>How to Make a Transaction:</h3>
-  <ol>
-      <li>Enter the withdrawal amount in the "Withdraw Amount" field.</li>
-      <li>Choose the transaction type from the dropdown: Withdrawal or Internal Transfer.</li>
-      <li>Enter the required details based on your selection.</li>
-      <li>Click the appropriate button to complete the transaction.</li>
-  </ol>
-  <p>
-      Please ensure that you have sufficient funds in your account before making a transaction.
-      Transactions are subject to processing and may take some time to reflect in your account balance.
-  </p>
-</div>
-
+      <!-- Withdraw Information -->
+      <div class="withdraw-info">
+        <h3>How to Make a Transaction:</h3>
+        <ol>
+          <li>Enter the withdrawal amount in the "Withdraw Amount" field.</li>
+          <li>
+            Choose the transaction type from the dropdown: Withdrawal or
+            Internal Transfer.
+          </li>
+          <li>Enter the required details based on your selection.</li>
+          <li>Click the appropriate button to complete the transaction.</li>
+        </ol>
+        <p>
+          Please ensure that you have sufficient funds in your account before
+          making a transaction. Transactions are subject to processing and may
+          take some time to reflect in your account balance.
+        </p>
+      </div>
     </div>
   </h:body>
 

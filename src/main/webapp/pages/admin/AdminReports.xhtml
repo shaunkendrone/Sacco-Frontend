@@ -23,19 +23,45 @@
     <style>
       .chart-container {
         display: flex;
-        /* justify-content: space-between; */
-        flex-wrap: wrap;
-        margin-bottom: -20px; /* To remove the large space between charts */
+        justify-content: center;
       }
 
       .chart {
-        flex: 0 0 calc(30% - 10px);
+        width: 80%;
+        max-width: 350px;
+        margin: 10px;
+      }
+
+      .chart .p-card {
+        width: 100%;
+      }
+      .report-tabs {
+        display: flex;
+        justify-content: center;
         margin-bottom: 20px;
       }
 
-      .chart-title {
-        text-align: center;
-        margin-bottom: 10px;
+      .report-tab-button {
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 18px;
+        font-family: "Arial", sans-serif;
+        border-radius: 5px;
+        margin: 0 10px;
+        transition: background-color 0.3s;
+      }
+
+      .report-tab-button.active {
+        background-color: #f5f5f5;
+        color: #007bff;
+      }
+
+      .report-tab-button:hover {
+        background-color: #f5f5f5;
+        color: #007bff;
       }
     </style>
   </h:head>
@@ -141,23 +167,60 @@
         Reports and Analysis
       </h1>
       <hr class="divider" />
-      <h2>Member Reports</h2>
-      <div class="chart-container">
+      <div class="report-tabs">
+        <button
+          id="memberTab"
+          class="report-tab-button active"
+          onclick="showReport('member')">
+          Member Reports
+        </button>
+        <button
+          id="transactionTab"
+          class="report-tab-button"
+          onclick="showReport('transaction')">
+          Transaction Reports
+        </button>
+      </div>
+
+      <div id="memberReports" class="chart-container">
         <div class="chart">
-          <div class="card">
-            <h3 class="chart-title">Gender Distribution</h3>
+          <div class="p-card p-shadow-3">
+            <h3 class="chart-title" style="text-align: center">
+              Approved Members Gender Distribution
+            </h3>
             <p:pieChart
+              type="pie"
               model="#{chartJsView.pieModel}"
-              style="width: 100%; height: 300px" />
+              style="height: 200px" />
           </div>
         </div>
         <div class="chart">
-          <div class="card">
-            <h3 class="chart-title">Membership Status</h3>
+          <div class="p-card p-shadow-3">
+            <h3 class="chart-title" style="text-align: center">
+              Membership Status
+            </h3>
             <p:donutChart
+              type="donut"
               model="#{chartJsView.donutModel}"
-              style="width: 100%; height: 300px" />
+              style="height: 200px" />
           </div>
+        </div>
+        <div class="chart">
+          <div class="p-card p-shadow-3">
+            <h3 class="chart-title" style="text-align: center">
+              Member Age Distribution
+            </h3>
+            <p:barChart
+              type="bar"
+              model="#{chartJsView.ageDistributionModel}"
+              style="width: 100%; height: 360px; max-width: 350px" />
+          </div>
+        </div>
+      </div>
+      <div id="transactionReports">
+        <div class="chart">
+
+          
         </div>
       </div>
     </div>
@@ -176,6 +239,33 @@
         content.classList.remove("extend");
       });
     });
+  </script>
+  <script>
+    function showReport(reportType) {
+      if (reportType === "member") {
+        document.getElementById("memberReports").style.display = "flex";
+        document.getElementById("transactionReports").style.display = "none";
+        document.getElementById("memberTab").classList.add("active");
+        document.getElementById("transactionTab").classList.remove("active");
+      } else if (reportType === "transaction") {
+        document.getElementById("memberReports").style.display = "none";
+        document.getElementById("transactionReports").style.display = "flex";
+        document.getElementById("memberTab").classList.remove("active");
+        document.getElementById("transactionTab").classList.add("active");
+      }
+
+      // Toggle active class on report tab buttons
+      // const reportTabButtons = document.querySelectorAll(".report-tab-button");
+      // reportTabButtons.forEach((button) => {
+      //   button.classList.toggle(
+      //     "active",
+      //     button.textContent === `${reportType} Reports`
+      //   );
+      // });
+    }
+
+    // Display member reports by default
+    showReport("member");
   </script>
   <script src="resources/js/fontawesome.js"></script>
 </html>

@@ -135,8 +135,7 @@
       <!-- Transaction Table -->
       <div class="transaction-table">
         <p:growl id="messages" showDetail="true" />
-        <h:form
-          >z
+        <h:form>
           <p:dataTable
             var="member"
             value="#{myMembers.members}"
@@ -200,7 +199,7 @@
                 <p:confirm
                   header="Confirmation"
                   message="Are you sure you want to proceed?"
-                  icon="pi pi-exclamation-triangle" />
+                  icon="pi pi-info-cirlce" />
               </p:commandButton>
             </p:column>
 
@@ -214,7 +213,7 @@
                 <p:confirm
                   header="Confirmation"
                   message="Are you sure you want to proceed?"
-                  icon="pi pi-info-circle" />
+                  icon="pi pi-exclamation-triangle" />
               </p:commandButton>
             </p:column>
           </p:dataTable>
@@ -272,7 +271,7 @@
               icon="pi pi-times"
               value="No"
               type="button"
-              styleClass="ui-confirmdialog-no ui-button-flat" />
+              styleClass="ui-confirmdialog-no ui-button-danger" />
           </p:confirmDialog>
         </h:form>
       </div>

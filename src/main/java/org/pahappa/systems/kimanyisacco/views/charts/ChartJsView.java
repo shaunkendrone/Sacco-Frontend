@@ -9,10 +9,16 @@ import javax.faces.bean.RequestScoped;
 
 import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.models.Members;
+// import org.primefaces.component.barchart.BarChart;
 import org.primefaces.model.charts.ChartData;
+import org.primefaces.model.charts.bar.BarChartDataSet;
+import org.primefaces.model.charts.bar.BarChartModel;
+import org.primefaces.model.charts.bar.BarChartOptions;
 import org.primefaces.model.charts.donut.DonutChartDataSet;
 import org.primefaces.model.charts.donut.DonutChartModel;
 import org.primefaces.model.charts.donut.DonutChartOptions;
+import org.primefaces.model.charts.optionconfig.legend.Legend;
+// import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.PieChartModel;
 
@@ -21,6 +27,7 @@ import org.primefaces.model.charts.pie.PieChartModel;
 public class ChartJsView implements java.io.Serializable {
     private PieChartModel pieModel;
     private DonutChartModel donutModel;
+    private BarChartModel ageDistributionModel;
 
     private List<Members> approvedMembers;
     private List<Members> members;
@@ -50,24 +57,25 @@ public class ChartJsView implements java.io.Serializable {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         SaccoDao saccoDao = new SaccoDao();
         members = saccoDao.allMembers();
         approvedMembers = saccoDao.getApprovedMembers();
         createPieModel();
         createDonutModel();
+        createAgeDistributionModel();
     }
 
     private void createPieModel() {
         pieModel = new PieChartModel();
         ChartData data = new ChartData();
-    
+
         PieChartDataSet dataSet = new PieChartDataSet();
         List<Number> values = new ArrayList<>();
-    
+
         int maleCount = 0;
         int femaleCount = 0;
-    
+
         // Iterate over the approvedMembers list to count genders
         for (Members member : approvedMembers) {
             if (member.getGender().equalsIgnoreCase("Male")) {
@@ -76,29 +84,29 @@ public class ChartJsView implements java.io.Serializable {
                 femaleCount++;
             }
         }
-    
+
         // Add the counts to the pie chart dataset
         values.add(maleCount);
         values.add(femaleCount);
         dataSet.setData(values);
-    
+
         // Set background colors for male and female slices in the chart
         List<String> bgColors = new ArrayList<>();
         bgColors.add("rgb(54, 162, 235)"); // Blue for Male
         bgColors.add("rgb(255, 99, 132)"); // Red for Female
         dataSet.setBackgroundColor(bgColors);
-    
+
         data.addChartDataSet(dataSet);
-    
+
         // Set the labels for male and female slices in the chart
         List<String> labels = new ArrayList<>();
         labels.add("Male");
         labels.add("Female");
         data.setLabels(labels);
-    
+
         pieModel.setData(data);
     }
-    
+
     public void createDonutModel() {
         donutModel = new DonutChartModel();
         ChartData data = new ChartData();
@@ -108,7 +116,7 @@ public class ChartJsView implements java.io.Serializable {
 
         DonutChartDataSet dataSet = new DonutChartDataSet();
         List<Number> values = new ArrayList<>();
-        
+
         // Calculate the count of approved, rejected, and pending members
         int approvedCount = 0;
         int rejectedCount = 0;
@@ -124,7 +132,7 @@ public class ChartJsView implements java.io.Serializable {
                 pendingCount++;
             }
         }
-        
+
         values.add(approvedCount);
         values.add(rejectedCount);
         values.add(pendingCount);
@@ -146,6 +154,51 @@ public class ChartJsView implements java.io.Serializable {
         donutModel.setData(data);
     }
 
+
+    public void createAgeDistributionModel() {
+        ageDistributionModel = new BarChartModel();
+        ChartData data = new ChartData();
+        ageDistributionModel.setData(data);
+    
+        BarChartDataSet dataSet = new BarChartDataSet();
+        List<Number> values = new ArrayList<>();
+    
+        // Get the age distribution data from your DAO
+        SaccoDao saccoDao = new SaccoDao();
+        List<Integer> ageDistribution = saccoDao.getAgeDistribution();
+    
+        values.addAll(ageDistribution);
+        dataSet.setData(values);
+    
+        // Assuming you want varying colors for the bars
+        List<String> backgroundColors = new ArrayList<>();
+        backgroundColors.add("rgb(255, 99, 132)");
+        backgroundColors.add("rgb(54, 162, 235)");
+        backgroundColors.add("rgb(255, 205, 86)");
+        backgroundColors.add("rgb(75, 192, 192)");
+        backgroundColors.add("rgb(153, 102, 255)");
+        dataSet.setBackgroundColor(backgroundColors);
+    
+        data.addChartDataSet(dataSet);
+    
+        List<String> labels = new ArrayList<>();
+        // Make sure the number of labels matches the number of data points
+        labels.add("18-25");
+        labels.add("25-32");
+        labels.add("32-40");
+        labels.add("40-50");
+        labels.add("50+");
+        data.setLabels(labels);
+    
+        BarChartOptions options = new BarChartOptions();
+        Legend legend = new Legend();
+        legend.setDisplay(true); // Display the legend
+        options.setLegend(legend);
+        ageDistributionModel.setOptions(options);
+
+        ageDistributionModel.setData(data);
+    }
+
     public DonutChartModel getDonutModel() {
         return donutModel;
     }
@@ -153,5 +206,14 @@ public class ChartJsView implements java.io.Serializable {
     public void setDonutModel(DonutChartModel donutModel) {
         this.donutModel = donutModel;
     }
+
+    public BarChartModel getAgeDistributionModel() {
+        return ageDistributionModel;
+    }
+
+    public void setAgeDistributionModel(BarChartModel ageDistributionModel) {
+        this.ageDistributionModel = ageDistributionModel;
+    }
+    
 
 }

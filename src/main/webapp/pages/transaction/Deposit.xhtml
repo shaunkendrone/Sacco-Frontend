@@ -64,7 +64,7 @@
             value="Withdraw"
         /></span>
       </div>
-      
+
       <div class="menu-item">
         <i class="pi pi-user" aria-hidden="true"></i>
         <span>
@@ -107,18 +107,27 @@
     </div>
 
     <div class="content">
-      
       <div class="profile-section">
         <div class="profile-name">
-            <h2 style="color:black;font-family: 'Times New Roman', Times, serif;">Welcome <h:outputText value="#{dashboard.firstName}" /></h2>
+          <h2
+            style="color: black; font-family: 'Times New Roman', Times, serif">
+            Welcome <h:outputText value="#{dashboard.firstName}" />
+          </h2>
         </div>
         <div class="profile-dropdown">
-            <h:form>
-            <p:commandButton style="margin-right: 10px;" value="View Profile" icon="pi pi-user" action="#{profile.viewProfile()}" />
+          <h:form>
+            <p:commandButton
+              style="margin-right: 10px"
+              value="View Profile"
+              icon="pi pi-user"
+              action="#{profile.viewProfile()}" />
           </h:form>
-            <p:commandButton value="Logout" icon="pi pi-sign-out" action="#{userSessionBean.logout()}" />
+          <p:commandButton
+            value="Logout"
+            icon="pi pi-sign-out"
+            action="#{userSessionBean.logout()}" />
         </div>
-    </div>
+      </div>
       <h1
         style="
           color: #477deb;
@@ -135,15 +144,43 @@
         <p:growl id="messages" showDetail="true" />
         <h:form>
           <p:growl id="messages" showDetail="true" />
-            <div class="form-group">
-                <p:outputLabel for="amount" value="Deposit Amount:" />
-                <p:inputText id="amount" placeholder="Enter the amount" value="#{deposit.depositAmount}" />
-            </div>
-            <div class="form-group">
-                <p:commandButton value="Make Deposit" action="#{deposit.makeDeposit}" update="messages @form" />
-            </div>
+          <div class="form-group">
+            <p:outputLabel for="amount" value="Deposit Amount:" />
+            <p:inputText
+              id="amount"
+              placeholder="Enter the amount"
+              value="#{deposit.depositAmount}" />
+          </div>
+          <div class="form-group">
+            <p:commandButton
+              value="Make Deposit"
+              action="#{deposit.makeDeposit}"
+              update="messages @form">
+              <p:confirm
+              header="Confirmation"
+              message="Are you sure you want to proceed?"
+              icon="pi pi-info-cirlce" />
+            </p:commandButton>
+          </div>
+          <p:confirmDialog
+            global="true"
+            showEffect="fade"
+            hideEffect="fade"
+            responsive="true"
+            width="350">
+            <p:commandButton
+              icon="pi pi-check"
+              value="Yes"
+              type="button"
+              styleClass="ui-confirmdialog-yes" />
+              <p:commandButton
+              icon="pi pi-times"
+              value="No"
+              type="button"
+              styleClass="ui-confirmdialog-no ui-button-danger" />
+          </p:confirmDialog>
         </h:form>
-    </div>
+      </div>
 
       <!-- Deposit Information -->
       <div class="deposit-info">

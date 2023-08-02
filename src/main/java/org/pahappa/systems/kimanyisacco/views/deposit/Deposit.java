@@ -1,7 +1,7 @@
 package org.pahappa.systems.kimanyisacco.views.deposit;
 
 import org.pahappa.Dao.SaccoDao;
-import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
+// import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 // import org.pahappa.systems.kimanyisacco.models.Transactions;
@@ -67,12 +67,12 @@ public class Deposit {
 
     // Getter and Setter for depositAmount
 
-    private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        Flash flash = facesContext.getExternalContext().getFlash();
-        flash.setKeepMessages(true);
-        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
-    }
+    // private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
+    //     FacesContext facesContext = FacesContext.getCurrentInstance();
+    //     Flash flash = facesContext.getExternalContext().getFlash();
+    //     flash.setKeepMessages(true);
+    //     facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    // }
 
     public void makeDeposit() {
         // Retrieve the logged-in member from the session

@@ -1,5 +1,6 @@
 package org.pahappa.Dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
 import org.hibernate.Criteria;
@@ -71,6 +72,8 @@ public class SaccoDao {
         return membersList;
     }
 
+    
+
     public List<Members> getApprovedMembers(){
         Session session = SessionConfiguration.getSessionFactory().openSession();
         session.beginTransaction();
@@ -84,6 +87,49 @@ public class SaccoDao {
     
         return membersList;
     }
+
+    public List<Integer> getAgeDistribution() {
+        Session session = null;
+        try {
+            session = SessionConfiguration.getSessionFactory().openSession();
+            
+            // Query to get ages of approved members
+            String hql = "SELECT YEAR(CURRENT_DATE()) - YEAR(m.dateOfBirth) FROM Members m WHERE m.status = :status";
+            Query query = session.createQuery(hql);
+            query.setParameter("status", "Approved");
+            List<Integer> ages = query.list();
+            
+            // Categorize ages into different ranges (18-25, 25-32, 32-40, 40-50, 50+)
+            List<Integer> ageDistribution = new ArrayList<>(5);
+            int[] ranges = {25, 32, 40, 50}; // Age ranges
+            for (int i = 0; i <= ranges.length; i++) {
+                ageDistribution.add(0);
+            }
+            for (int age : ages) {
+                if (age >= 18 && age <= ranges[0]) {
+                    ageDistribution.set(0, ageDistribution.get(0) + 1);
+                } else if (age <= ranges[1]) {
+                    ageDistribution.set(1, ageDistribution.get(1) + 1);
+                } else if (age <= ranges[2]) {
+                    ageDistribution.set(2, ageDistribution.get(2) + 1);
+                } else if (age <= ranges[3]) {
+                    ageDistribution.set(3, ageDistribution.get(3) + 1);
+                } else {
+                    ageDistribution.set(4, ageDistribution.get(4) + 1);
+                }
+            }
+            return ageDistribution;
+        } catch (HibernateException e) {
+            // Handle any exceptions if necessary
+            e.printStackTrace();
+            return new ArrayList<>();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+    
 
     public int approvedMemberCount(){
         Session session = SessionConfiguration.getSessionFactory().openSession();
