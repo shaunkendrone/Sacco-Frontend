@@ -15,6 +15,21 @@ public class AdminServiceImp implements AdminService {
     }
 
     @Override
+    public long getTotalDepositCount(){
+        return saccoDao.getTotalDepositCount();
+    }
+
+    @Override
+    public long getTotalWithdrawalCount() {
+        return saccoDao.getTotalWithdrawalCount();
+    }
+
+    @Override
+    public long getInternalTransferCount() {
+        return saccoDao.getInternalTransferCount();
+    }
+
+    @Override
     public int getTotalMemberCount() {
         return saccoDao.getTotalMemberCount();
     }

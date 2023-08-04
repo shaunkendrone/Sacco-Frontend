@@ -45,7 +45,7 @@
         </span>
       </div>
       <div class="menu-item">
-        <i class="pi pi-wallet" aria-hidden="true"></i>
+        <i class="pi pi-file-import" aria-hidden="true"></i>
         <span
           ><p:link
             style="
@@ -59,7 +59,7 @@
       </div>
 
       <div class="menu-item">
-        <i class="pi pi-money-bill" aria-hidden="true"></i>
+        <i class="pi pi-file-export" aria-hidden="true"></i>
         <span
           ><p:link
             style="
@@ -72,7 +72,7 @@
         /></span>
       </div>
       <div class="menu-item">
-        <i class="pi pi-user" aria-hidden="true"></i>
+        <i class="pi pi-money-bill" aria-hidden="true"></i>
         <span>
           <p:link
             style="
@@ -84,7 +84,7 @@
             value="Transaction Details" />
         </span>
       </div>
-      <div class="menu-item">
+      <!-- <div class="menu-item">
         <i class="pi pi-chart-pie" aria-hidden="true"></i>
         <span>
           <p:link
@@ -96,7 +96,7 @@
             outcome="/pages/transaction/Report.xhtml"
             value="Transaction Report" />
         </span>
-      </div>
+      </div> -->
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
         <span>
@@ -118,7 +118,7 @@
         <div class="profile-name">
           <h2
             style="color: black; font-family: 'Times New Roman', Times, serif">
-            Welcome <h:outputText value="#{dashboard.firstName}" />
+            Welcome <h:outputText id="em6" value="#{dashboard.firstName}" />
           </h2>
         </div>
         <div class="profile-dropdown">
@@ -157,17 +157,17 @@
           </div>
           <div class="profile-details">
             <h3>
-              <h:outputText value="#{dashboard.firstName}" />
-              <h:outputText
+              <h:outputText id="em" value="#{dashboard.firstName}" />
+              <h:outputText id="em1"
                 style="margin-left: 0.5em"
                 value="#{dashboard.lastName}" />
             </h3>
-            <p>Email: <h:outputText value="#{dashboard.email}" /></p>
+            <p>Email: <h:outputText id="em2" value="#{dashboard.email}" /></p>
             <p>
-              Phone Number: <h:outputText value="#{dashboard.phoneNumber}" />
+              Phone Number: <h:outputText id="em3" value="#{dashboard.phoneNumber}" />
             </p>
-            <p>Address: <h:outputText value="#{dashboard.address}" /></p>
-            <p>Occupation: <h:outputText value="#{dashboard.occupation}" /></p>
+            <p>Address: <h:outputText id="em4" value="#{dashboard.address}" /></p>
+            <p>Occupation: <h:outputText id="em5" value="#{dashboard.occupation}" /></p>
             <p>Account Id: <h:outputText value="#{dashboard.accountId}" /></p>
           </div>
         </div>
@@ -276,9 +276,8 @@
             </div>
             <p:commandButton value="Save" 
             actionListener="#{dashboard.updateProfile}" 
-            update="messages @form" 
+            update="messages @form em em1 em2 em3 em4 em5 em6"
             process="@form" 
-            oncomplete="refreshPage();"
              />
           </h:form>
           <p:growl id="messages" showDetail="true" />
@@ -301,9 +300,5 @@
       });
     });
   </script>
-  <script>
-    function refreshPage() {
-        location.reload(); // Reload the current page
-    }
-    </script>
+  
 </html>

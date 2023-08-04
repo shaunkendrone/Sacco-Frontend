@@ -2,15 +2,14 @@ package org.pahappa.systems.kimanyisacco.services;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.pahappa.systems.kimanyisacco.models.Members;
-import org.pahappa.systems.kimanyisacco.views.authentication.UserSessionBean;
 
 public class LoginServiceImp implements LoginService {
     private MemberService memberService;
-    private UserSessionBean userSessionBean;
+    // private UserSessionBean userSessionBean;
 
     public LoginServiceImp() {
         this.memberService = new MemberServiceImp();
-        this.userSessionBean = new UserSessionBean();
+        // this.userSessionBean = new UserSessionBean();
     }
 
     @Override

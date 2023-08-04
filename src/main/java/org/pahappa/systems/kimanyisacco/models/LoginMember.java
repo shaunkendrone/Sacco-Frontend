@@ -5,8 +5,6 @@ public class LoginMember {
     private String password;
     private String status = "Approved";
 
-    
-    
     public String getEmail() {
         return email;
     }

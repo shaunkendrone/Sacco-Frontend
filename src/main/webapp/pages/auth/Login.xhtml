@@ -77,6 +77,9 @@
       </style>
     </f:facet>
   </h:head>
+  <f:metadata>
+    <f:event listener="#{userSessionBean.checkSession}" type="preRenderView" />
+</f:metadata>
   <h:outputScript>
   $(document).ready(function() {
     // Set the duration (in milliseconds) for the messages to be displayed
@@ -145,8 +148,6 @@
                   <a href="#url" class="forgot">Forgot password?</a>
                 </div>
                 <br />
-
-
                 <p:commandButton
                   styleClass="btn btn-primary btn-block"
                   value="Login"

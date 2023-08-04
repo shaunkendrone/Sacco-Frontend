@@ -7,10 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.context.Flash;
-
 import org.pahappa.Dao.SaccoDao;
-import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.services.AccountService;
@@ -104,12 +101,12 @@ public class Withdraw {
 
     }
 
-    private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        Flash flash = facesContext.getExternalContext().getFlash();
-        flash.setKeepMessages(true);
-        facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
-    }
+    // private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
+    //     FacesContext facesContext = FacesContext.getCurrentInstance();
+    //     Flash flash = facesContext.getExternalContext().getFlash();
+    //     flash.setKeepMessages(true);
+    //     facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
+    // }
 
     public void makeWithdraw() {
         Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext()

@@ -22,22 +22,13 @@
     </f:facet>
   </h:head>
   <h:outputScript>
-  $(document).ready(function() {
-    // Set the duration (in milliseconds) for the messages to be displayed
-    var displayDuration = 2000; // Change this value as needed (e.g., 3000 for 3 seconds)
-
-    // Find the messages component by its ID
-    var messages = $("#messages");
-
-    // Function to hide the messages after the specified duration
-    function hideMessages() {
-      messages.hide("fade");
-    }
-
-    // Hide the messages after the specified duration
-    setTimeout(hideMessages, displayDuration);
-  });
-</h:outputScript>
+    $(document).ready(function() { 
+      var displayDuration = 2000; 
+      var messages = $("#messages"); 
+      function hideMessages() {
+         messages.hide("fade"); }
+    setTimeout(hideMessages, displayDuration); });
+  </h:outputScript>
 
   <h:body style="background-color: #f5f5f5">
     <div class="sidebar">
@@ -96,7 +87,7 @@
             value="Transaction Details" />
         </span>
       </div>
-      <div class="menu-item">
+      <!-- <div class="menu-item">
         <i class="pi pi-chart-pie" aria-hidden="true"></i>
         <span>
           <p:link
@@ -108,7 +99,7 @@
             outcome="/pages/transaction/Report.xhtml"
             value="Transaction Report" />
         </span>
-      </div>
+      </div> -->
 
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
@@ -150,7 +141,7 @@
       </h1>
       <hr class="divider" />
       <div class="card-container">
-        <!-- <div class="card">
+        <div class="card">
           <div class="icon">
             <i
               style="font-size: 40px"
@@ -158,73 +149,56 @@
               aria-hidden="true"></i>
           </div>
           <h2>Total Transactions</h2>
-          <h2 style="text-align: right; color: #777">
-            <h:outputText value="#{myTransactions.getNumberOfTransactions()}" />
-        </h2>
-        <div class="more-info">
-          <p:link style="color: #fff;font-family: 'Times New Roman', Times, serif;" outcome="/pages/transaction/Details.xhtml">
-          <span>More info <i class="fas fa-info-circle"></i></span>
-          
-          </p:link>
-        </div>
-        </div> -->
-        <div class="card">
-          <div class="icon">
-              <i style="font-size: 40px" class="pi pi-money-bill" aria-hidden="true"></i>
-          </div>
-          <h2>Total Transactions</h2>
           <h2 class="number">
-              <h:outputText value="#{myTransactions.getNumberOfTransactions()}" />
+            <h:outputText value="#{myTransactions.getNumberOfTransactions()}" />
           </h2>
           <div class="more-info">
-              <p:link style="color: #fff; font-family: 'Times New Roman', Times, serif;" outcome="/pages/transaction/Details.xhtml">
-                  <span>More info <i class="fas fa-info-circle"></i></span>
-              </p:link>
+            <p:link
+              style="color: #fff; font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/transaction/Details.xhtml">
+              <span>More info <i class="fas fa-info-circle"></i></span>
+            </p:link>
           </div>
-      </div>
+        </div>
         <div class="card">
           <div class="icon">
-              <i style="font-size: 40px" class="pi pi-file-import" aria-hidden="true"></i>
+            <i
+              style="font-size: 40px"
+              class="pi pi-file-import"
+              aria-hidden="true"></i>
           </div>
           <h2>Deposits</h2>
           <h2 class="number">
-              <h:outputText value="#{deposit.getNumberOfDeposits()}" />
+            <h:outputText value="#{deposit.getNumberOfDeposits()}" />
           </h2>
           <div class="more-info">
-              <p:link style="color: #fff; font-family: 'Times New Roman', Times, serif;" outcome="/pages/transaction/Deposit.xhtml">
-                  <span>More info <i class="fas fa-info-circle"></i></span>
-              </p:link>
+            <p:link
+              style="color: #fff; font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/transaction/Deposit.xhtml">
+              <span>More info <i class="fas fa-info-circle"></i></span>
+            </p:link>
           </div>
-      </div>
+        </div>
         <div class="card">
           <div class="icon">
-              <i style="font-size: 40px" class="pi pi-file-export" aria-hidden="true"></i>
+            <i
+              style="font-size: 40px"
+              class="pi pi-file-export"
+              aria-hidden="true"></i>
           </div>
           <h2>Withdrawals</h2>
           <h2 class="number">
-              <h:outputText value="#{withdraw.getNumberOfWithdraws()}" />
+            <h:outputText value="#{withdraw.getNumberOfWithdraws()}" />
           </h2>
           <div class="more-info">
-              <p:link style="color: #fff; font-family: 'Times New Roman', Times, serif;" outcome="/pages/transaction/Withdraw.xhtml">
-                  <span>More info <i class="fas fa-info-circle"></i></span>
-              </p:link>
-          </div>
-      </div>
-      <div class="card">
-        <div class="icon">
-            <i style="font-size: 40px" class="pi pi-wallet" aria-hidden="true"></i>
-        </div>
-        <h2>Account Balance</h2>
-        <h2 class="number">
-            <h:outputText value="#{myTransactions.getAccountBalance()}" />
-        </h2>
-        <div class="more-info">
-            <p:link style="color: #fff; font-family: 'Times New Roman', Times, serif;" outcome="/pages/transaction/Report.xhtml">
-                <span>More info <i class="fas fa-info-circle"></i></span>
+            <p:link
+              style="color: #fff; font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/transaction/Withdraw.xhtml">
+              <span>More info <i class="fas fa-info-circle"></i></span>
             </p:link>
+          </div>
         </div>
-    </div>
-        <!-- <div class="card">
+        <div class="card">
           <div class="icon">
             <i
               style="font-size: 40px"
@@ -232,14 +206,17 @@
               aria-hidden="true"></i>
           </div>
           <h2>Account Balance</h2>
-          <h2 style="text-align: right; color: #777">
+          <h2 class="number">
             <h:outputText value="#{myTransactions.getAccountBalance()}" />
-        </h2>
-        <div class="more-info">
-          <span>More info</span>
-          <i class="fas fa-info-circle"></i>
+          </h2>
+          <div class="more-info">
+            <p:link
+              style="color: #fff; font-family: 'Times New Roman', Times, serif"
+              outcome="/pages/transaction/Report.xhtml">
+              <span>More info <i class="fas fa-info-circle"></i></span>
+            </p:link>
+          </div>
         </div>
-        </div> -->
       </div>
       <br />
       <h2 style="color: #477deb; margin-bottom: 30px">
@@ -280,7 +257,7 @@
       </h:form>
     </div>
   </h:body>
-<script src="resources/js/fontawesome.js" type="text/javascript"></script>
+  <script src="resources/js/fontawesome.js" type="text/javascript"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       var sidebar = document.querySelector(".sidebar");

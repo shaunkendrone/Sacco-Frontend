@@ -3,7 +3,6 @@ package org.pahappa.systems.kimanyisacco.views.dashboard;
 import java.io.IOException;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -12,14 +11,20 @@ import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.services.AdminService;
 import org.pahappa.systems.kimanyisacco.services.AdminServiceImp;
-import org.pahappa.systems.kimanyisacco.views.authentication.UserSessionBean;
 
 @ManagedBean(name = "adminDashboard")
 @ViewScoped
 public class AdminDashboard {
     private String firstName;
     private AdminService adminService;
-    
+    private int totalMembers;
+    private long totalTransactions;
+    private long totalDeposits;
+    private int approvedMembers;
+    private int pendingMembers;
+    private long totalWithdrawals;
+    private long internalTransferCount;
+
     public AdminService getAdminService() {
         return adminService;
     }
@@ -27,11 +32,23 @@ public class AdminDashboard {
     public void setAdminService(AdminService adminService) {
         this.adminService = adminService;
     }
+    
 
-    private int totalMembers;
-    private long totalTransactions;
-    private int approvedMembers;
-    private int pendingMembers;
+    public long getInternalTransferCount() {
+        return internalTransferCount;
+    }
+
+    public void setInternalTransferCount(long internalTransferCount) {
+        this.internalTransferCount = internalTransferCount;
+    }
+
+    public long getTotalWithdrawals() {
+        return totalWithdrawals;
+    }
+
+    public void setTotalWithdrawals(long totalWithdrawals) {
+        this.totalWithdrawals = totalWithdrawals;
+    }
 
     public int getPendingMembers() {
         return pendingMembers;
@@ -39,6 +56,14 @@ public class AdminDashboard {
 
     public void setPendingMembers(int pendingMembers) {
         this.pendingMembers = pendingMembers;
+    }
+
+    public long getTotalDeposits() {
+        return totalDeposits;
+    }
+
+    public void setTotalDeposits(long totalDeposits) {
+        this.totalDeposits = totalDeposits;
     }
 
     public int getApprovedMembers() {
@@ -73,16 +98,16 @@ public class AdminDashboard {
         this.firstName = firstName;
     }
 
-    @ManagedProperty("#{userSessionBean}")
-    private UserSessionBean userSessionBean;
+    // @ManagedProperty("#{userSessionBean}")
+    // private UserSessionBean userSessionBean;
 
-    public UserSessionBean getUserSessionBean() {
-        return userSessionBean;
-    }
+    // public UserSessionBean getUserSessionBean() {
+    //     return userSessionBean;
+    // }
 
-    public void setUserSessionBean(UserSessionBean userSessionBean) {
-        this.userSessionBean = userSessionBean;
-    }
+    // public void setUserSessionBean(UserSessionBean userSessionBean) {
+    //     this.userSessionBean = userSessionBean;
+    // }
 
     public AdminDashboard() throws IOException{
         Members adminUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("adminUser");
@@ -92,7 +117,10 @@ public class AdminDashboard {
             adminService = new AdminServiceImp(saccoDao);
 
             totalMembers = adminService.getTotalMemberCount();
-            totalTransactions = (adminService.getTotalTransactionCount());
+            totalTransactions = adminService.getTotalTransactionCount();
+            totalDeposits = adminService.getTotalDepositCount();
+            totalWithdrawals = adminService.getTotalWithdrawalCount();
+            internalTransferCount = adminService.getInternalTransferCount()/2;
             approvedMembers = adminService.getApprovedMemberCount();
             pendingMembers = adminService.getPendingMemberCount();
     }else{

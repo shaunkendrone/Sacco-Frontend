@@ -29,4 +29,6 @@ public interface TransactionService {
     void internalTransfer(Account senderAccount, Account recipientAccount, double amount, String transactionDate);
 
     int getInternalTransferCountForUser(Members member);
+
+    // List<Transactions> getTransactionsOverTime(String filter);
 }

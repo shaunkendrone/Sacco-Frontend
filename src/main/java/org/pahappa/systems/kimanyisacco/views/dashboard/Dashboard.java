@@ -161,14 +161,24 @@ public class Dashboard {
         if (loggedInUser != null) {
             // Check if the provided email is already taken
             boolean isEmailTaken = memberService.isEmailExists(email);
+            boolean isPhoneNumberTaken = memberService.isPhoneNumberExists(phoneNumber);
             if (isEmailTaken && !email.equals(loggedInUser.getEmail())) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         "Email Taken", "The email you entered is already taken. Please try another one."));
                 System.out.println("Email taken");
+                email = loggedInUser.getEmail();
                 return;
             } else {
                 System.out.println("Email not taken");
-    
+                if(isPhoneNumberTaken && !phoneNumber.equals(loggedInUser.getPhoneNumber())){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Phone Number Taken", "The phone number you entered is already taken. Please try another one."));
+                    System.out.println("Phone Number taken");
+                    phoneNumber = loggedInUser.getPhoneNumber();
+                    return;
+                }else{
+                    System.out.println("Phone Number not taken");
+                
                 // Update the user's information in the session
                 loggedInUser.setFirstName(firstName);
                 loggedInUser.setLastName(lastName);
@@ -187,13 +197,7 @@ public class Dashboard {
                 // Switch back to view mode
                 setEditMode(false);
     
-                // Refresh the input fields with the updated values
-                // firstName = loggedInUser.getFirstName();
-                // lastName = loggedInUser.getLastName();
-                // email = loggedInUser.getEmail();
-                // phoneNumber = loggedInUser.getPhoneNumber();
-                // address = loggedInUser.getAddress();
-                // occupation = loggedInUser.getOccupation();
+                }
             }
         }
     }

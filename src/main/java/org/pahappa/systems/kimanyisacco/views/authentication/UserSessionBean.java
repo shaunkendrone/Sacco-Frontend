@@ -40,4 +40,22 @@ public class UserSessionBean implements Serializable {
         ec.invalidateSession();
         ec.redirect(ec.getRequestContextPath() + Hyperlinks.login);
     }
+
+    public void checkSession() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = facesContext.getExternalContext();
+
+        // Check if the user is on the login page (replace "login.xhtml" with your actual login page URL)
+        if (externalContext.getRequestServletPath().contains("login.xhtml")) {
+            // Invalidate the current session
+            externalContext.invalidateSession();
+
+            // Redirect the user to the login page
+            try {
+                externalContext.redirect(externalContext.getRequestContextPath() + Hyperlinks.login);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

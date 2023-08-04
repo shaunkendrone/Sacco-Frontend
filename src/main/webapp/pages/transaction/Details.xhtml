@@ -38,7 +38,7 @@
         </span>
       </div>
       <div class="menu-item">
-        <i class="pi pi-wallet" aria-hidden="true"></i>
+        <i class="pi pi-file-import" aria-hidden="true"></i>
         <span
           ><p:link
             style="
@@ -52,7 +52,7 @@
       </div>
 
       <div class="menu-item">
-        <i class="pi pi-money-bill" aria-hidden="true"></i>
+        <i class="pi pi-file-export" aria-hidden="true"></i>
         <span
           ><p:link
             style="
@@ -66,7 +66,7 @@
       </div>
       
       <div class="menu-item">
-        <i class="pi pi-user" aria-hidden="true"></i>
+        <i class="pi pi-money-bill" aria-hidden="true"></i>
         <span>
           <p:link
             style="
@@ -78,7 +78,7 @@
             value="Transaction Details" />
         </span>
       </div>
-      <div class="menu-item">
+      <!-- <div class="menu-item">
         <i class="pi pi-chart-pie" aria-hidden="true"></i>
         <span>
           <p:link
@@ -90,7 +90,7 @@
             outcome="/pages/transaction/Report.xhtml"
             value="Transaction Report" />
         </span>
-      </div>
+      </div> -->
       <div class="menu-item">
         <i class="pi pi-sign-out"></i>
         <span>
@@ -143,19 +143,19 @@
             rowsPerPageTemplate="5,10,15"
             id="userTable"
             class="custom-table">
-            <p:column headerText="Transaction Id" sortBy="#{transaction.transactionId}" >
+            <p:column headerText="Transaction Id" >
               <h:outputText value="#{transaction.transactionId}" />
             </p:column>
 
-            <p:column headerText="Transaction Type" sortBy="#{transaction.transactionType}" >
+            <p:column headerText="Transaction Type" >
               <h:outputText value="#{transaction.transactionType}" />
             </p:column>
 
-            <p:column headerText="Transaction Amount" sortBy="#{transaction.transactionAmount}" >
+            <p:column headerText="Transaction Amount" >
               <h:outputText value="#{transaction.transactionAmount}" />
             </p:column>
 
-            <p:column headerText="Transaction Date" sortBy="#{transaction.transactionDate}" >
+            <p:column headerText="Transaction Date" >
               <h:outputText value="#{transaction.transactionDate}" />
             </p:column>
           </p:dataTable>

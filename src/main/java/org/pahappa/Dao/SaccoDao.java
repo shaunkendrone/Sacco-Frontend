@@ -1,5 +1,6 @@
 package org.pahappa.Dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -72,8 +73,6 @@ public class SaccoDao {
         return membersList;
     }
 
-    
-
     public List<Members> getApprovedMembers(){
         Session session = SessionConfiguration.getSessionFactory().openSession();
         session.beginTransaction();
@@ -130,7 +129,6 @@ public class SaccoDao {
         }
     }
     
-
     public int approvedMemberCount(){
         Session session = SessionConfiguration.getSessionFactory().openSession();
         session.beginTransaction();
@@ -158,7 +156,6 @@ public class SaccoDao {
     
         return count.intValue();
     }
-
 
     public void updateMemberStatus(Members member) {
         Session session = null;
@@ -191,7 +188,6 @@ public class SaccoDao {
         }
     }
     
-
     public void updateMemberStatusToRejected(Members member) {
         Session session = null;
         try {
@@ -262,7 +258,6 @@ public class SaccoDao {
             }
         }
     }
-
 
     public void saveAccount(Account account) {
         Session session = null;
@@ -342,7 +337,6 @@ public class SaccoDao {
         }
     }
     
-
     public Account getAccountByAccountId(int accountId) {
         Session session = null;
         try {
@@ -413,6 +407,7 @@ public class SaccoDao {
         }
     }
 
+    
     public long getTotalTransactionCount() {
         Session session = null;
         try {
@@ -426,6 +421,77 @@ public class SaccoDao {
             return 0;
         } finally {
             if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public List<Transactions> getAllTransactions(){
+        Session session = null;
+        try{
+            session = SessionConfiguration.getSessionFactory().openSession();
+            String hql = "FROM Transactions";
+            Query query = session.createQuery(hql);
+            return query.list();
+        }catch(HibernateException e){
+            e.printStackTrace();
+            return null;
+        }finally{
+            if(session != null){
+                session.close();
+            }
+        }
+    }
+
+    public long getTotalDepositCount(){
+        Session session = null;
+        try{
+            session = SessionConfiguration.getSessionFactory().openSession();
+            String hql = "SELECT COUNT(*) FROM Transactions WHERE transactionType = :transactionType";
+            Query query = session.createQuery(hql);
+            query.setParameter("transactionType", "Deposit");
+            return (Long) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+            return 0;
+        }finally{
+            if(session != null){
+                session.close();
+            }
+        }
+    }
+
+    public long getTotalWithdrawalCount(){
+        Session session = null;
+        try{
+            session = SessionConfiguration.getSessionFactory().openSession();
+            String hql = "SELECT COUNT(*) FROM Transactions WHERE transactionType = :transactionType";
+            Query query = session.createQuery(hql);
+            query.setParameter("transactionType", "Withdrawal");
+            return (Long) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+            return 0;
+        }finally{
+            if(session != null){
+                session.close();
+            }
+        }
+    }
+
+    public long getInternalTransferCount(){
+        Session session = null;
+        try{
+            session = SessionConfiguration.getSessionFactory().openSession();
+            String hql = "SELECT COUNT(*) FROM Transactions WHERE transactionType = :transactionType";
+            Query query = session.createQuery(hql);
+            query.setParameter("transactionType", "Internal Transfer");
+            return (Long) query.uniqueResult();
+        }catch(HibernateException e){
+            e.printStackTrace();
+            return 0;
+        }finally{
+            if(session != null){
                 session.close();
             }
         }

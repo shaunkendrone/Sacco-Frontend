@@ -107,6 +107,7 @@ public class TransactionServiceImp implements TransactionService {
         }
     }
 
+    
     @Override
     public Transactions getTransactionById(int transactionId) {
         return saccoDao.getTransactionById(transactionId);

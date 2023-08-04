@@ -17,7 +17,7 @@ import org.pahappa.systems.kimanyisacco.services.TransactionService;
 import org.pahappa.systems.kimanyisacco.services.TransactionServiceImp;
 
 @ManagedBean(name = "myTransactions")
-@SessionScoped // Use SessionScoped to retain data across multiple requests
+@SessionScoped 
 public class MyTransactions {
     private AccountService accountService;
     private TransactionService transactionService;
@@ -50,12 +50,14 @@ public class MyTransactions {
                 // Get the transactions of the account
                 List<Transactions> transactions = transactionService.getTransactionsForAccount(account);
 
-                // Sort the transactions in descending order based on the transactionDate
+                // Sort the transactions in descending order based on the transactionId
                 Collections.sort(transactions, new Comparator<Transactions>() {
                     @Override
                     public int compare(Transactions t1, Transactions t2) {
-                        // Sort in descending order by comparing the transactionDate
-                        return t2.getTransactionDate().compareTo(t1.getTransactionDate());
+                        // Sort in descending order by comparing the transactionId
+                        Integer id1 = t1.getTransactionId();
+                        Integer id2 = t2.getTransactionId();
+                        return id2.compareTo(id1);
                     }
                 });
 
@@ -84,12 +86,13 @@ public class MyTransactions {
         return 0.0;
     }
 
-    public int getNumberOfTransactions(){
+    public int getNumberOfTransactions() {
         Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .get("loggedInUser");
         if (loggedInUser != null) {
             SaccoDao saccoDao = new SaccoDao();
-            return saccoDao.getDepositCountForUser(loggedInUser)+saccoDao.getWithdrawCountForUser(loggedInUser)+saccoDao.getInternalTransferCountForUser(loggedInUser);
+            return saccoDao.getDepositCountForUser(loggedInUser) + saccoDao.getWithdrawCountForUser(loggedInUser)
+                    + saccoDao.getInternalTransferCountForUser(loggedInUser);
         } else {
             return 0;
         }

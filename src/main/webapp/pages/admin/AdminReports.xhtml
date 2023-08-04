@@ -61,7 +61,71 @@
 
       .report-tab-button:hover {
         background-color: #f5f5f5;
+        text-decoration: underline;
         color: #007bff;
+      }
+
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+
+      .card {
+        width: calc(
+          25% - 10px
+        ); 
+        height: 150px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 10px; 
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+        position: relative;
+      }
+
+      .card .number {
+        position: absolute;
+        top: 0px; 
+        right: 10px; 
+        font-size: 30px; 
+        
+      }
+
+      .card .icon {
+        font-size: 36px;
+        color: #477deb;
+      }
+
+      .card .more-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        background-color: #5889ed; 
+        border-radius: 0 0 10px 10px; 
+        padding: 5px 0;
+      }
+
+      .card .more-info span {
+        margin-right: 5px;
+      }
+
+      .card .more-info i {
+        font-size: 18px;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card .card-content {
+        padding: 10px 10px; /* Add padding to create space between card content and More info section */
       }
     </style>
   </h:head>
@@ -79,7 +143,7 @@
             "
             styleClass="link-hover-white"
             outcome="/pages/admin/AdminDashboard.xhtml"
-            value="Home" />
+            value="Dashboard" />
         </span>
       </div>
       <div class="menu-item">
@@ -185,8 +249,14 @@
       <div id="memberReports" class="chart-container">
         <div class="chart">
           <div class="p-card p-shadow-3">
-            <h3 class="chart-title" style="text-align: center">
-              Approved Members Gender Distribution
+            <h3
+              class="chart-title"
+              style="
+                text-align: center;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+                  sans-serif;
+              ">
+              Member Gender Distribution
             </h3>
             <p:pieChart
               type="pie"
@@ -196,7 +266,13 @@
         </div>
         <div class="chart">
           <div class="p-card p-shadow-3">
-            <h3 class="chart-title" style="text-align: center">
+            <h3
+              class="chart-title"
+              style="
+                text-align: center;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+                  sans-serif;
+              ">
               Membership Status
             </h3>
             <p:donutChart
@@ -207,7 +283,13 @@
         </div>
         <div class="chart">
           <div class="p-card p-shadow-3">
-            <h3 class="chart-title" style="text-align: center">
+            <h3
+              class="chart-title"
+              style="
+                text-align: center;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+                  sans-serif;
+              ">
               Member Age Distribution
             </h3>
             <p:barChart
@@ -218,10 +300,57 @@
         </div>
       </div>
       <div id="transactionReports">
-        <div class="chart">
-
-          
+        <div class="card-container">
+          <div class="card">
+            <div class="icon">
+              <i
+                style="font-size: 40px"
+                class="pi pi-money-bill"
+                aria-hidden="true"></i>
+            </div>
+            <h2>Total Transactions</h2>
+            <h2 class="number">
+              <h:outputText value="#{adminDashboard.totalTransactions}" />
+            </h2>
+          </div>
+          <div class="card">
+            <div class="icon">
+              <i
+                style="font-size: 40px"
+                class="pi pi-file-import"
+                aria-hidden="true"></i>
+            </div>
+            <h2>Total Deposits</h2>
+            <h2 class="number">
+              <h:outputText value="#{adminDashboard.totalDeposits}" />
+            </h2>
+          </div>
+          <div class="card">
+            <div class="icon">
+              <i
+                style="font-size: 40px"
+                class="pi pi-file-export"
+                aria-hidden="true"></i>
+            </div>
+            <h2>Total Withdraws</h2>
+            <h2 class="number">
+              <h:outputText value="#{adminDashboard.totalWithdrawals}" />
+            </h2>
+          </div>
+          <div class="card">
+            <div class="icon">
+              <i
+                style="font-size: 40px"
+                class="pi pi-arrow-right-arrow-left"
+                aria-hidden="true"></i>
+            </div>
+            <h2>Total Internal Transfers</h2>
+            <h2 class="number">
+              <h:outputText value="#{adminDashboard.internalTransferCount}" />
+            </h2>
+          </div>
         </div>
+        
       </div>
     </div>
   </h:body>
@@ -249,7 +378,7 @@
         document.getElementById("transactionTab").classList.remove("active");
       } else if (reportType === "transaction") {
         document.getElementById("memberReports").style.display = "none";
-        document.getElementById("transactionReports").style.display = "flex";
+        document.getElementById("transactionReports").style.display = "grid";
         document.getElementById("memberTab").classList.remove("active");
         document.getElementById("transactionTab").classList.add("active");
       }
