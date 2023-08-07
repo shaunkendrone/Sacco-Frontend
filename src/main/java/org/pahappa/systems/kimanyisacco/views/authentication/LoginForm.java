@@ -10,6 +10,8 @@ import javax.faces.context.Flash;
 import java.io.IOException;
 
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
+import org.pahappa.systems.kimanyisacco.enumerations.Gender;
+import org.pahappa.systems.kimanyisacco.enumerations.Status;
 import org.pahappa.systems.kimanyisacco.models.LoginMember;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.services.LoginService;
@@ -31,9 +33,6 @@ public class LoginForm {
     public void setLoginMember(LoginMember loginMember) {
         this.loginMember = loginMember;
     }
-
-    @ManagedProperty("#{userSessionBean}")
-    private UserSessionBean userSessionBean;
 
     private MemberService memberService = new MemberServiceImp();
 
@@ -57,11 +56,11 @@ public class LoginForm {
             admin.setEmail("admin1@gmail.com");
             admin.setPhoneNumber("0756453219");
             admin.setDateOfBirth(java.sql.Date.valueOf("2001-07-20")); // Set the date of birth
-            admin.setGender("Male");
+            admin.setGender(Gender.Male);
             admin.setPassword("adminpassword");
-            admin.setStatus("Admin");
+            admin.setStatus(Status.Admin);
             admin.setAddress("Makerere");
-            admin.setOccupation("Software Engineer"); 
+            admin.setOccupation("Software Engineer");
             // Set other admin properties if needed
 
             // Save the admin user using the MemberService
@@ -72,50 +71,50 @@ public class LoginForm {
     public void doLogin() throws IOException {
         // Initialize the admin user when the login form is accessed
         initializeAdminUser();
-    
 
-        boolean adminLoginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(), "Admin");
-        boolean loginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(), "Approved");
+        boolean adminLoginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(),
+                Status.Admin);
+        boolean loginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(),
+                Status.Approved);
+        boolean pendingLoginSuccessful = loginService.authenticate(loginMember.getEmail(), loginMember.getPassword(),
+                Status.Pending);
         if (loginSuccessful || adminLoginSuccessful) {
-    
+
             Members member = memberService.getMemberByEmail(loginMember.getEmail());
             if (member != null) {
                 String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-    
+
                 // Check if the user is an admin, and redirect accordingly
                 if (member.getEmail().equals("admin1@gmail.com")) {
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("adminUser", member);
                     loginMember = new LoginMember();
                     addFlashMessage(FacesMessage.SEVERITY_INFO, "Login Successful",
-                        "Welcome Admin");
+                            "Welcome Admin");
                     FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.adminDashboard);
                 } else {
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("loggedInUser", member);
                     loginMember = new LoginMember();
                     addFlashMessage(FacesMessage.SEVERITY_INFO, "Login Successful",
-                        "Welcome, " + member.getFirstName() + " " + member.getLastName() + "!");
+                            "Welcome, " + member.getFirstName() + " " + member.getLastName() + "!");
                     FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.dashboard);
-                }
- 
-            } else {
+                } 
+            }else {
                 // Redirect to the login page with an error message
                 System.out.println("Member is null");
-                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Credentials");
             }
-    
-        } else {
-    
+
+        }  else if(pendingLoginSuccessful){
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Your account is still pending approval");
+                FacesContext.getCurrentInstance().addMessage("messages", message);
+            }
+        else {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Invalid Credentials");
             FacesContext.getCurrentInstance().addMessage("messages", message);
-    
+
         }
     }
+
     
-
-    public void setUserSessionBean(UserSessionBean userSessionBean) {
-        this.userSessionBean = userSessionBean;
-    }
-
     public void toLogin() throws IOException {
         String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
         FacesContext.getCurrentInstance().getExternalContext().redirect(path + Hyperlinks.login);

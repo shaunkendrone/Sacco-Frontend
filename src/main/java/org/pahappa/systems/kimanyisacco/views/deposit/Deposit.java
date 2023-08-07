@@ -65,15 +65,6 @@ public class Deposit {
         transactionService = new TransactionServiceImp(saccoDao);
     }
 
-    // Getter and Setter for depositAmount
-
-    // private void addFlashMessage(FacesMessage.Severity severity, String summary, String detail) {
-    //     FacesContext facesContext = FacesContext.getCurrentInstance();
-    //     Flash flash = facesContext.getExternalContext().getFlash();
-    //     flash.setKeepMessages(true);
-    //     facesContext.addMessage(null, new FacesMessage(severity, summary, detail));
-    // }
-
     public void makeDeposit() {
         // Retrieve the logged-in member from the session
         Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext()

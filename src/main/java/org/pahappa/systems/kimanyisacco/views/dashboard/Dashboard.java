@@ -4,16 +4,11 @@ import java.io.IOException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-// import javax.faces.bean.SessionScoped;
-// import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Members;
-// import org.pahappa.systems.kimanyisacco.User.User;
-import org.pahappa.systems.kimanyisacco.views.authentication.UserSessionBean;
 import org.pahappa.systems.kimanyisacco.services.MemberService;
 import org.pahappa.systems.kimanyisacco.services.MemberServiceImp;
 
@@ -133,8 +128,7 @@ public class Dashboard {
         }
     }
 
-    @ManagedProperty("#{userSessionBean}")
-    private UserSessionBean userSessionBean;
+   
 
     public Dashboard() throws IOException {
         Members loggedInUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
@@ -202,9 +196,5 @@ public class Dashboard {
         }
     }
     
-
-    public void setUserSessionBean(UserSessionBean userSessionBean) {
-        this.userSessionBean = userSessionBean;
-    }
 
 }

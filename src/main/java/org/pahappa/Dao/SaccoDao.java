@@ -1,6 +1,6 @@
 package org.pahappa.Dao;
 
-import java.time.LocalDate;
+// import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -12,6 +12,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.pahappa.systems.kimanyisacco.config.SessionConfiguration;
+import org.pahappa.systems.kimanyisacco.enumerations.Status;
+import org.pahappa.systems.kimanyisacco.enumerations.TransactionType;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.models.Transactions;
@@ -36,7 +38,7 @@ public class SaccoDao {
             criteria.add(Restrictions.eq("email", email));
             member = (Members) criteria.uniqueResult();
         } catch (NoResultException ex) {
-            // If no member found, return null or handle the situation as needed
+            // If no member found, return null
             member = null;
         } finally {
             if (session != null) {
@@ -52,7 +54,7 @@ public class SaccoDao {
     
         String hql = "FROM Members m WHERE m.status = :status";
         Query query = session.createQuery(hql);
-        query.setParameter("status", "Pending");
+        query.setParameter("status", Status.Pending);
         List<Members> membersList = query.list();
         session.getTransaction().commit();
         session.close();
@@ -79,7 +81,7 @@ public class SaccoDao {
     
         String hql = "FROM Members m WHERE m.status = :status";
         Query query = session.createQuery(hql);
-        query.setParameter("status", "Approved");
+        query.setParameter("status", Status.Approved);
         List<Members> membersList = query.list();
         session.getTransaction().commit();
         session.close();
@@ -95,7 +97,7 @@ public class SaccoDao {
             // Query to get ages of approved members
             String hql = "SELECT YEAR(CURRENT_DATE()) - YEAR(m.dateOfBirth) FROM Members m WHERE m.status = :status";
             Query query = session.createQuery(hql);
-            query.setParameter("status", "Approved");
+            query.setParameter("status", Status.Approved);
             List<Integer> ages = query.list();
             
             // Categorize ages into different ranges (18-25, 25-32, 32-40, 40-50, 50+)
@@ -135,7 +137,7 @@ public class SaccoDao {
     
         String hql = "SELECT COUNT(*) FROM Members m WHERE m.status = :status";
         Query query = session.createQuery(hql);
-        query.setParameter("status", "Approved");
+        query.setParameter("status", Status.Approved);
         Long count = (Long) query.uniqueResult();
         session.getTransaction().commit();
         session.close();
@@ -149,7 +151,7 @@ public class SaccoDao {
     
         String hql = "SELECT COUNT(*) FROM Members m WHERE m.status = :status";
         Query query = session.createQuery(hql);
-        query.setParameter("status", "Pending");
+        query.setParameter("status", Status.Pending);
         Long count = (Long) query.uniqueResult();
         session.getTransaction().commit();
         session.close();
@@ -164,7 +166,7 @@ public class SaccoDao {
             session.beginTransaction();
     
             // Set the status to "Approved"
-            member.setStatus("Approved");
+            member.setStatus(Status.Approved);
     
             // Creating a new account and setting the initial balance
             Account account = new Account();
@@ -193,7 +195,7 @@ public class SaccoDao {
         try {
             session = SessionConfiguration.getSessionFactory().openSession();
             session.beginTransaction();
-            member.setStatus("Rejected"); // Set the status to "Rejected"
+            member.setStatus(Status.Rejected); // Set the status to "Rejected"
             session.update(member);
             session.getTransaction().commit();
         } catch (HibernateException e) {
@@ -285,7 +287,7 @@ public class SaccoDao {
             session = SessionConfiguration.getSessionFactory().openSession();
             Criteria criteria = session.createCriteria(Transactions.class);
             criteria.add(Restrictions.eq("account", member.getAccount()));
-            criteria.add(Restrictions.eq("transactionType", "Deposit")); // Specify "Deposit" as the transaction type
+            criteria.add(Restrictions.eq("transactionType", TransactionType.Deposit)); // Specify "Deposit" as the transaction type
             criteria.setProjection(Projections.rowCount());
             Long count = (Long) criteria.uniqueResult();
             return count.intValue();
@@ -306,7 +308,7 @@ public class SaccoDao {
             session = SessionConfiguration.getSessionFactory().openSession();
             Criteria criteria = session.createCriteria(Transactions.class);
             criteria.add(Restrictions.eq("account", member.getAccount()));
-            criteria.add(Restrictions.eq("transactionType", "Withdrawal")); // Specify "Deposit" as the transaction type
+            criteria.add(Restrictions.eq("transactionType", TransactionType.Withdrawal)); // Specify "Deposit" as the transaction type
             criteria.setProjection(Projections.rowCount());
             Long count = (Long) criteria.uniqueResult();
             return count.intValue();
@@ -327,7 +329,7 @@ public class SaccoDao {
             session = SessionConfiguration.getSessionFactory().openSession();
             Criteria criteria = session.createCriteria(Transactions.class);
             criteria.add(Restrictions.eq("account", member.getAccount()));
-            criteria.add(Restrictions.eq("transactionType", "Internal Transfer"));
+            criteria.add(Restrictions.eq("transactionType", TransactionType.Internal_Transfer));
             criteria.setProjection(Projections.rowCount());
             Long count = (Long) criteria.uniqueResult();
             return count.intValue();
@@ -407,7 +409,6 @@ public class SaccoDao {
         }
     }
 
-    
     public long getTotalTransactionCount() {
         Session session = null;
         try {
@@ -449,7 +450,7 @@ public class SaccoDao {
             session = SessionConfiguration.getSessionFactory().openSession();
             String hql = "SELECT COUNT(*) FROM Transactions WHERE transactionType = :transactionType";
             Query query = session.createQuery(hql);
-            query.setParameter("transactionType", "Deposit");
+            query.setParameter("transactionType", TransactionType.Deposit);
             return (Long) query.uniqueResult();
         }catch(HibernateException e){
             e.printStackTrace();
@@ -467,7 +468,7 @@ public class SaccoDao {
             session = SessionConfiguration.getSessionFactory().openSession();
             String hql = "SELECT COUNT(*) FROM Transactions WHERE transactionType = :transactionType";
             Query query = session.createQuery(hql);
-            query.setParameter("transactionType", "Withdrawal");
+            query.setParameter("transactionType", TransactionType.Withdrawal);
             return (Long) query.uniqueResult();
         }catch(HibernateException e){
             e.printStackTrace();
@@ -485,7 +486,7 @@ public class SaccoDao {
             session = SessionConfiguration.getSessionFactory().openSession();
             String hql = "SELECT COUNT(*) FROM Transactions WHERE transactionType = :transactionType";
             Query query = session.createQuery(hql);
-            query.setParameter("transactionType", "Internal Transfer");
+            query.setParameter("transactionType", TransactionType.Internal_Transfer);
             return (Long) query.uniqueResult();
         }catch(HibernateException e){
             e.printStackTrace();
@@ -515,5 +516,4 @@ public class SaccoDao {
         }
     }
     
-        
 }

@@ -2,14 +2,12 @@ package org.pahappa.systems.kimanyisacco.views.profile;
 
 // import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
 import org.pahappa.systems.kimanyisacco.models.Members;
-import org.pahappa.systems.kimanyisacco.views.authentication.UserSessionBean;
 
 import java.io.IOException;
 
@@ -63,9 +61,6 @@ public class Profile {
         this.occupation = occupation;
     }
 
-    @ManagedProperty("#{userSessionBean}")
-    private UserSessionBean userSessionBean;
-
     public Profile() throws IOException {
         Members loggedInUser = (Members)FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
                 .get("loggedInUser");
@@ -92,9 +87,7 @@ public class Profile {
         this.firstName = firstName;
     }
 
-    public void setUserSessionBean(UserSessionBean userSessionBean) {
-        this.userSessionBean = userSessionBean;
-    }
+    
 
     public void logout() throws IOException {
         // Clear the session and redirect to the login page

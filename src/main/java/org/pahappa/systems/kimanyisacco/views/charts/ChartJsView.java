@@ -8,8 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 import org.pahappa.Dao.SaccoDao;
+import org.pahappa.systems.kimanyisacco.enumerations.Gender;
+import org.pahappa.systems.kimanyisacco.enumerations.Status;
 import org.pahappa.systems.kimanyisacco.models.Members;
-import org.pahappa.systems.kimanyisacco.models.Transactions;
 import org.primefaces.model.charts.ChartData;
 import org.primefaces.model.charts.bar.BarChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
@@ -17,15 +18,8 @@ import org.primefaces.model.charts.bar.BarChartOptions;
 import org.primefaces.model.charts.donut.DonutChartDataSet;
 import org.primefaces.model.charts.donut.DonutChartModel;
 import org.primefaces.model.charts.donut.DonutChartOptions;
-import org.primefaces.model.charts.line.LineChartDataSet;
-// import org.primefaces.model.charts.line.LineChartDataSet;
 import org.primefaces.model.charts.line.LineChartModel;
-import org.primefaces.model.charts.line.LineChartOptions;
-// import org.primefaces.model.charts.line.LineChartOptions;
 import org.primefaces.model.charts.optionconfig.legend.Legend;
-import org.primefaces.model.charts.optionconfig.title.Title;
-// import org.primefaces.model.charts.optionconfig.title.Title;
-// import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.PieChartModel;
 
@@ -91,7 +85,6 @@ public class ChartJsView implements java.io.Serializable {
         createPieModel();
         createDonutModel();
         createAgeDistributionModel();
-        createLineModel();
         
     }
 
@@ -107,9 +100,9 @@ public class ChartJsView implements java.io.Serializable {
 
         // Iterate over the approvedMembers list to count genders
         for (Members member : approvedMembers) {
-            if (member.getGender().equalsIgnoreCase("Male")) {
+            if (member.getGender()==Gender.Male) {
                 maleCount++;
-            } else if (member.getGender().equalsIgnoreCase("Female")) {
+            } else if (member.getGender()==Gender.Female) {
                 femaleCount++;
             }
         }
@@ -152,12 +145,12 @@ public class ChartJsView implements java.io.Serializable {
         int pendingCount = 0;
 
         for (Members member : members) {
-            String status = member.getStatus(); // Assuming you have a getStatus() method in Members
-            if (status.equalsIgnoreCase("Approved")) {
+            Status status = member.getStatus(); // Assuming you have a getStatus() method in Members
+            if (status == Status.Approved) {
                 approvedCount++;
-            } else if (status.equalsIgnoreCase("Rejected")) {
+            } else if (status == Status.Rejected) {
                 rejectedCount++;
-            } else if (status.equalsIgnoreCase("Pending")) {
+            } else if (status == Status.Pending) {
                 pendingCount++;
             }
         }
@@ -243,90 +236,7 @@ public class ChartJsView implements java.io.Serializable {
         this.ageDistributionModel = ageDistributionModel;
     }
 
-    public void createLineModel() {
-    lineModel = new LineChartModel();
-    ChartData data = new ChartData();
-
-    // Initialize datasets for each transaction type
-    LineChartDataSet depositDataSet = new LineChartDataSet();
-    LineChartDataSet withdrawalDataSet = new LineChartDataSet();
-    LineChartDataSet transferDataSet = new LineChartDataSet();
-
-    // Retrieve all transactions from the database
-    SaccoDao saccoDao = new SaccoDao();
-    List<Transactions> transactions = saccoDao.getAllTransactions();
-
-    List<Object> depositValues = new ArrayList<>();
-    List<Object> withdrawalValues = new ArrayList<>();
-    List<Object> transferValues = new ArrayList<>();
     
-    // Process the transactions and populate the datasets
-    for (Transactions transaction : transactions) {
-        // Assuming you have a "transactionType" field in Transactions class
-        String transactionType = transaction.getTransactionType();
-        
-        // Assuming you have a "transactionAmount" field in Transactions class
-        int transactionAmount = (int) transaction.getTransactionAmount();
-        
-        if ("Deposit".equals(transactionType)) {
-            depositValues.add(transactionAmount);
-            withdrawalValues.add(null); // Placeholder for other datasets
-            transferValues.add(null);   // Placeholder for other datasets
-        } else if ("Withdrawal".equals(transactionType)) {
-            depositValues.add(null);    // Placeholder for other datasets
-            withdrawalValues.add(transactionAmount);
-            transferValues.add(null);   // Placeholder for other datasets
-        } else if ("Internal Transfer".equals(transactionType)) {
-            depositValues.add(null);    // Placeholder for other datasets
-            withdrawalValues.add(null); // Placeholder for other datasets
-            transferValues.add(transactionAmount);
-        }
-    }
-
-    depositDataSet.setData(depositValues);
-    depositDataSet.setFill(false);
-    depositDataSet.setLabel("Deposits");
-    depositDataSet.setBorderColor("rgb(75, 192, 192)");
-    depositDataSet.setTension(0.1);
-
-    withdrawalDataSet.setData(withdrawalValues);
-    withdrawalDataSet.setFill(false);
-    withdrawalDataSet.setLabel("Withdrawals");
-    withdrawalDataSet.setBorderColor("rgb(192, 75, 75)");
-    withdrawalDataSet.setTension(0.1);
-
-    transferDataSet.setData(transferValues);
-    transferDataSet.setFill(false);
-    transferDataSet.setLabel("Internal Transfers");
-    transferDataSet.setBorderColor("rgb(75, 75, 192)");
-    transferDataSet.setTension(0.1);
-
-    data.addChartDataSet(depositDataSet);
-    data.addChartDataSet(withdrawalDataSet);
-    data.addChartDataSet(transferDataSet);
-
-    // Populate labels for days of the week
-    List<String> daysOfWeekLabels = new ArrayList<>();
-    daysOfWeekLabels.add("Monday");
-    daysOfWeekLabels.add("Tuesday");
-    daysOfWeekLabels.add("Wednesday");
-    daysOfWeekLabels.add("Thursday");
-    daysOfWeekLabels.add("Friday");
-    daysOfWeekLabels.add("Saturday");
-    daysOfWeekLabels.add("Sunday");
-    data.setLabels(daysOfWeekLabels);
-
-    // Options and title remain the same
-
-    LineChartOptions options = new LineChartOptions();
-    Title title = new Title();
-    title.setDisplay(true);
-    title.setText("Line Chart");
-    options.setTitle(title);
-
-    lineModel.setOptions(options);
-    lineModel.setData(data);
-}
 
 
 }

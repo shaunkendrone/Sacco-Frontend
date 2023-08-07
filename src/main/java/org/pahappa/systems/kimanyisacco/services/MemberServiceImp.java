@@ -16,7 +16,6 @@ public class MemberServiceImp implements MemberService{
     }
 
     private String hashPassword(String password) {
-        // Use a strong hashing algorithm
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
@@ -36,7 +35,6 @@ public class MemberServiceImp implements MemberService{
 
     @Override
     public boolean isEmailExists(String email) {
-        // Delegate the call to the SaccoDao's isEmailExists() method
         return memberDao.isEmailExists(email);
     }
 
@@ -47,7 +45,6 @@ public class MemberServiceImp implements MemberService{
     
     @Override
     public void updateMember(Members member) {
-        // Call the SaccoDao to update the member in the database
         memberDao.updateMember(member);
     }
 }

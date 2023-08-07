@@ -9,12 +9,16 @@ import javax.faces.context.Flash;
 
 import org.pahappa.Dao.SaccoDao;
 import org.pahappa.systems.kimanyisacco.controllers.Hyperlinks;
+import org.pahappa.systems.kimanyisacco.enumerations.TransactionType;
 import org.pahappa.systems.kimanyisacco.models.Account;
 import org.pahappa.systems.kimanyisacco.models.Members;
 import org.pahappa.systems.kimanyisacco.models.Transactions;
 
 public class TransactionServiceImp implements TransactionService {
     private SaccoDao saccoDao;
+    public static final double minimumDepositAmount = 10000;
+    public static final double minimumWithdrawAmount = 10000;
+    public static final double minimumTransferAmount = 10000;
 
     public TransactionServiceImp(SaccoDao saccoDao) {
         this.saccoDao = saccoDao;
@@ -22,7 +26,6 @@ public class TransactionServiceImp implements TransactionService {
 
     @Override
     public void deposit(Account account, double amount, String transactionDate) {
-        double minimumDepositAmount = 10000;
     if (amount < minimumDepositAmount) {
         FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Deposit Amount",
@@ -33,7 +36,7 @@ public class TransactionServiceImp implements TransactionService {
 
         // Create a new transaction
         Transactions transaction = new Transactions();
-        transaction.setTransactionType("Deposit");
+        transaction.setTransactionType(TransactionType.Deposit);
         transaction.setTransactionAmount(amount);
         transaction.setTransactionDate(transactionDate);
         transaction.setAccount(account);
@@ -67,7 +70,6 @@ public class TransactionServiceImp implements TransactionService {
     public void withdraw(Account account, double amount, String transactionDate) {
         // Check if the amount is greater than or equal to the minimum withdraw amount
         // (10000)
-        double minimumWithdrawAmount = 10000;
         if (amount < minimumWithdrawAmount) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Withdrawal Amount",
@@ -76,7 +78,7 @@ public class TransactionServiceImp implements TransactionService {
         }
         // Create a new transaction
         Transactions transaction = new Transactions();
-        transaction.setTransactionType("Withdrawal");
+        transaction.setTransactionType(TransactionType.Withdrawal);
         transaction.setTransactionAmount(amount);
         transaction.setTransactionDate(transactionDate);
         transaction.setAccount(account);
@@ -91,7 +93,7 @@ public class TransactionServiceImp implements TransactionService {
             saccoDao.saveTransaction(transaction);
             saccoDao.saveAccount(account);
 
-            addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Withdraw made successfully");
+            addFlashMessage(FacesMessage.SEVERITY_INFO, "Success", "Withdrawal made successfully");
 
             String path = FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
             try {
@@ -143,7 +145,6 @@ public class TransactionServiceImp implements TransactionService {
 
         // Check if the amount is greater than or equal to the minimum transfer amount
         // (10000)
-        double minimumTransferAmount = 10000;
         if (amount < minimumTransferAmount) {
             FacesContext.getCurrentInstance().addMessage("messages",
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid Transfer Amount",
@@ -162,14 +163,14 @@ public class TransactionServiceImp implements TransactionService {
 
             // Create a new transaction for the sender
             Transactions senderTransaction = new Transactions();
-            senderTransaction.setTransactionType("Internal Transfer");
+            senderTransaction.setTransactionType(TransactionType.Internal_Transfer);
             senderTransaction.setTransactionAmount(-amount);
             senderTransaction.setTransactionDate(transactionDate);
             senderTransaction.setAccount(senderAccount);
 
             // Create a new transaction for the recipient
             Transactions recipientTransaction = new Transactions();
-            recipientTransaction.setTransactionType("Internal Transfer");
+            recipientTransaction.setTransactionType(TransactionType.Internal_Transfer);
             recipientTransaction.setTransactionAmount(amount);
             recipientTransaction.setTransactionDate(transactionDate);
             recipientTransaction.setAccount(recipientAccount);

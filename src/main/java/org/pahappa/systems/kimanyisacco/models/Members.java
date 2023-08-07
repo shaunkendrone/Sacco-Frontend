@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,19 +15,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 // import javax.persistence.Transient;
 
+import org.pahappa.systems.kimanyisacco.enumerations.Gender;
+import org.pahappa.systems.kimanyisacco.enumerations.Status;
+
 @Entity
-@Table(name = "sacco_members")
+@Table(name = "member")
 public class Members {
     private int id;
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
-    private String gender;
+    private Gender gender;
     private String phoneNumber;
     private String email;
     private String address;
     private String occupation;
     private String password;
+    private Status status = Status.Pending;
 
 
     public Members() {
@@ -33,13 +39,13 @@ public class Members {
 
     private Account account;
 
-    @Column(name = "status", nullable = true)
-    private String status = "Pending";
+    // @Column(name = "status", nullable = true)
+    // private String status = "Pending";
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "member_id", nullable = false)
     public int getId() {
         return id;
     }
@@ -75,12 +81,13 @@ public class Members {
         this.dateOfBirth = date;
     }
 
-    @Column(name = "gender", nullable = false)
-    public String getGender() {
+    @Enumerated(EnumType.STRING)
+    @Column(name="gender",nullable = false)
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -129,13 +136,16 @@ public class Members {
         this.password = password;
     }
 
-    public String getStatus() {
+    @Enumerated(EnumType.STRING)
+    @Column(name="status",nullable = false)
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
+    
 
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -147,6 +157,5 @@ public class Members {
         this.account = account;
     }
 
-    
 
 }

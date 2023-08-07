@@ -17,10 +17,10 @@ import javax.persistence.Table;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "accountId")
+    @Column(name = "account_id")
     private int accountId;
 
-    @Column(nullable = false)
+    @Column(name = "account_balance",nullable = false)
     private double balance;
 
     @OneToMany(targetEntity = Transactions.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "account")

@@ -3,7 +3,7 @@ package org.pahappa.systems.kimanyisacco.models;
 public class LoginMember {
     private String email;
     private String password;
-    private String status = "Approved";
+    private String status;
 
     public String getEmail() {
         return email;

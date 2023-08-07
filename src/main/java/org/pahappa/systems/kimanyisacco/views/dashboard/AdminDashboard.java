@@ -98,16 +98,6 @@ public class AdminDashboard {
         this.firstName = firstName;
     }
 
-    // @ManagedProperty("#{userSessionBean}")
-    // private UserSessionBean userSessionBean;
-
-    // public UserSessionBean getUserSessionBean() {
-    //     return userSessionBean;
-    // }
-
-    // public void setUserSessionBean(UserSessionBean userSessionBean) {
-    //     this.userSessionBean = userSessionBean;
-    // }
 
     public AdminDashboard() throws IOException{
         Members adminUser = (Members) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("adminUser");
