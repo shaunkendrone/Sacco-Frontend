@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:k="http://xmlns.jcp.org/jsf/passthrough">
+  <h:head>
+    <f:facet name="first">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+
+      <link rel="stylesheet" href="resources/css/style.css" />
+      <link rel="stylesheet" href="resources/css/font-awesome.min.css" />
+      <h:outputStylesheet
+        name="primeflex/3.3.1/primeflex.css"
+        library="webjars" />
+
+      <style>
+        * {
+          box-sizing: border-box;
+          /* color: rgb(226, 226, 226); */
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+            Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
+        #styleid {
+          color: rgb(105, 105, 105);
+          font-family: "Segoe UI", "Tahoma", "Geneva", "Verdana", "sans-serif";
+          font-weight: bold;
+        }
+        .divider {
+          border-top: 1px solid #ccc;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+        .error-message {
+          color: rgb(209, 92, 92);
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 16px;
+          font-weight: 550;
+        }
+
+        .ui-button .ui-button-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 15px 15px;
+          background-color: #3470e9;
+          font-size: 18px;
+        }
+
+        .ui-button .ui-button-text:hover {
+          background-color: #042aff;
+        }
+
+        .ui-button .ui-button-icon-left {
+          display: none !important;
+        }
+
+        .ui-button .ui-button-text:before {
+          margin-right: 5px;
+          content: "\f2f6";
+          font-family: "Font Awesome 5 Free";
+        }
+      </style>
+    </f:facet>
+  </h:head>
+  <h:body>
+    <h:form>
+      <div class="signinform">
+        <div class="container">
+          <!-- main content -->
+          <div class="w3l-form-info">
+            <div>
+              <p:link outcome="/pages/dashboard/Dashboard.xhtml">
+                <img
+                  src="resources/images/myyyy.png"
+                  alt="Logo"
+                  width="80%"
+                  height="80%"
+              /></p:link>
+            </div>
+            <div id="tv">
+              <div class="input-group">
+                <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                <h:inputText
+                  id="firstName"
+                  k:placeholder="First Name"
+                  required="true"
+                  requiredMessage="*First name required." />
+                <h:message for="firstName" styleClass="error-message" />
+              </div>
+
+              <div class="input-group">
+                <span><i class="fas fa-user-plus" aria-hidden="true"></i></span>
+                <h:inputText
+                  id="lastName"
+                  k:placeholder="Last Name"
+                  required="true"
+                  requiredMessage="*Last name required." />
+                  <h:message for="lastName" styleClass="error-message" />
+              </div>
+
+              <div class="input-group">
+                <span
+                  ><i class="fas fa-calendar-alt" aria-hidden="true"></i
+                ></span>
+                <p:outputLabel for="navigator" />
+                <p:datePicker
+                  style="margin-left: 10%; padding-bottom: 5px"
+                  id="navigator"
+                  monthNavigator="true"
+                  yearRange="1970:2023"
+                  yearNavigator="true"
+                  showWeek="true"
+                  placeholder="Date of Birth" />
+              </div>
+
+              <div class="input-group">
+                <span
+                  ><i class="fas fa-venus-mars" aria-hidden="true"></i
+                ></span>
+                <div class="gender-options">
+                  <h:selectOneRadio id="gender">
+                    <f:selectItem itemLabel="Male" itemValue="male" />
+                    <f:selectItem itemLabel="Female" itemValue="female" />
+                  </h:selectOneRadio>
+                  <div class="space-below"></div>
+                </div>
+              </div>
+
+              <div class="input-group">
+                <span><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                <h:inputText id="email" k:placeholder="Email" required="true"
+                requiredMessage="*Email required" />
+                <h:message for="email" styleClass="error-message" />
+                
+              </div>
+
+              <div class="input-group">
+                <span><i class="fas fa-phone" aria-hidden="true"></i></span>
+                <h:inputText
+                id="phone"
+                  k:placeholder="Phone Number"
+                  required="true"
+                  requiredMessage="*Phone number required." />
+                  <h:message for="phone" styleClass="error-message" />
+              </div>
+
+              <div class="input-group">
+                <span
+                  ><i class="fas fa-map-marker-alt" aria-hidden="true"></i
+                ></span>
+                <h:inputText
+                  id="address"
+                  k:placeholder="Address"
+                  required="true"
+                  requiredMessage="*Address required." />
+                  <h:message for="address" styleClass="error-message" />
+              </div>
+
+              <!--Occupation-->
+              <div class="input-group">
+                <span><i class="fas fa-briefcase" aria-hidden="true"></i></span>
+                <h:inputText
+                  id="occupation"
+                  k:placeholder="Occupation"
+                  required="true"
+                  requiredMessage="*Occupation is required." />
+                  <h:message for="occupation" styleClass="error-message" />
+              </div>
+
+              <div class="input-group">
+                <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                <h:inputSecret
+                  id="password"
+                  k:placeholder="Password"
+                  required="true"
+                  requiredMessage="*Password required." />
+                  <h:message for="password" styleClass="error-message" />
+              </div>
+
+              <div class="input-group">
+                <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                <h:inputSecret
+                  id="confirm"
+                  k:placeholder="Confirm Password"
+                  required="true"
+                  requiredMessage="*Confirmation required." />
+                  <h:message for="confirm" styleClass="error-message" />
+              </div>
+
+              <p:commandButton
+                styleClass="btn btn-primary btn-block"
+                value="Register"
+                type="submit"
+                icon="fas fa-sign-in"
+                action="#{navigation.getDashboard()}"
+                update="@form"
+                ajax="false"
+                 />
+
+              <p class="account">
+                Already a member?
+                <h:outputLink value="Login.xhtml">Login</h:outputLink>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          <p>2023 Kimanyi SACCO register form | All Rights Reserved</p>
+        </div>
+      </div>
+    </h:form>
+  </h:body>
+  <script src="resources/js/fontawesome.js"></script>
+
+</html>
